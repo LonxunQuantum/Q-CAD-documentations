@@ -96,6 +96,7 @@ Tutorials and examples
    /tutorials_and_examples/Si_DOS_Calculation
    /tutorials_and_examples/Si_Band_Calculation
    /tutorials_and_examples/GaAs_HSE_SCF_Calculation
+   /tutorials_and_examples/GaAs_HSE_Band_Calculation
 
 Modules
 -------

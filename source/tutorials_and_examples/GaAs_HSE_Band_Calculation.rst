@@ -1,4 +1,4 @@
-AsGa HSE bandsctructure calculation
+GaAa HSE bandsctructure calculation
 ===================================
 HSE bandstructure calculation for AsGa
 
@@ -23,16 +23,17 @@ etot.input
 
 .. code-block::
 
-   1 4
+   4 1
    JOB = NONSCF
-   IN.PSP1 = Si.SG15.PBE.UPF
+   IN.PSP1 = Ga.SG15.PBE.UPF
+   IN.PSP2 = As.SG15.PBE.UPF
    IN.ATOM = atom.config
-   ECUT = 50
+   XCFUNCTIONAL = HSE
    IN.VR = T
    IN.KPT = T
 
 .. note::
-   1. Read IN.VR from previous SCF calculation. To copy OUT.VR and OUT.FERMI from the SCF calculation of example `Si SCF Calculation <Si_SCF_Calculation.html>`_ to your current working drectory and rename IN.VR.
+   1. Read IN.VR from previous SCF calculation. To copy OUT.VR, OUT.FERMI and OUT.HSEWR* from the HSE SCF calculation of example `GaAs HSE SCF calculation <GaAs_HSE_SCF_Calculation.html>`_ to your current working drectory and rename IN.VR.
    2. IN.KPT is the k-points file which PWmat will use for band structure calculation, one can use "split_kp.x" utility to get it. You should prepare an input file for "split_kp.x", which can be named "gen.kpt":
    
    .. code-block::
@@ -57,11 +58,11 @@ etot.input
 
    After running "split_kp.x gen.kpt", it will generate "IN.KPT" and "HIGH_SYMMETRY_POINT" (high-symmetry points information) files.  
 
-Si.SG15.PBE.UPF
+As.SG15.PBE.UPF, Ga.SG15.PBE.UPF
 
 
 .. note::
-   Si.SG15.PEB.UPF is the pseudopotential file.
+   As.SG15.PEB.UPF and Ga.SG15.PBE.UPF are the pseudopotential files.
 
 Calculations
 -------------
@@ -98,9 +99,9 @@ file of band structure), which can be used to plot band by  *origin* or *gnuplot
    
    plot_band_structure.x
 
-.. image:: pictures/bandstructure.png 
+.. image:: pictures/bandstructure_GaAs.png 
 
 Download
 --------
 
-`example03 <examples/example03.tar.gz>`_
+`GaAs_HSE_Band_Cal <examples/GaAs_HSE_Band_Cal.tar.gz>`_

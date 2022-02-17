@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Si bandsctructure calculation &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>GaAa HSE bandsctructure calculation &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,8 +16,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GaAs HSE SCF calculation" href="GaAs_HSE_SCF_Calculation.html" />
-    <link rel="prev" title="Si DOS calculation" href="Si_DOS_Calculation.html" /> 
+    <link rel="prev" title="GaAs HSE SCF calculation" href="GaAs_HSE_SCF_Calculation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,14 +42,14 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and examples</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Si_SCF_Calculation.html">Si SCF calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Si_DOS_Calculation.html">Si DOS calculation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Si bandsctructure calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Si bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">GaAs HSE SCF calculation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GaAa HSE bandsctructure calculation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#input-files">Input files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#calculations">Calculations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#download">Download</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">GaAs HSE SCF calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">GaAa HSE bandsctructure calculation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
@@ -75,9 +74,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
-      <li>Si bandsctructure calculation</li>
+      <li>GaAa HSE bandsctructure calculation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/tutorials_and_examples/Si_Band_Calculation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/tutorials_and_examples/GaAs_HSE_Band_Calculation.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -85,9 +84,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="si-bandsctructure-calculation">
-<h1>Si bandsctructure calculation<a class="headerlink" href="#si-bandsctructure-calculation" title="Permalink to this headline">¶</a></h1>
-<p>Bandstructure calculation for Si</p>
+  <div class="section" id="gaaa-hse-bandsctructure-calculation">
+<h1>GaAa HSE bandsctructure calculation<a class="headerlink" href="#gaaa-hse-bandsctructure-calculation" title="Permalink to this headline">¶</a></h1>
+<p>HSE bandstructure calculation for AsGa</p>
 <div class="section" id="input-files">
 <h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
 <p>atom.config</p>
@@ -102,11 +101,12 @@
 </pre></div>
 </div>
 <p>etot.input</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">4</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="mi">1</span>
 <span class="n">JOB</span> <span class="o">=</span> <span class="n">NONSCF</span>
-<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Si</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Ga</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">As</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
 <span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
-<span class="n">ECUT</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">HSE</span>
 <span class="n">IN</span><span class="o">.</span><span class="n">VR</span> <span class="o">=</span> <span class="n">T</span>
 <span class="n">IN</span><span class="o">.</span><span class="n">KPT</span> <span class="o">=</span> <span class="n">T</span>
 </pre></div>
@@ -114,7 +114,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ol class="arabic simple">
-<li><p>Read IN.VR from previous SCF calculation. To copy OUT.VR and OUT.FERMI from the SCF calculation of example <a class="reference external" href="Si_SCF_Calculation.html">Si SCF Calculation</a> to your current working drectory and rename IN.VR.</p></li>
+<li><p>Read IN.VR from previous SCF calculation. To copy OUT.VR, OUT.FERMI and OUT.HSEWR* from the HSE SCF calculation of example <a class="reference external" href="GaAs_HSE_SCF_Calculation.html">GaAs HSE SCF calculation</a> to your current working drectory and rename IN.VR.</p></li>
 <li><p>IN.KPT is the k-points file which PWmat will use for band structure calculation, one can use “split_kp.x” utility to get it. You should prepare an input file for “split_kp.x”, which can be named “gen.kpt”:</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BAND</span>                    <span class="c1"># COMMENT line</span>
@@ -137,10 +137,10 @@
 </div>
 <p>After running “split_kp.x gen.kpt”, it will generate “IN.KPT” and “HIGH_SYMMETRY_POINT” (high-symmetry points information) files.</p>
 </div>
-<p>Si.SG15.PBE.UPF</p>
+<p>As.SG15.PBE.UPF, Ga.SG15.PBE.UPF</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Si.SG15.PEB.UPF is the pseudopotential file.</p>
+<p>As.SG15.PEB.UPF and Ga.SG15.PBE.UPF are the pseudopotential files.</p>
 </div>
 </div>
 <div class="section" id="calculations">
@@ -174,11 +174,11 @@ file of band structure), which can be used to plot band by  <em>origin</em> or <
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_band_structure</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
-<img alt="../_images/bandstructure.png" src="../_images/bandstructure.png" />
+<img alt="../_images/bandstructure_GaAs.png" src="../_images/bandstructure_GaAs.png" />
 </div>
 <div class="section" id="download">
 <h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="examples/Si_Band_Cal.tar.gz">Si_Band_Cal</a></p>
+<p><a class="reference external" href="examples/GaAs_HSE_Band_Cal.tar.gz">GaAs_HSE_Band_Cal</a></p>
 </div>
 </div>
 
@@ -186,8 +186,7 @@ file of band structure), which can be used to plot band by  <em>origin</em> or <
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Si_DOS_Calculation.html" class="btn btn-neutral float-left" title="Si DOS calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="GaAs_HSE_SCF_Calculation.html" class="btn btn-neutral float-right" title="GaAs HSE SCF calculation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="GaAs_HSE_SCF_Calculation.html" class="btn btn-neutral float-left" title="GaAs HSE SCF calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
