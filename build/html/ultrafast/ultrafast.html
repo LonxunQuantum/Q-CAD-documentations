@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultrafast dynamical process &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Machine Learning Force Field calculation" href="../MLFF/MLFF.html" />
+    <link rel="prev" title="Defect properties" href="../defect/defect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-and-output-files">Input and Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../phonon/phonon.html">Phonon calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../optical/optical.html">Optical properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../defect/defect.html">Defect properties</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ultrafast dynamical process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hot-carrier-cooling">Hot carrier cooling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>Ultrafast dynamical process</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/ultrafast/ultrafast.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="ultrafast-dynamical-process">
+<h1>Ultrafast dynamical process<a class="headerlink" href="#ultrafast-dynamical-process" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we will talk about how to calculate the ultrafast dynamics, dynamics in the time scale of ~100fs. It mostly involves carrier dynamics (the movement of electron) resulting in the failure of ground state description. Usually, the ultrafast dynamics involves:</p>
+<ol class="arabic simple">
+<li><p>the dynamics after a system suddenly loses an electron (e.g., due to femtosecond laser beam caused ionization);</p></li>
+<li><p>exciting one electron from valence band to one conduction band state;</p></li>
+<li><p>a collision of a very fast ion.</p></li>
+</ol>
+<p>PWmat provides two approach to simulate such ultrafast carrier dynamics: real-time time dependent density functional theory (rt-TDDFT) and Non-adiabatic molecular dynamics (NAMD).</p>
+<ol class="arabic simple">
+<li><p>The rt-TDDFT method could add oscillating electric field and simulate the initial excitation process. It include both electron-electron and electron-phonon interaction. We have developed a new rt-TDDFT method which could include the detailed balance between states (beyond Ehrenfest dynamics) and the finite dephaseing time (10.1039/c9sc04100a). But the limitation of calculated amount makes rt-TDDFT only good for relatively small system (less than 100 atoms).</p></li>
+<li><p>NAMD is an approxomation method which ignores the effects of carrier dynamics to nuclear dynamics. And it only include electron-phonon interaction, no electron-electron interaction. But it is a good method for large systems compared to rt-TDDFT. NAMD method based on fewest-swiches surface hopping (FSSH) could not include the detailed balance and finite dephasing time well. So we develop a new NAMD simulation method by modifying the conventional density matrix.</p></li>
+</ol>
+<p>Note: Makesure you have been familiar to basic TDDFT and NAMD calculations in PWmat manual before you undertake this section.</p>
+<div class="section" id="hot-carrier-cooling">
+<h2>Hot carrier cooling<a class="headerlink" href="#hot-carrier-cooling" title="Permalink to this headline">¶</a></h2>
+<p>This module is used to calculate the carrier cooling using rt-TDDFT. Radiolysis is the most common inelastic scattering damage in electron beam illumination caused molecular dissociation and damage. There are at least 3 different processes can be expected:</p>
+<ol class="arabic simple">
+<li><p>if the ejected electron level is very shallow and close to the highest occupied molecular orbital (HOMO) level, a hot hole carrier will be formed; it will cool with relaxation of the hole to the HOMO, and the energy will be transformed into nuclear kinetic energy. Because the ejected electron level is very shallow, the energy from the hot hole relaxation will be small and cannot drive dissociation of the molecule in a short time scale. However, both the hot hole relaxation energy and the recoganization energy of the molecule will be converted into nuclear kinetic energy, which can still dissiciate the molecule on a longer time scale;</p></li>
+<li><p>if the electron is ejected from a level that is slightly lower than the HOMO level, the energy released by hot hole relaxation is higher than in the above situation and will also be converted to nuclear kinetic energy, which may in turn dissociate the molecule;</p></li>
+<li><p>if the ejected electron level is very deep and much lower than the HOMO level, the lare energy from the hot hole relaxation can induce an Auger process with another electron ejected to the vaccum, causing dissociation of the doubly ionized molecule via Coulomb explosion.</p></li>
+</ol>
+<p>The schematic of the decay processes could be displayed here:</p>
+<img alt="../_images/schematic.png" src="../_images/schematic.png" />
+<p>We only discuss the second process in this module. Currently, it is difficult to simulate the Auger process with rt-TDDFT. So we develop an analytical formalism to calculate the Auger cross section with the Fermi-golden rule (details in module xx). The molecule breakdown due to the first process could not be observed during rt-TDDFT simulations as well, we simulate this process by calculating the cross sections of electron ejection on different levels using binary-encounter-dipole (BED) model (details in module xx).</p>
+<div class="section" id="relaxation">
+<h3>Relaxation<a class="headerlink" href="#relaxation" title="Permalink to this headline">¶</a></h3>
+<p>First, we should get a fully relaxed C2H6O2 molecule. Put the molecule in a vaccum box (<span class="math notranslate nohighlight">\(10\angstorm \times 10\angstorm \times 10\angstorm\)</span>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
+<span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
+<span class="mf">0.1000000000E+02</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>
+<span class="mf">0.0000000000E+00</span>    <span class="mf">0.1000000000E+02</span>    <span class="mf">0.0000000000E+00</span>
+<span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.1000000000E+02</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+<span class="mi">6</span>      <span class="mf">0.462316818</span>      <span class="mf">0.423166921</span>      <span class="mf">0.475427054</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">6</span>      <span class="mf">0.539337789</span>      <span class="mf">0.527765152</span>      <span class="mf">0.397500130</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">8</span>      <span class="mf">0.617516587</span>      <span class="mf">0.601419821</span>      <span class="mf">0.492659472</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">8</span>      <span class="mf">0.382438827</span>      <span class="mf">0.350979141</span>      <span class="mf">0.380630566</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.533323425</span>      <span class="mf">0.356459335</span>      <span class="mf">0.527106558</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.399467710</span>      <span class="mf">0.472759547</span>      <span class="mf">0.551334942</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.468425336</span>      <span class="mf">0.593515516</span>      <span class="mf">0.344336363</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.603330482</span>      <span class="mf">0.478124265</span>      <span class="mf">0.322600274</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.668467865</span>      <span class="mf">0.667709020</span>      <span class="mf">0.444165727</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>      <span class="mf">0.340263077</span>      <span class="mf">0.277427533</span>      <span class="mf">0.427001981</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+</pre></div>
+</div>
+<p>To screen the false periodic interaction, we use the double box coulomb cut-off by setting ‘COULOMB = 1, 0.0, 0.0, 0.0’ in etot.input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4     1
+
+job = relax
+
+!input
+in.atom = atom.config
+in.psp1 = O.SG15.PBE.UPF
+in.psp2 = C.SG15.PBE.UPF
+in.psp3 = H.SG15.PBE.UPF
+
+!functional
+XCFUNCTIONAL=PBE
+
+!relax
+relax_detail = 1 50 0.01
+
+!iter
+SCF_ITER0_1 = 6 4 3 0.0 0.01 1
+SCF_ITER0_2 = 94 4 3 1.0 0.01 1
+SCF_ITER1_1 = 40 4 3 1.0 0.01 1
+
+!accurancy
+Ecut      =    60.0000000000000
+Ecut2     =    240
+Ecut2L    =    240
+MP_N123 = 1 1 1 0 0 0 2
+WG_ERROR =  1.E-6
+E_ERROR  = 0
+RHO_ERROR = 1.0E-6
+COULOMB = 1, 0.0, 0.0, 0.0
+
+!output
+OUT.FORCE = T
+OUT.WG = F
+OUT.RHO = F
+</pre></div>
+</div>
+</div>
+<div class="section" id="scf">
+<h3>SCF<a class="headerlink" href="#scf" title="Permalink to this headline">¶</a></h3>
+<p>Then do JOB = SCF to get the charge density and wavefunciton:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4     1
+
+job = scf
+
+!input
+in.atom = atom.config
+in.psp1 = O.SG15.PBE.UPF
+in.psp2 = C.SG15.PBE.UPF
+in.psp3 = H.SG15.PBE.UPF
+
+!functional
+XCFUNCTIONAL=PBE
+
+!iter
+SCF_ITER0_1 = 6 4 3 0.0 0.01 1
+SCF_ITER0_2 = 94 4 3 1.0 0.01 1
+
+!accurancy
+Ecut      =    60.0000000000000
+Ecut2     =    240
+Ecut2L    =    240
+MP_N123 = 1 1 1 0 0 0 2
+WG_ERROR =  1.E-6
+E_ERROR  = 0
+RHO_ERROR = 1.0E-6
+COULOMB = 1, 0.0, 0.0, 0.0
+
+!output
+OUT.FORCE = F
+OUT.WG = T
+OUT.RHO = T
+</pre></div>
+</div>
+</div>
+<div class="section" id="rt-tddft">
+<h3>rt-TDDFT<a class="headerlink" href="#rt-tddft" title="Permalink to this headline">¶</a></h3>
+<p>Finally, do JOB = TDDFT with several important tags:</p>
+<ol class="arabic simple">
+<li><p>IN.OCC = T for occupation, prepare IN.OCC</p></li>
+<li><p>use TDDFT.BOLTZMANN to turn on the Boltzmann factor</p></li>
+<li><p>use IN.WG and IN.RHO from the SCF calculation</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../defect/defect.html" class="btn btn-neutral float-left" title="Defect properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../MLFF/MLFF.html" class="btn btn-neutral float-right" title="Machine Learning Force Field calculation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

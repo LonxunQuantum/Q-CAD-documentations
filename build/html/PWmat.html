@@ -13,6 +13,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -56,11 +57,18 @@
 <li class="toctree-l3"><a class="reference internal" href="tutorials_and_examples/GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html">Phonon calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html">Optical properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html">Defect properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ultrafast/ultrafast.html">Ultrafast dynamical process</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cases">Cases</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
 </ul>
 
         </div>
@@ -244,6 +252,119 @@ $ bash
 </div>
 <div class="section" id="modules">
 <h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="phonon/phonon.html">Phonon calculation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="phonon/phonon.html#pypwmat">PyPWmat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#download-and-installation">Download and installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#calculate-phonon-band-structure-for-crystal">Calculate phonon band structure for crystal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#calculate-defect-phonon-mode">Calculate defect phonon mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#calculate-subsystem-phonon-mode">Calculate subsystem phonon mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phonon/phonon.html#high-tempereture-and-anharmonic-phonon-modes-for-unstable-structure">High tempereture and anharmonic phonon modes for unstable structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#problems-and-basic-idea">Problems and basic idea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#the-formulas-and-procedures">The formulas and procedures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#get-the-phonon-modes">Get the phonon modes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#self-consistent-steps">Self-consistent steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#actual-codes-and-procedures">Actual codes and procedures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#post-processing">Post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#example-gaas">example GaAs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phonon/phonon.html#pwphono3py">PWphono3py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#install">Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#tersor-properties">tersor properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#scalar-properties">scalar properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phonon/phonon.html#electron-phonon-coupling-epc">Electron-phonon coupling (EPC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#basic-theory-of-mlwfs">Basic theory of MLWFs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#prepare-epc-utility-programs">Prepare EPC utility programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phonon/phonon.html#calculation-procedure">Calculation procedure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#scf-calculation-to-generate-mlwfs">SCF calculation to generate MLWFs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#calculate-phonon-modes-using-pypwmat">Calculate phonon modes using PyPWmat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#write-mlwfs-into-g-space-agian">Write MLWFs into G space agian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phonon/phonon.html#calculate-epc-matrix">Calculate EPC matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optical/optical.html">Optical properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#aborption-spectrum-for-non-periodic-systems">Aborption spectrum for non-periodic systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#example-ch4">Example: CH4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#bulk-optical-absorption-spectrum-calculations">Bulk optical absorption spectrum calculations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#calculation-procedure">Calculation procedure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="optical/optical.html#linear-response-method">Linear response method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optical/optical.html#rt-tddft-method">rt-TDDFT method</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#rpa-method-with-second-order-interpolation">RPA method with second order interpolation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#step1-scf">Step1: SCF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#step2-nonscf">Step2: NONSCF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#step3-dos">Step3: DOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#step4-moment">Step4: MOMENT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#step5-calculate-absorption-spectrum-and-dielectric-constant">Step5: Calculate absorption spectrum and dielectric constant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#emissivity-etc">Emissivity etc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#second-order-susceptibility-calculation">Second order susceptibility calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#infrared-spectrum">Infrared spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="optical/optical.html#example-gaas">Example GaAs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="optical/optical.html#raman-spectrum">Raman spectrum</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="defect/defect.html">Defect properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#defect-level">Defect level</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#example-gaas">Example GaAs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#image-charge-correction-method">Image charge correction method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#calculation-procedure">Calculation procedure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#trsm">TRSM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#introduction-to-trsm">Introduction to TRSM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#id1">Calculation procedure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#defect-nonradiative-decay">Defect nonradiative decay</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#id2">Calculation procedure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#anharmonic-multi-phonon-nonradiative-transition">Anharmonic multi-phonon nonradiative transition</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="defect/defect.html#id3">Calculation procedure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="defect/defect.html#charge-trapping-simulation">Charge trapping simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ultrafast/ultrafast.html">Ultrafast dynamical process</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ultrafast/ultrafast.html#hot-carrier-cooling">Hot carrier cooling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ultrafast/ultrafast.html#relaxation">Relaxation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ultrafast/ultrafast.html#scf">SCF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ultrafast/ultrafast.html#rt-tddft">rt-TDDFT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="utilities">
 <h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>

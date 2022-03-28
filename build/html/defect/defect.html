@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defect properties &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ultrafast dynamical process" href="../ultrafast/ultrafast.html" />
+    <link rel="prev" title="Optical properties" href="../optical/optical.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-and-output-files">Input and Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../phonon/phonon.html">Phonon calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../optical/optical.html">Optical properties</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Defect properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#defect-level">Defect level</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#image-charge-correction-method">Image charge correction method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trsm">TRSM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#defect-nonradiative-decay">Defect nonradiative decay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#anharmonic-multi-phonon-nonradiative-transition">Anharmonic multi-phonon nonradiative transition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#charge-trapping-simulation">Charge trapping simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ultrafast/ultrafast.html">Ultrafast dynamical process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>Defect properties</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/defect/defect.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="defect-properties">
+<h1>Defect properties<a class="headerlink" href="#defect-properties" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we will provide modules dealing with defects, in particular point defect/impurity. We use ‘defect’ to generically refer to both point defect and impuruty from now on.</p>
+<p>We usually calculate defect in a supercell geometry to provide the defect sufficiently well separated. A formalism based on formation energies allows calculation of defect equilibrium. In the case of semiconductors, it also allows the calculation of relative stability of different charge states of a given defect.</p>
+<p>The formation energy of a defect X with charge q could be defined as:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E^{f}[\alpha,q]=E_{tot}[\alpha,q]-E_{tot}[host]-\sum{n_{i}\mu_{i}}+qE_{F}+E_{corr}\)</span></p>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(E_{tot}[\alpha,q]\)</span> is the total energy of supercell with defect <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(E_{tot}[host]\)</span> is the total energy for perfect crystal using an equivalent supercell. The integer <span class="math notranslate nohighlight">\(n_{i}\)</span> indicates the number of type i. One could simulate the atoms increase and decrease during forming a defect using <span class="math notranslate nohighlight">\(n_{i}&gt;0\)</span> and <span class="math notranslate nohighlight">\(n_{i}&lt;0\)</span> correspondingly. The <span class="math notranslate nohighlight">\(\mu_{i}\)</span> are the corresponding chemical potentials of these species. The analog of chemical potential for charge is given by chemical potential of the electrons (<span class="math notranslate nohighlight">\(E_{F}\)</span>). The last term <span class="math notranslate nohighlight">\(E_{corr}\)</span> is a correction term.</p>
+<p>It is challenging to determine the chemical potential of an element in compound. Consider the growth of <span class="math notranslate nohighlight">\(A_{x}B_{y}\)</span></p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(x\mu_{A}+y\mu_{B}=\mu_{A_{x}B_{y}}\)</span></p>
+</div></blockquote>
+<p>Assuming that the most stable elemental form of A and B are both solid, corresponding to <span class="math notranslate nohighlight">\(\mu^{*}_{A}\)</span> and <span class="math notranslate nohighlight">\(\mu^{*}_{B}\)</span></p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\mu_{A}\leq \mu^{*}_{A}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mu_{B}\leq \mu^{*}_{B}\)</span></p>
+</div></blockquote>
+<p>So the lower bounds on and <span class="math notranslate nohighlight">\(\mu_{A}\)</span> and <span class="math notranslate nohighlight">\(\mu_{B}\)</span> transform into upper bounds for the corresponding other species</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\mu_{A_{x}B_{y}}-y\mu^{*}_{B}\leq x\mu_{A}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mu_{A_{x}B_{y}}-x\mu^{*}_{A}\leq y\mu_{B}\)</span></p>
+</div></blockquote>
+<p>One could directly use this form</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\Delta\mu_{A}=\mu_{A}-\mu^{*}_{A}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Delta\mu_{B}=\mu_{B}-\mu^{*}_{B}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Delta\mu_{A_{x}B_{y}}=\mu_{A_{x}B_{y}}-x\mu^{*}_{A}-y\mu^{*}_{B}=\Delta H_{f}(A_{x}B_{y})\)</span></p>
+</div></blockquote>
+<p>Then</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(x\Delta\mu_{A}+y\Delta\mu_{B}=\Delta H_{f}(A_{x}B_{y})\)</span></p>
+</div></blockquote>
+<p>Control the allocation of <span class="math notranslate nohighlight">\(\Delta H_{f}(A_{x}B_{y})\)</span> and you will get the lower bounds for <span class="math notranslate nohighlight">\(\mu_{A}\)</span> and <span class="math notranslate nohighlight">\(\mu_{B}\)</span>. Under the rich A limit, <span class="math notranslate nohighlight">\(\mu_{A}\)</span> could tend to the upper bound <span class="math notranslate nohighlight">\(\mu^{*}_{A}\)</span> and so on. Finally, defect formation energy could be manipulated by the concentration limits of each element. You could predict the defect type in deferent chemical potential section.</p>
+<img alt="../_images/scheme_mu.png" src="../_images/scheme_mu.png" />
+<p>Gas-phase species is critical to take the temperature and pressure dependences into account. More details of basic knowledge could be found in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.1103</span><span class="o">/</span><span class="n">RevModPhys</span><span class="o">.</span><span class="mf">86.253</span>
+<span class="mf">10.1016</span><span class="o">/</span><span class="n">j</span><span class="o">.</span><span class="n">commatsci</span><span class="o">.</span><span class="mf">2004.02</span><span class="o">.</span><span class="mi">024</span>
+</pre></div>
+</div>
+<p>Defect could carry different charges. The external field will cause Fermi level shift resulting in the transition between different charge states. One could simulate this process by changing the chemical potential of the electrons (<span class="math notranslate nohighlight">\(E_{F}\)</span>). Considering systems with different electron number would have intrinsic energy different, a correction term <span class="math notranslate nohighlight">\(E_{corr}\)</span> should be given. Ususally, this could be simply defined as <span class="math notranslate nohighlight">\(q\Delta V\)</span> where <span class="math notranslate nohighlight">\(\Delta V\)</span> is the potential different between defect system and host system at a place far away from the defect.
+.. image:: picture/scheme_Ef.png</p>
+<p>There are two main problems in charged defect systems:</p>
+<ol class="arabic simple">
+<li><p>How to screen the long range image charge Coulomb interation due to the finite supercell size.</p></li>
+<li><p>How to eliminate the remarkable dissimilarity between a real charge put on host band-edge states and a virtual jellium charge (especially in 2D systems with vacuum region).</p></li>
+</ol>
+<p>And PWmat provides two modules to solve them, i.e. image charge correction method and ‘transfer to real state’ model (TRSM).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevB</span><span class="o">.</span><span class="mf">102.174110</span>
+<span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevB</span><span class="o">.</span><span class="mf">101.165306</span>
+</pre></div>
+</div>
+<div class="section" id="defect-level">
+<h2>Defect level<a class="headerlink" href="#defect-level" title="Permalink to this headline">¶</a></h2>
+<p>From the form of defect formation energy</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E^{f}[\alpha,q]=E_{tot}[\alpha,q]-E_{tot}[host]-\sum{n_{i}\mu_{i}}+qE_{F}+q\Delta V\)</span></p>
+</div></blockquote>
+<p>We could summarize the process of calculating defect level:</p>
+<ol class="arabic simple">
+<li><p>Do JOB = RELAX for primitive cell and contrust a large enough supercell.</p></li>
+<li><p>Do JOB = SCF with OUT.VATOM = T for the supercell without defect with OUT.VATOM = T.</p></li>
+<li><p>Do JOB = SCF for the most stable elemental state of each defect element.</p></li>
+<li><p>Calculate the formation enthalpy (<span class="math notranslate nohighlight">\(\Delta H_{f}(A_{x}B_{y})\)</span>) of host structure and determain the range of defect element chemical potential.</p></li>
+<li><p>Construct the defect you like to study in the supercell and do JOB = RELAX with different defect charge states (change NUM_ELECTRON).</p></li>
+<li><p>Do JOB = SCF for all relaxed defect structures with OUT.VATOM = T.</p></li>
+<li><p>Calculate the <span class="math notranslate nohighlight">\(\Delta V\)</span> using data in OUT.VATOM.</p></li>
+<li><p>Plot the formation energy as a function of chemical potential and <span class="math notranslate nohighlight">\(E_{F}\)</span>. One could set the energy of VBM or the Fermi level of q=0 to 0 so the <span class="math notranslate nohighlight">\(E_{F}\)</span> could only be the energy shift.</p></li>
+</ol>
+<div class="section" id="example-gaas">
+<h3>Example GaAs<a class="headerlink" href="#example-gaas" title="Permalink to this headline">¶</a></h3>
+<p>We use Ga vacancy GaAs as an example. A 2x2x2 supercell is used here just for demonstration. The Ga atom at (0,0,0) is removed from the original bulk supercell. We only calculate q=0 and q=-1 defect states in Ga riched limit for demonstration. The fully relaxed structure of original bulk supercell, q=0 Ga vacancy and q=-1 Ga vacancy are stored in atom.config64.bulk, atom.64.VGa0.rel and atom.64.VGa-1.rel. The corresponding potential are stored in OUT.VATOM.bulk, OUT.VATOM.VGa0.rel and OUT.VATOM.VGa-1.rel. We choose potential for Ga at (0.5,0.5,0.5) to correct the potential energy</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\Delta V=V(\alpha,q,(0.5,0.5,0.5))-V(host,(0.5,0.5,0.5))\)</span></p>
+</div></blockquote>
+<p>Note:</p>
+<ol class="arabic simple">
+<li><p>We use the PWM pseudopotential and default 45 Ryd Ecut to reduce the calculation amount. In your real calculation requirement, check it carefully by comparing the results using PD04 or SG15 since PWM pseudopotential might not be suitable for geometric optimazation.</p></li>
+<li><p>Depending on the problem, one might want to use SPIN=2 for both q=0 and q=-1 defect calculation. Here we just use SPIN=1 for illustrative purpose.</p></li>
+</ol>
+<p>Finally you will get</p>
+<img alt="../_images/q=0_-1.png" src="../_images/q=0_-1.png" />
+<p>The transition level is close to VBM. And defect with q=-1 is more stable than q=0.</p>
+</div>
+</div>
+<div class="section" id="image-charge-correction-method">
+<h2>Image charge correction method<a class="headerlink" href="#image-charge-correction-method" title="Permalink to this headline">¶</a></h2>
+<p>In scenarios such as shallow donors or acceptors, the defect wave function is very extended and spreads over a large space so that a large supercell must be utilized, whereas, for a relatively deep defect, the defect wave function is rather localized and thus can be contained in a small supercell. As long as the supercell is larger than the spreading of the defect wave function and is converged in elastic relaxation, the result of the finite supercell approaches that of the infinite system very quickly for charge-neutral defects where the total charge around the defect site is zero. However, if the defect is charged, the convergence is slow due to the long range image-image charge interaction resulting from the utilization of a finite supercell in the periodic boundary condition. So it is necessary to provide an imagine charge correction to make the convergence faster to the infinite supercell result or even a new scheme beyond the jellium model.</p>
+<p>Unlike previous approaches, where analytical formulas with adjustable parameters are used to describe the image charge interaction or defect charge profile, we use the self-consistent field (SCF) calculated charge density instead of the macroscopic dielectric constant, considering it already contains the information for the screening.</p>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>After introducing a new image charge interaction correction term <span class="math notranslate nohighlight">\(E_{corr}(\alpha,q)\)</span>, the formula of formation energy will be</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E^{f}[\alpha,q]={E_{tot}[\alpha,q]+E_{corr}(\alpha,q)}-E_{tot}[host]-\sum{n_{i}\mu_{i}}+qE_{F}+q\Delta V\)</span></p>
+</div></blockquote>
+<p>Then we could define the charge-defect energy correction</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E_{C}(\alpha,q)=E_{corr}(\alpha,q)+q\Delta V\)</span></p>
+</div></blockquote>
+<p>This <span class="math notranslate nohighlight">\(E_{C}(\alpha,q)\)</span> is used to get the infinite system results from finite supercell calculations. We only deal with the screening effect due to wave function SCF treatment (i.e., the electronic structure part), and ignore the ionic screening component. From small supercell to large supercell, we will fix the atomic positions as in the original small supercell, while using the pristine crystal to fill the rest of the large supercell. The atomic relaxation near the defect induced by the change of defect charge is included in small supercell. For a polar crystal, the ionic displacement for atoms far away from the defect can still provide further screening effect, which reduces the image interaction. Our final formula is likely also applicable to ionic screening as long as the nuclear charges are treated as part of the total charge (e.g., using a Gaussian broadening to represent the nuclear charge).</p>
+<p>Consider the Non-SCF unscreened situation first. We assume the defect is in charge state q with a wave function <span class="math notranslate nohighlight">\(\varphi'_{d}\)</span>, define <span class="math notranslate nohighlight">\(\varphi_{d}=\sqrt{|q|}\varphi'_{d}\)</span> and assume the defect charge density is <span class="math notranslate nohighlight">\(\rho_{d}(r)\)</span>. Then we will have</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\rho_{d}=\varphi^2_{d}\)</span></p>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(E_{0}=\frac{1}{2}\int[\rho_{0}(r)+\rho_{ion}(r)]\frac{1}{|r-r'|}\times[\rho_{0}(r')+\rho_{ion}(r')]d^{3}rd^{3}r'\)</span></p>
+<p><span class="math notranslate nohighlight">\(E_{q}=\frac{1}{2}\int[\rho_{d}(r)+\rho_{0}(r)+\rho_{ion}(r)]\frac{1}{|r-r'|}\times[\rho_{d}(r')+\rho_{0}(r')+\rho_{ion}(r')]d^{3}rd^{3}r'\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(E_{0}\)</span> and <span class="math notranslate nohighlight">\(E_{q}\)</span> are the electrostatic energy of the supercell with the neutral and charged defect, respectively. <span class="math notranslate nohighlight">\(\rho_{0}\)</span> is the total electron density of the neutral charge system, and <span class="math notranslate nohighlight">\(\rho_{ion}\)</span> is the nuclear charge. Therefore, the electrostatic energy deviation induced by the charged defect in size N supercell is</p>
+<p><span class="math notranslate nohighlight">\(\Delta E^{N} = E_{q}-E_{0}=\frac{1}{2}\int\rho_{d}(r)\frac{1}{|r-r'|}\rho_{d}(r')d^{3}rd^{3}r'+\int\rho_{d}(r)V_{tot}(r)d^{3}r\)</span></p>
+<p>This <span class="math notranslate nohighlight">\(\Delta E^{N}\)</span> will depend on the supercell size N due to the Hartree interaction integral in a finite supercell. In the Hartree calculation for the finite supercell, we have assumed a constant compensating background charge: <span class="math notranslate nohighlight">\(V_{tot}(G=0)=0\)</span> with reciprocal vector G. So we have <span class="math notranslate nohighlight">\(V_{tot}(r)=V^{\infty}_{tot}(r)+\Delta V_{N}\)</span> even for a neutral defect system. On the other hand, we obtain <span class="math notranslate nohighlight">\(\Delta E^{\infty}\)</span> with integral in an infinite supercell under an open boundary condition for the Poisson equation as well as the correction for no screening effect (C-NS)</p>
+<p><span class="math notranslate nohighlight">\(E^{N}_{C-NS}=\Delta E^{\infty}-\Delta E^{N}\)</span></p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(=\frac{1}{2}\int_{\infty}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{D}(r')d^{3}rd^{3}r'-\frac{1}{2}\int_{P,N}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{D}(r')d^{3}rd^{3}r'+q\Delta V_{N}\)</span></p>
+</div></blockquote>
+<p>After considering the screening effect, a macroscopic dielectric constant <span class="math notranslate nohighlight">\(\epsilon\)</span> is added in front of the Coulomb interaction term</p>
+<p><span class="math notranslate nohighlight">\(E^{N}_{C-AP}=\frac{1}{2\epsilon}\int_{\infty}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{d}(r')d^{3}rd^{3}r'-\frac{1}{2\epsilon}\int_{P,N}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{d}(r')d^{3}rd^{3}r'+q\Delta V_{N}\)</span></p>
+</div>
+<div class="section" id="calculation-procedure">
+<h3>Calculation procedure<a class="headerlink" href="#calculation-procedure" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we could summarize the following calculation procedures:</p>
+<ol class="arabic" start="0">
+<li><p>Calculate defect level.</p></li>
+<li><p>Get defect charge density (<span class="math notranslate nohighlight">\(\rho_{d}(r)=\sum_{k,i}occ_{i,k}\varphi^{2}_{k,i}\)</span>)</p></li>
+<li><p>Coulomb integral</p>
+<p>Double box integral: <span class="math notranslate nohighlight">\(E^{\infty}=\frac{1}{2}\int_{\infty}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{d}(r')d^{3}(r)d^{3}(r)\)</span> (JOB=potential, COULOMB = 1, X1, X2, X3)</p>
+<p>Periodic integral: <span class="math notranslate nohighlight">\(E^{p}=\frac{1}{2}\int_{P,N}\rho_{d}(r)\frac{1}{|r-r'|}\rho_{d}(r')d^{3}rd^{3}r'\)</span> (JOB=potential, COULOMB = 0)</p>
+</li>
+<li><p>Get potential alignment (PA) <span class="math notranslate nohighlight">\(\Delta V_{N}\)</span> and deal with your results</p>
+<p><span class="math notranslate nohighlight">\(\Delta V_{N}=V(R,q=0)-V(R,bulk)\)</span></p>
+<p><span class="math notranslate nohighlight">\(E^{N}_{C-AP}=(E^{infty}-E^{P})/\epsilon+q\Delta V_{N}\)</span></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="trsm">
+<h2>TRSM<a class="headerlink" href="#trsm" title="Permalink to this headline">¶</a></h2>
+<p>This module is introduced to how to calculate the formation energies of charged defects in both three-dimensional bulk and low-dimensional semiconductors by TRSM, which can overcome both conceptual ambiguity and computational difficulty, especially for low-dimensional semiconducting materials caused by ‘jellium model’.</p>
+<p>Current DFT standard approach of defect systems using the so-called ‘jellium model’ (uniform charge distribution over the whole supercell) has encountering both conceptual ambiguity and computational difficulty, especially for low-dimensional semiconducting materials. An unavoidable vacuum region is added to separate in low-dimensional materials from periodic images. When the jellium model is used, a virtual charge is uniformly filled in the whole supercell, including the vacuum region. This leads to a divergent Coulomb interaction between the jellium charge and the charge left on the 1D chain/2D slab. A similar situation, to a lesser degree, has been observed in some 3D systems when the supercell is extremly anisotropic.</p>
+<img alt="../_images/Jellium_2D.png" src="../_images/Jellium_2D.png" />
+<p>TRSM is more physical and straightforward to calculate the formation energies of charged defects in both three-dimensional bulk and low-dimensional semiconductors.</p>
+<div class="section" id="introduction-to-trsm">
+<h3>Introduction to TRSM<a class="headerlink" href="#introduction-to-trsm" title="Permalink to this headline">¶</a></h3>
+<p>During the defect ionization, the carriers from the defect states are excited to the unperturbed host band edge states in the limit of infinite supercell size. Inspired by this concept, we represent the charge density of the ionized carrier by unperturbed host band-edge state, e.g., CBM or VBM states, and treat it on the same footing as all the other occupied states in the self-consistent total energy calculation, thus realizing the real process of carriers exciting to host band-edge states from the defect level in the same supercell. Apparently, in this treatment, the whole system is charge neutral because the charged defect and the excited carriers are kept in the same supercell.</p>
+<p>To calculate formation energy using TRSM, the formula for a defect <span class="math notranslate nohighlight">\(\alpha\)</span> in a charge state q is deicribed as:</p>
+<p>Donor (q&gt;0, near CBM)</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E^{f}[\alpha,q,\epsilon_{D}\rightarrow\epsilon_{F}]=E^{f}[\alpha,q,\epsilon_{D}\rightarrow\epsilon^{h}_{C}]-q(\epsilon^{h}_{C}-\epsilon_{F})\)</span>
+<span class="math notranslate nohighlight">\(E^{f}[\alpha,q,\epsilon_{D}\rightarrow\epsilon^{h}_{C}]=E_{tot}[\alpha,q,\epsilon_{D}\rightarrow\epsilon_{C}]-E_{tot}[host]-\sum{n_{i}\mu_{i}}+q(\epsilon^{h}_{C}-\epsilon_{C})\)</span></p>
+</div></blockquote>
+<p>Acceptor (q&lt;0, near VBM)</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(E^{f}[\alpha,q,\epsilon_{F}\rightarrow\epsilon_{D}]=E^{f}[\alpha,q,\epsilon^{h}_{V}\rightarrow\epsilon_{D}]-q(\epsilon_{F}-\epsilon^{h}_{V})\)</span>
+<span class="math notranslate nohighlight">\(E^{f}[\alpha,q,\epsilon^{h}_{V}\rightarrow\epsilon_{D}]=E_{tot}[\alpha,q,\epsilon_{V}\rightarrow\epsilon_{D}]-E_{tot}[host]-\sum{n_{i}\mu_{i}}+q(\epsilon_{V}-\epsilon^{h}_{V})\)</span></p>
+</div></blockquote>
+<p>Here <span class="math notranslate nohighlight">\(\epsilon^{h}_{C}\)</span> and <span class="math notranslate nohighlight">\(\epsilon^{h}_{V}\)</span> are CBM and VBM of perfect host crystal, respectively. While <span class="math notranslate nohighlight">\(\epsilon_{C}\)</span> and <span class="math notranslate nohighlight">\(\epsilon_{V}\)</span> are CBM and VBM of the supercell containing a deffect <span class="math notranslate nohighlight">\(\alpha\)</span> in a charge state q.</p>
+<p>The sketch of self-consistent calculation flow for (a) donor and (b) acceptor charged-defect total-energy calculations is following:</p>
+<img alt="../_images/scheme_TRSM.png" src="../_images/scheme_TRSM.png" />
+</div>
+<div class="section" id="id1">
+<h3>Calculation procedure<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In short, if you have a fully relaxed host structure, you could implement TRSM process in four steps:</p>
+<ol class="arabic simple">
+<li><p>SCF calculation for host structure to obtain total energy and real host CBM or VBM charge.</p></li>
+<li><p>Charged defect structure relaxation using jellium model to obtain stable charged state structure.</p></li>
+<li><p>SCF calculating with charged state structure with transfer to real state model to obtain charged state total energy, VBM, CBM.</p></li>
+<li><p>Calculate formation energy according to the above formula.</p></li>
+</ol>
+<p>Note: We use Gamma point k-mesh only.</p>
+</div>
+</div>
+<div class="section" id="defect-nonradiative-decay">
+<h2>Defect nonradiative decay<a class="headerlink" href="#defect-nonradiative-decay" title="Permalink to this headline">¶</a></h2>
+<p>Devices suffer from significant nonradiative recombination losses will limit their functions. One challenge to apply ab initio calculation to bulk semiconductor impurity is the large computational cost. We have developed a new algorithm, which calculates the electron-phonon coupling constants all at once, and makes it possible to use DFT calculation to the deep level nonradiative decay rate in a semiconductor. If you follow this module, please cite papers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevLett</span><span class="o">.</span><span class="mf">109.245501</span>
+<span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevB</span><span class="o">.</span><span class="mf">91.205315</span>
+<span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevB</span><span class="o">.</span><span class="mf">97.077302</span>
+</pre></div>
+</div>
+<p>We use Kuang Huang’s formula, which gives almost exactly the same results as in the integration formula. This formula is suitable for large system, under harmonic approximation</p>
+<p><span class="math notranslate nohighlight">\(Rate_{ab}=\frac{1}{\hbar}(\frac{\pi}{\lambda k_{B}T)}^{\frac{1}{2}}[k_{B}T\sum_{l}\frac{|\sum_{i}\langle a|\frac{\partial H}{\partial R_{i}}|b\rangle V_{l}(i)/\sqrt{m_{i}}|^{2}}{\omega^{2}_{l}}]exp[-(E_{a}-E_{b}-\lambda)^{2}/(4\lambda k_{B}T)]\)</span></p>
+<p>Here a and b are the initial and final electronic states, <span class="math notranslate nohighlight">\(V_{l}(i)\)</span> is the normalized phonon mode/vector with atom index i, <span class="math notranslate nohighlight">\(\omega_{l}\)</span> is the phonon frequency, <span class="math notranslate nohighlight">\(m_{i}\)</span> is the nuclear mass, <span class="math notranslate nohighlight">\(E_{a}\)</span>,:math:<cite>E_{b}</cite> are the initial and final state energies, <span class="math notranslate nohighlight">\(lambda\)</span> is the recorgnization energy.</p>
+<div class="section" id="id2">
+<h3>Calculation procedure<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Calculate the defect state, get relaxed neutral charge configuration atom_defect.config, identify the states a and b for the transitions.</p>
+<p>Step 2: Do JOB = SCFEP to calculate electron-phonon coupling constant (OUT.EP_COEFF).</p>
+<p>Step 3: Calculate defect phonon spectrum using PyPWmat module (qpoints.yaml.dat).</p>
+<p>Step 4: Do JOB = RELAX for charged defect state (change NUM_ELECTRON in etot.input) to get <span class="math notranslate nohighlight">\(\lambda\)</span> and charged structure atom_defect2.config.</p>
+<p>Step 5: Use nonradiative.x to calculate the transition rate.</p>
+</div>
+</div>
+<div class="section" id="anharmonic-multi-phonon-nonradiative-transition">
+<h2>Anharmonic multi-phonon nonradiative transition<a class="headerlink" href="#anharmonic-multi-phonon-nonradiative-transition" title="Permalink to this headline">¶</a></h2>
+<p>In previous module, we assume simple harmonic approximation for the phonon modes, which is often far from the truth. There are attempts to overcome this problem, e.g. by calculating the energies along the 1D reaction coordinates before and after the electron transition. But such 1D method misses the true electron-phonon coupling nuclear displacements. In this module, we provided a novel algorithm to search for the classical transition barrier where the anharmonic effects are corrected by taking into account local phonon mode variation at different charge states of the defect.</p>
+<p>If you follow this module, please cite paper:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.1103</span><span class="o">/</span><span class="n">PhysRevApplied</span><span class="o">.</span><span class="mf">11.044058</span>
+</pre></div>
+</div>
+<div class="section" id="id3">
+<h3>Calculation procedure<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Step 1: Do JOB = RELAX for all defect charged states</p>
+<p>Step 2: Do JOB = SCF to determine the transition level and obtain the reorganization energy of different charge state.</p>
+<p>Step 3: Do JOB = SCFEP to calculate of electron-phonon coupling between transition levels.</p>
+<p>Step 4: Calculate defect phonon spectrum using PyPWmat module.</p>
+<p>Step 5: Calculate activation barrier for the anharmonic system.</p>
+<p>Step 6: Calculate the charge trapping rate by corrective Huang Kung nonradiative multi-phonon transition theory.</p>
+</div>
+</div>
+<div class="section" id="charge-trapping-simulation">
+<h2>Charge trapping simulation<a class="headerlink" href="#charge-trapping-simulation" title="Permalink to this headline">¶</a></h2>
+<p>In this module, we will explain how to use Marcus theory to calculate the transition rates.</p>
+<p>Charge tansfer is an important process, describing one electron jumping from one localized state to another. This phenomenon can be relevant for hopping related charge transport in semiconductor devices, organic systems and nanostructures. It can happen between localized states such as defect, or extended state to localized state. Fundamentally, it is a phonon assisted process, can be described by Landau-Zener transition, Marcus theory or multiphonon process.</p>
+<p>When combined with charge patching method, this approach can be used to study large systems with tens of thousands of atoms.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../optical/optical.html" class="btn btn-neutral float-left" title="Optical properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ultrafast/ultrafast.html" class="btn btn-neutral float-right" title="Ultrafast dynamical process" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
