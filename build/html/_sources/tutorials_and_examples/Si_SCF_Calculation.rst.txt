@@ -1,5 +1,5 @@
-Si SCF calculation
-==================
+SCF calculation
+===============
 SCF calculation for Si
 
 Input files

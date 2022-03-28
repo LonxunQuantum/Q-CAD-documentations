@@ -1,5 +1,5 @@
-GaAs HSE SCF calculation
-========================
+HSE SCF calculation
+===================
 HSE SCF calculation for GaAs
 
 Input files
@@ -45,7 +45,7 @@ etot.input
 .. note::
    1. The product of the two integers on the first line must equal to the number of GPU to run PWmat.
    2. MP_N123 is the Monkhorst-Pack grids to generate the reduced k-points, so no additional k-points file is required. 
-   3. XCFUNCTONAL is used to control the exchange-correlation functinal. If XCFUNCTIONAL = HSE, PWmat will do HSE calculation.
+   3. XCFUNCTONAL is used to control the exchange-correlation functinal, default value is PBE. If XCFUNCTIONAL = HSE, PWmat will do HSE calculation.
 
 As.SG15.PBE.UPF, Ga.SG15.PBE.UPF
 

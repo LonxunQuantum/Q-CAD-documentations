@@ -88,7 +88,14 @@ Manual
 
 The `manual <http://www.pwmat.com/pwmat-resource/Manual.pdf>`_ of PWmat is available on the LongXun offical website, please check it!
 
-Tutorials and examples
+Input and Output Files
+----------------------
+
+.. toctree::
+   /Input_and_output/Input_Files
+   /Input_and_output/Output_Files
+
+Tutorials and Examples
 ----------------------
 
 .. toctree::
@@ -97,6 +104,9 @@ Tutorials and examples
    /tutorials_and_examples/Si_Band_Calculation
    /tutorials_and_examples/GaAs_HSE_SCF_Calculation
    /tutorials_and_examples/GaAs_HSE_Band_Calculation
+   /tutorials_and_examples/Si_RELAX_Calculation
+   /tutorials_and_examples/Graphene_CELL_REL_Calculation
+   /tutorials_and_examples/GaAs_HSE_REL_Calculation
 
 Modules
 -------

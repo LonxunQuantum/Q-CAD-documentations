@@ -1,5 +1,5 @@
-Si bandsctructure calculation
-=============================
+Bandsctructure calculation
+==========================
 Bandstructure calculation for Si
 
 Input files

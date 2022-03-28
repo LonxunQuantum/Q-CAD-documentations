@@ -1,5 +1,5 @@
-Si DOS calculation
-==================
+DOS calculation
+===============
 DOS calculation for Si
 
 Input files

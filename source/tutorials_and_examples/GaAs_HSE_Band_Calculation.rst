@@ -1,5 +1,5 @@
-GaAa HSE bandsctructure calculation
-===================================
+HSE bandsctructure calculation
+==============================
 HSE bandstructure calculation for AsGa
 
 Input files
