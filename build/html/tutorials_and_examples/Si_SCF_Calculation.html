@@ -13,11 +13,12 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="DOS calculation" href="Si_DOS_Calculation.html" />
-    <link rel="prev" title="PWmat" href="../PWmat.html" /> 
+    <link rel="prev" title="Output Files" href="../Input_and_output/Output_Files.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,7 +41,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-and-output-files">Input and Output Files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and Examples</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">SCF calculation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#input-files">Input files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#calculations">Calculations</a></li>
@@ -51,7 +53,9 @@
 <li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Bandsctructure calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">HSE SCF calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">HSE bandsctructure calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">RELAX calculation (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">Crystal Structure Optimization (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
@@ -59,6 +63,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
 </ul>
 
         </div>
@@ -182,7 +187,7 @@ mpirun -np 4 PWmat | tee output
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../PWmat.html" class="btn btn-neutral float-left" title="PWmat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Input_and_output/Output_Files.html" class="btn btn-neutral float-left" title="Output Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="Si_DOS_Calculation.html" class="btn btn-neutral float-right" title="DOS calculation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

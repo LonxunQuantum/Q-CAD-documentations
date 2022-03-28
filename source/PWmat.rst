@@ -110,6 +110,11 @@ Tutorials and Examples
 
 Modules
 -------
+.. toctree::
+   /phonon/phonon
+   /optical/optical
+   /defect/defect
+   /ultrafast/ultrafast
 
 Utilities
 ---------

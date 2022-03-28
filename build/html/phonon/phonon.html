@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phonon calculation &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optical properties" href="../optical/optical.html" />
+    <link rel="prev" title="HSE Relaxation calculation" href="../tutorials_and_examples/GaAs_HSE_REL_Calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-and-output-files">Input and Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials-and-examples">Tutorials and Examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Phonon calculation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pypwmat">PyPWmat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#high-tempereture-and-anharmonic-phonon-modes-for-unstable-structure">High tempereture and anharmonic phonon modes for unstable structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pwphono3py">PWphono3py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#electron-phonon-coupling-epc">Electron-phonon coupling (EPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../optical/optical.html">Optical properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../defect/defect.html">Defect properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ultrafast/ultrafast.html">Ultrafast dynamical process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>Phonon calculation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/phonon/phonon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="phonon-calculation">
+<h1>Phonon calculation<a class="headerlink" href="#phonon-calculation" title="Permalink to this headline">¶</a></h1>
+<p>In this section, several modules are provided to calculate phonon and corresponding characters.</p>
+<div class="section" id="pypwmat">
+<h2>PyPWmat<a class="headerlink" href="#pypwmat" title="Permalink to this headline">¶</a></h2>
+<p>This module is the interface between PWmat and Phonopy. Phonopy is an open source package for phonon calculations at harmonic and quasi-harmonic levels. It can be used to calculate phonon band structures, phonon DOS and partial DOS, phonon thermal properties, etc. Compared to other interface such as VASP&amp;Phonopy, this module can calculate the phonon of the defect system more efficiently.</p>
+<div class="section" id="download-and-installation">
+<h3>Download and installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h3>
+<p>Users should use anaconda2 and phonopy-1.12.8, since the PyPWmat was writen using python2. First, download the anaconda2. Users could find version Anaconda2-5.3.1-Linux-x86_64.sh at <a class="reference external" href="http://www.pwmat.com:3389/#/MSTATION/Anaconda">http://www.pwmat.com:3389/#/MSTATION/Anaconda</a>. If anconda3 is already installed, one can change the environment by the following steps.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sh Anaconda2-5.3.1-Linux-x86_64.sh -b -p $HOME/anaconda3/envs/py2
+$ rm -f $HOME/anaconda3/envs/py2/bin/conda*
+$ rm -f $HOME/anaconda3/envs/py2/conda-meta/conda-*
+$ rm -f $HOME/anaconda3/envs/py2/bin/activate
+$ rm -f $HOME/anaconda3/envs/py2/bin/deactivate
+$ cd $HOME/anaconda3/envs/py2/bin
+$ ln -s ../../../bin/conda .
+$ ln -s ../../../bin/activate .
+$ ln -s ../../../bin/deactivate .
+</pre></div>
+</div>
+<p>Users could use ‘source activate py2’ to activate anaconda2 environment and ‘source deactivate py2’ to return anaconda3.
+Next, download phonopy-1.12.8 at <a class="reference external" href="https://github.com/atztogo/phonopy/releases">https://github.com/atztogo/phonopy/releases</a>. Untar the package, enter the directory and ‘pip install ./’.
+After getting anaconda2 environment and phononpy, users could download PyPWmat (i.e. PyPWmat-1.0.7) and untar the package in selected directory(i.e. /home/user_name/). One should modifying environment variables in .bashrc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PATH=(where you place it)/PyPWmat-1.0.7/bin:$PATH
+export PYTHONPATH=(where you place it)/PyPWmat-1.0.7:$PYTHONPATH
+</pre></div>
+</div>
+<p>Finally, reload the environment variables using ‘source ~/.bashrc’. Users could varify the installation by ‘which PWmatPhonon.py’.</p>
+</div>
+<div class="section" id="calculate-phonon-band-structure-for-crystal">
+<h3>Calculate phonon band structure for crystal<a class="headerlink" href="#calculate-phonon-band-structure-for-crystal" title="Permalink to this headline">¶</a></h3>
+<p>Users should calculate the phonon band first for further calculations. PyPWmat only support finite displacement method (No density functional perturbation theory!). To get dynamic matrix, finite displacement method introduces atom displacement in equilibrium structure and calculate corresponding Hellmann-Feynman forces. Considering the periodic boundary condition, we need to make supercell to reduce the disturbances from adjacent period. Phonopy genetate structures according to  symmetry. Only scf calculations are needed for different displacements. The workflow is similar to VASP&amp;Phonopy, but PyPWmat provide a file named PWphonon.in to integrate the input. Here is the flow chart of calculating crystal phonon band.</p>
+<img alt="../_images/std.png" src="../_images/std.png" />
+<p>Take GaN as an example, first, set up a working directory ‘phonon’. Then prepare a fully relaxed atom.config, a scf etot.input in ‘phonon’ and correspongding pseudopotential files in ‘phonon’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>     <span class="mi">2</span>
+<span class="ow">in</span><span class="o">.</span><span class="n">atom</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">job</span><span class="o">=</span><span class="n">scf</span>
+<span class="n">XCFUNCTIONAL</span><span class="o">=</span><span class="n">PBE</span>
+<span class="n">Ecut</span>      <span class="o">=</span>    <span class="mf">60.0000000000000</span>
+<span class="n">Ecut2</span>     <span class="o">=</span>    <span class="mi">240</span>
+<span class="n">Ecut2L</span>    <span class="o">=</span>    <span class="mi">240</span>
+<span class="n">WG_ERROR</span> <span class="o">=</span>  <span class="mf">1.E-6</span>
+<span class="n">E_ERROR</span>  <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">RHO_ERROR</span> <span class="o">=</span> <span class="mf">1.0E-6</span>
+<span class="ow">in</span><span class="o">.</span><span class="n">psp1</span><span class="o">=</span><span class="n">ONCV</span><span class="o">.</span><span class="n">PWM</span><span class="o">.</span><span class="n">Ga</span><span class="o">.</span><span class="n">UPF</span>
+<span class="ow">in</span><span class="o">.</span><span class="n">psp2</span><span class="o">=</span><span class="n">ONCV</span><span class="o">.</span><span class="n">PWM</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">UPF</span>
+<span class="ow">in</span><span class="o">.</span><span class="n">psp3</span><span class="o">=</span><span class="n">ONCV</span><span class="o">.</span><span class="n">PWM</span><span class="o">.</span><span class="n">Zn</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">FORCE</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">WG</span> <span class="o">=</span> <span class="n">F</span>
+</pre></div>
+</div>
+<p>This example etot.input is only used to create PWphonon.in, so tags such as job and OUT.WG are not important. The kmesh MP_N123 here is the values for supercell calculations. Phonon calculation is very sensitive to accurancy of the force. So, it might be necessary to set the paremeters accurately. Otherise, it might have imaginary frequency. Users could type ‘PWmatPhonon.py’ to generate the PWphonon.in with some default values. Edit PWphonon.in according to real requirement. (Warning: If there is already a PWphonon.in, and if you type PWmatPhonon.py, then the phonon calculation will begin!)
+After editing, the PWphonon.in might like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>JOB = std                                                 # std:normal phonon, defect:defect system phonon, sub:subsystem phonon
+NODES = 2    2                                            # node1 node2 for pwmat parallel configuration
+WALL_TIME = 1000:00:00                                    # wall time for the queue system (torque): hours:minutes:seconds
+MP_N123 = 3 3 3 0 0 0                                        # k-mesh for the supercell calculations; it is 3 3 3 0 0 0 for the unitcell calculation
+DIM = 3 3 2                                               # supercell dimension which will be used to make displacements
+PRIMITIVE_AXIS = 1.0 0.0 0.0  0.0 1.0 0.0  0.0 0.0 1.0    # the primitive cell for building the dynamical matrix
+FC_SYMMETRY = .TRUE.                                      # This tag is used to symmetrize force constants partly
+ACCELERATION = .TRUE.                                     # read in in.wg in.rho from forces-001 calculation
+BAND = 0.0 0.0 0.0  0.5 0.0 0.0  0.33333333 0.33333333 0  0.0 0.0 0.0  0.0 0.0 0.5 # special q points in Brillioun zone
+BAND_LABELS = $\Gamma$  M  K  $\Gamma$ Z                  # labels of the special q points
+BAND_POINTS = 101                                         # number of q-point along the high symmetry path
+FREQUENCY_CONVERSION_FACTOR = THz                         # unit of the frequency:&quot;THz&quot;, &quot;cm^-1&quot;, &quot;eV&quot;, &quot;meV&quot;
+DOS = .TRUE.                                              # switch to the DOS calculation
+FMIN = -1.0                                               # minimum of frequency DOS range
+FMAX = 25.0                                               # maximum of frequency DOS range
+MP = 10 10 10                                             # q-mesh for the DOS calculation
+FPITCH = 0.1                                              # frequency interval for DOS calculation
+SIGMA = 0.1                                               # smearing width for DOS calculation
+EIGENVECTORS = .TRUE.                                     # output eigenvectors
+SUBJOB = torque                                           # slurm or torque
+SUBJOB_FILENAME = pwmat.pbs                               # submit job filename
+DISPLACEMENT = 0.05                                       # amplitude of atomic displacement
+</pre></div>
+</div>
+<p>SUBJOB and SUBJOB_FILENAME are the PBS system name PBS submit filename, respectively. The default PBS system is TORQUE and another option is SLURM. The default filename is ‘pwmat.pbs’. You have to edit and put the PBS file in the same directory of PWphonon.in and the filename must be exactly the same as with the “SUBJOB_FILENAME” in PWphonon.in. The last line is used to control the atomic displacement in the supercell whise default value is 0.01. If the SCF is hard to converge, so there are some noise, then larger displacenebt can have the results above the noise. But if the displacement is too large, the numerical derivative will not be accurate. To check the convergence, one can check ‘grep update REPORT’. And also check the total force in OUT.FORCE.BACK. As a indication of the convergence, the total force should be almost zero (at least much smaller than the atomic forces caused by the displacement).
+After edit PWphonon.in, type ‘PWmatPhonon.py’ again and the supercell calculations with different atomic displacements will start. It will generate a new directory: phonon_std(under ‘phonon’). Within ‘phonon_std’, it will have force-00x subdirectories for supercell displacement calculations (you can check the files within those directories, just to see what kind of calculations you have). Each force-00x represents one atomic diplacement. The ‘phonon_std’ might looks like this:</p>
+<img alt="../_images/phonon_std.png" src="../_images/phonon_std.png" />
+<p>After the PWmat supercell calculations have finished, type ‘./extract_phonon_data.sh’ inside phonon_std and the screened print out might like:</p>
+<img alt="../_images/phonopy_screen.png" src="../_images/phonopy_screen.png" />
+<p>It will generate the following files:</p>
+<img alt="../_images/std_afterphonopy.png" src="../_images/std_afterphonopy.png" />
+<dl class="simple">
+<dt>In particular:</dt><dd><p>band.dat, total_dos.dat can be plotted by Gnuplot to generate the phonon band and DOS.
+mesh.yaml.dat has all the q-point phonon modes(vector).
+FORCE_SETS could be used to further calculation such as defect calculation.
+The phonon band and DOS are also shown:</p>
+</dd>
+</dl>
+<img alt="../_images/bandandDOS_std.png" src="../_images/bandandDOS_std.png" />
+</div>
+<div class="section" id="calculate-defect-phonon-mode">
+<h3>Calculate defect phonon mode<a class="headerlink" href="#calculate-defect-phonon-mode" title="Permalink to this headline">¶</a></h3>
+<p>Defect phonon mode has attracted much attention, but there might be too many atomic displacement in defect systems. So it is too expensive to calculate the defect phonon. PyPWmat provides a easy way to calculate defect phonon by defining the scope of defect. Then atoms out of scope could be calculated using FORCE_SETS generated in std calculations.</p>
+<img alt="../_images/defect.png" src="../_images/defect.png" />
+<p>To use the results in std, user should prepare the defect structure using supercell generated in phonon_std (atom_3x3x2.config here) and fully relax it with PWmat (Warning: You shall not relax the crystal!). Rename relax results final.config to atom_defect.config in ‘phonon’ and prepare etot_defect.in as well. Use the same MP_N123 as in the etot.input in std calculations. Use the same Ecut and Ecut2 as for crystal calculation as well. Note: PWmat only accepts structure file named atom.config in current version! So atom_defect.config is only a identification which must exist in the directory. But user should only use ‘in.atom = atom.config’ in etot_defect.input, not ‘in.atom = atom_defect.config’.
+Then edit PWphonon.in again. From the crystal bulk PWphonon.in (Note: DIM=n1,n2,n3 must be the same as the defect supercell), you need change the following:</p>
+<blockquote>
+<div><p>JOB = defect
+DEFECT_CENTER = x1, x2, x3           #(x1,x2,x3) is the fractional coord. for the center of the point defect;
+DEFECT_RADIUS = R                    # R in Ang is the radius size of the defect
+MP = 5 5 5                           # this is the q-point for the defect supercell, should not be too big</p>
+</div></blockquote>
+<dl class="simple">
+<dt>For atoms within R, the explict displacement and force calculations will be carried out. For atoms outside the R, their dynamic matrix element will be approximated by the bulk one calculated before. So user should test the R value to ensure that the defect supercell and the bulk supercell should have roughly the same outside R.</dt><dd><p>After Pwphonon.in is edited, type ‘PWmatPhonon.py’. This will generate a new directory ‘phonon_defect’ and begin the defect calculation. The generated files including extract_phonon_data.py is now in ‘phonon’ not ‘phonon_defect’. Type ‘./extrac_phonon_data.py’ and you might get the screen like that:</p>
+</dd>
+</dl>
+<img alt="../_images/defect_screen.png" src="../_images/defect_screen.png" />
+<p>Total_dos.dat could be used to plot the DOS and qpoints.yaml.dat contains the Gamma point phonon energy and their eigen vectors (eigen vectors are three complex vectors, corresponding to six columns). (They can be used to calculate nonradiative decay rate). Users who proceed this calculation might focus on the defect localized modes.</p>
+<img alt="../_images/defect_mode.png" src="../_images/defect_mode.png" />
+</div>
+<div class="section" id="calculate-subsystem-phonon-mode">
+<h3>Calculate subsystem phonon mode<a class="headerlink" href="#calculate-subsystem-phonon-mode" title="Permalink to this headline">¶</a></h3>
+<p>When we study surface absorption, we might pay more attention to the phonon mode of the absorbed molecule and the surrounding surface atoms. So we need subsystem calculation in which other atoms are kept static. No primitive cell calculations are needed before subsystem calculations.</p>
+<img alt="../_images/sub.png" src="../_images/sub.png" />
+<p>First prepare atom_all.config (fully relaxed) in ‘phonon’. Just like the example below, the red box atoms is the atoms to be calculated. One should give the atom setting ‘1 1 1’, like the setting in relaxation. The atoms with ‘0 0 0’ will not in consideration to be calculated. The atom_all.config is the whole system, in other words, a supercell!</p>
+<img alt="../_images/atom_all.png" src="../_images/atom_all.png" />
+<p>The prepare etot_sub.input in ‘phonon’. Details of etot_sub.input is the same as the previous example. Type ‘PWmatPhonon.py’ and edit PWphonon.in. Compared to crystal band calculations, you only need to change ‘JOB = std’ to ‘JOB = sub’. You could also change values of MP to get the q-point you are interested in (ususally for subsystem calculation, only Gamma point is needed).
+Type ‘PWmatPhonon.py’ to generate directory ‘phonon_sub’ and start calculations. After the PWmat supercell calculations have finished, inside type ‘./extract_phonon_data.sh’ in ‘phonon_sub’ and generate mesh.yaml.dat which has all the q-point phonon modes.</p>
+<img alt="../_images/sub_mode.png" src="../_images/sub_mode.png" />
+<p>The phonon mode and vector (at Gamma) for the subsystem (only 2 atoms so 6 modes). The vector is according to the atoms in atom_sub.config (the sub system). For catalysis calculation, these modes could be used to estimate the zero phonon mode energy for molecules absorbed on the surface. File atom_sub.config contains the part of atoms involved in the phonon mode. SUB_INDEX is the atoms index which mapping the atoms in atom_sub.config to atom_all.config. It is needed by the script ‘extract_phonon_data.sh’.</p>
+</div>
+</div>
+<div class="section" id="high-tempereture-and-anharmonic-phonon-modes-for-unstable-structure">
+<h2>High tempereture and anharmonic phonon modes for unstable structure<a class="headerlink" href="#high-tempereture-and-anharmonic-phonon-modes-for-unstable-structure" title="Permalink to this headline">¶</a></h2>
+<p>Please go familiar with PyPWmat module before run this module!</p>
+<div class="section" id="problems-and-basic-idea">
+<h3>Problems and basic idea<a class="headerlink" href="#problems-and-basic-idea" title="Permalink to this headline">¶</a></h3>
+<p>It is well know some of the high symmetry phase are unstable at low temperature (almost T=0 K). Nevertheless, by enforcing symmetry, in the relax calculation, we can relax to such high symmetry structure (at T=0 K). However, if we calculate the phonon spectrum, we will find imaginary convergence error irrelative phonon modes, which can be at both Gamma point and off Gamma point. The question is, experimentally, such structure is stable at higher temperature (also shown by high temperature molecular dynamics).</p>
+<p>According to spontaneous symmetry breaking theory, the above systems have potential surface cross section like a in following picture:</p>
+<img alt="../_images/energy_curve.png" src="../_images/energy_curve.png" />
+<p>The high symmetry point is unstable in a. But at higher temperature, the vibration amplitude is large, so it can reach points like C and D effectively. If we judge from the energy (or the force) at C and D, and draw a parabolic curve (the dashed lines c and d), then they can be considered as having positive phonon frequency. At given temperature, if the oscillation amplitude is <span class="math notranslate nohighlight">\(d_{C}\)</span> (the C curve), then the frequency is <span class="math notranslate nohighlight">\(\omega_{C}\)</span>. For given <span class="math notranslate nohighlight">\(\omega_{C}\)</span> and T, we can come back to estimate the <span class="math notranslate nohighlight">\(d_{C}\)</span> (each degree of freedom will have enegy about <span class="math notranslate nohighlight">\(0.5k_{B}T\)</span>). So there can be self-consistency.</p>
+<p>If the initial estimation of <span class="math notranslate nohighlight">\(d_{C}\)</span> is too small, <span class="math notranslate nohighlight">\(\omega_{C}\)</span> will be too small, then <span class="math notranslate nohighlight">\(d_{C}\)</span> dervied from <span class="math notranslate nohighlight">\(\omega_{C}\)</span> and T will be larger than the origin <span class="math notranslate nohighlight">\(d_{C}\)</span>. This will increase <span class="math notranslate nohighlight">\(d_{C}\)</span>. In another word, the self-consistency is a stable one. One can estimate such self-consistency one phonon mode at a time. But that will not be the best. Since all these are results of anharmonic effect, it thus will be better to estimate all the modes together, all at their corresponding amplitudes at T (including phonon modes which are real at small T).</p>
+<p>The following procedure is actually a rough one, not really excat. It involves several approximations. But qualitatively, it can be useful.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Phys</span><span class="o">.</span><span class="n">Rev</span><span class="o">.</span><span class="n">Lett</span><span class="o">.</span><span class="mi">100</span><span class="p">,</span><span class="mi">095901</span><span class="p">(</span><span class="mi">2008</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-formulas-and-procedures">
+<h3>The formulas and procedures<a class="headerlink" href="#the-formulas-and-procedures" title="Permalink to this headline">¶</a></h3>
+<p>We will assume the same phonon modes calculated at the high symmetry point at T = 0 K, even though some of the phonon modes have imaginary frequency. We call such phonon modes: <span class="math notranslate nohighlight">\(\mu_{k}'(i)\)</span>, here k is the mode index, i is the atom index. For a given temperature T, and a calculated phonon frequency <span class="math notranslate nohighlight">\(\omega_{k}\)</span>, we can calculate a mode amplitude <span class="math notranslate nohighlight">\(Q_{k}\)</span>. Now, we can have an atomic displacement (measured from the high symmetry points): <span class="math notranslate nohighlight">\(dR(i)=\sum_{k}sign(k)Q_{k}\mu_{k}'(i)\)</span>. Here, <span class="math notranslate nohighlight">\(sign(k)=\pm\)</span> is a random set, but fixed throughout the iterations. Now using this <span class="math notranslate nohighlight">\(dR(i)\)</span>, redo a SCF calculation, get <span class="math notranslate nohighlight">\(dF(i)\)</span> (the force). Using these force <span class="math notranslate nohighlight">\(dF(i)\)</span> and phonon mode <span class="math notranslate nohighlight">\(\mu_{k}'(i)\)</span>, recalculate <span class="math notranslate nohighlight">\(\omega_{k}\)</span>, thus repeat the self-consistent loop.</p>
+<div class="section" id="get-the-phonon-modes">
+<h4>Get the phonon modes<a class="headerlink" href="#get-the-phonon-modes" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>First, do JOB = std bulk phonon calculation with a n1*n2*n3 supercell using PyPWmat.</p></li>
+<li><p>In PyPWmat calculation, in PWphonon.in, specify MP=m1,m2,m3 for phonon q-point generation.</p></li>
+<li><p>Get mesh.yaml.dat, which contains all the phonon modes for all m1*m2*m3 q-points.</p></li>
+<li><p>Read out these phonon modes as: <span class="math notranslate nohighlight">\(\mu_{k}'(i)\)</span> and corresponding <cite>omega_{k}</cite> (here k is the composite index, including m1*m2*m3 q-points, and at each q-point, there should be 3*natom modes). Also note, <span class="math notranslate nohighlight">\(\mu_{k}'(i)\)</span> is directly read-out from mesh.yaml.dat (adding an <span class="math notranslate nohighlight">\(e^{-iqR}\)</span> factor). So it has <span class="math notranslate nohighlight">\(\sum_{i}\mu_{k1}'(i)\mu_{k2}'^{*}(i)=\delta_{k1}\delta_{k2}\)</span>, thus <span class="math notranslate nohighlight">\(\mu_{k}'(i)=\sqrt{M(i)}\mu_{k}(i)\)</span>. Here i is the index of atom with x, y, z, M(i) is the mass of the atom and <span class="math notranslate nohighlight">\(\mu_{k}(i)\)</span> if the more conventional definition of the phonon mode.</p></li>
+</ol>
+</div>
+<div class="section" id="self-consistent-steps">
+<h4>Self-consistent steps<a class="headerlink" href="#self-consistent-steps" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple" start="5">
+<li><p>If we assume that we have <span class="math notranslate nohighlight">\(\omega_{k}\)</span> for each k mode. Then we will have the amplitude of this phonon mode as <span class="math notranslate nohighlight">\(Q_{k}=\sqrt{k_{B}T/\omega_{k}}\)</span> (classical formula) or <span class="math notranslate nohighlight">\(Q_{k}=\sqrt{\frac{1}{2}+\frac{1}{e^{\hbar\omega_{k}/k_{B}T}-1}}\)</span> (quantum mechanics formula) at temperature T.</p></li>
+<li><p>Get the displacement: <span class="math notranslate nohighlight">\(dR(i)=\frac{1}{\sqrt{M(i)}}\sum_{k}sign(k)Q_{k}\mu_{k}'(i)\)</span>.</p></li>
+<li><p>Do SCF calculations using <span class="math notranslate nohighlight">\(R(i)=R_{0}(i)+dR(i)\)</span> and the n1*n2*n3 supercell. Get the force F(i). Here <span class="math notranslate nohighlight">\(R_{0}(i)\)</span> is the high symmetry phase atomic position.</p></li>
+<li><p>Estimate the frequency <span class="math notranslate nohighlight">\(\omega_{k}\)</span> as <span class="math notranslate nohighlight">\(\omega_{k}=\sqrt{\frac{-\sum_{i}\mu_{k}'(i)F(i)/\sqrt{M(i)}}{sign(k)Q_{k}}}\)</span> for all modes k.</p></li>
+<li><p>Compare <span class="math notranslate nohighlight">\(\omega_{k}\)</span> with that in step(5), if the resulting is imaginary, decrease the original <span class="math notranslate nohighlight">\(\omega_{k}\)</span> ; else if resulting is real, then do some mixing for this <span class="math notranslate nohighlight">\(\omega_{k}\)</span> and that in step(5), using it as a new input in step(5), repeat steps (5) to (9), until <span class="math notranslate nohighlight">\(\omega_{k}\)</span> no longer changes.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="actual-codes-and-procedures">
+<h3>Actual codes and procedures<a class="headerlink" href="#actual-codes-and-procedures" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>gen_dR_config0.f</strong>: This code should be run in the <strong>phonon_std</strong> directory, after the bulk phonon modes have been calculated using ‘extract_phonon_data.sh’. It needs the <strong>htp.input</strong> file as the input, and needs to copy the unit cell <strong>atom.config</strong> in the directory. It is the initial step to generate <strong>dQ.000</strong>, <strong>Freq.000</strong> and <strong>atom_sup.config</strong>. <strong>Freq.000</strong> is the frequency taken from mesh.yaml.dat. <strong>dQ.000</strong> is the amplitude of each phonon mode for displacement. It also generate <strong>isign.store</strong>, install the <strong>sign(:math:`pm`)</strong> for each phonon mode displacement. This codes take the frequency for each mode and <span class="math notranslate nohighlight">\(k_{B}T\)</span> to generate dQ and displacement dR. It also places the phonon mode in <strong>muq_super.store</strong> for later usage.</p></li>
+<li><p>Run PWmat in the <strong>phonon_std</strong> directory. Users need to have <strong>OUT.FORCE = T</strong> and <strong>in.atom = arom_sup.config</strong> in etot.input.</p></li>
+<li><p><strong>gen_dR_config2.f</strong>: This should be run after run PWmat in step(2). Run it as ‘gen_dR_config.r iter’, here iter is the iteration number (+1 number of the higher <strong>dQ.xxx</strong>, <strong>Freq.xxx</strong> in the directory). It takes the mode from <strong>muq_super.store</strong>, the forece in <strong>OUT.FORCE</strong> and <strong>dQ.iter-1</strong> to calculate the frequency (stoned in <strong>Freq.iter</strong>). It also calculates the <strong>dQ.iter</strong> based on <strong>Freq.iter</strong>, <span class="math notranslate nohighlight">\(k_{B}T\)</span> and the procedural option provided in <strong>htp.input</strong> (e.g., with a mixing amix). It will also generate <strong>atom_sup.config</strong>.</p></li>
+<li><p>Repeat (2)-(3), until it converges (the frequency in <strong>Freq.xxx</strong> no longer changes). Users could run it using <strong>iteration.sh</strong>.</p></li>
+<li><p>Sometimes this is not easy to converge, one can do this for only a few phonon modes (all other modes have zero dQ), and keep their frequency at T=0 frequency (e.g, the positive phonons). This can be done with <strong>set_freq_fix.f</strong>, and modify the <strong>Freq.fix</strong> files (set the mode to be fix as 0 in the flag column). One can also change <strong>Freq.fix</strong> during iterations.</p></li>
+<li><p>Users can also manully alter the dQ.iter (usually after run gen_dR_config2.f, so you already have Freq.iter), then run <strong>gen.config_fromdQ.f</strong> (enter step number iter), it will generate atom_sup.config from dQ.</p></li>
+</ol>
+</div>
+<div class="section" id="post-processing">
+<h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>If the self-consistent calculations are converged, we will have all positive <span class="math notranslate nohighlight">\(\omega_{k}\)</span>.</p></li>
+<li><p>But <span class="math notranslate nohighlight">\(\omega_{k}\)</span> is only define for the m1*m2*m3 q-points. That may or may not be enough. To get more phonon modes, users could reconstruct the dynamic matrix as:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(D(R_{1},R{2})=\frac{\partial^{2}}{\partial R(i_{1})\partial R(i_{2})}E=\sqrt{M(i_{1})M(i_{2})}\sum_{k}\omega_{k}^2\mu_{k}'(i_{1})\mu_{k}'(i_{2})\)</span></p>
+</div></blockquote>
+</li>
+<li><p>This is done by running <strong>gen_force_set.f</strong>. It will take Freq.iter and muq_super.store (modes) tp regenerate FORCE_SETS.NEW to FORCE_SETS, run <strong>extract_phonon_data2.sh</strong>, it will generate the new phonon band structure and DOS <span class="math notranslate nohighlight">\(g(\omega)\)</span>.</p></li>
+<li><p>After get all the phonon mode, we can also calculate the phonon free energy as:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(F(T)=\int_{0}^{\infty}d\omega g(\omega)[\frac{\hbar\omega}{2}+k_{B}Tln(1-exp(-\hbar\omega/k_{B}T))]\)</span></p>
+</div></blockquote>
+</li>
+</ol>
+<p>Code is node provided, but users can use the phonon mode from mesh.yaml.dat or DOS from total_dos.dat to do this.</p>
+</div>
+<div class="section" id="example-gaas">
+<h3>example GaAs<a class="headerlink" href="#example-gaas" title="Permalink to this headline">¶</a></h3>
+<p>We use bulk GaAs as an example. It will help to see the procedure and the anharmonic effects although it does not have imaginary frequency.
+(1) Creat directory ‘phonon’ and prepare fully relaxed atom.config and other necessary input files. The example etot.input is here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4     1
+
+job = scf
+
+!input
+in.atom = atom.config
+in.psp1 = Ga.SG15.PBE.UPF
+in.psp2 = As.SG15.PBE.UPF
+
+!functional
+XCFUNCTIONAL=PBE
+
+!relax
+#relax_detail = 5 50 0.001 1 0.005
+
+!iter
+SCF_ITER0_1 = 6 4 3 0.0 0.01 1
+SCF_ITER0_2 = 94 4 3 1.0 0.01 1
+#SCF_ITER1_1 = 90 4 3 1.0 0.01 1
+
+!accurancy
+Ecut      =    70.0000000000000
+Ecut2     =    280
+Ecut2L    =    280
+MP_N123 = 8 8 8 0 0 0
+WG_ERROR =  1.0E-8
+E_ERROR  = 0
+RHO_ERROR = 1.0E-6
+
+!output
+OUT.FORCE = T
+OUT.WG = T
+OUT.RHO = F
+</pre></div>
+</div>
+<p>But the MP_N123 in etot.input will not be used in this section, which is different to ordinary std calculation. Prepare the PWphonon.in and edit it. The edited PWphonon.in might like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>JOB = std                                                 # std:normal phonon, defect:defect system phonon, sub:subsystem phonon
+NODES = 4    1                                            # node1 node2 for pwmat parallel configuration
+WALL_TIME = 1000:00:00                                    # wall time for the queue system (torque): hours:minutes:seconds
+MP_N123 = 2 2 2 0 0 0                                        # k-mesh for the supercell calculations; it is 3 3 3 0 0 0 for the unitcell calculation
+DIM = 2 2 2                                               # supercell dimension which will be used to make displacements
+PRIMITIVE_AXIS = 1.0 0.0 0.0  0.0 1.0 0.0  0.0 0.0 1.0    # the primitive cell for building the dynamical matrix
+FC_SYMMETRY = .TRUE.                                      # This tag is used to symmetrize force constants partly
+ACCELERATION = .TRUE.                                     # read in in.wg in.rho from forces-001 calculation
+BAND = 0.0 0.0 0.0  0.5 0.0 0.0  0.5 0.5 0  0.0 0.5 0.0  0.0 0.0 0.0  0.0 0.0 0.5 # special q points in Brillioun zone
+BAND_LABELS = $\Gamma$  X  S  Y  $\Gamma$  Z                  # labels of the special q points
+BAND_POINTS = 101                                         # number of q-point along the high symmetry path
+FREQUENCY_CONVERSION_FACTOR = THz                         # unit of the frequency:&quot;THz&quot;, &quot;cm^-1&quot;, &quot;eV&quot;, &quot;meV&quot;
+DOS = .TRUE.                                              # switch to the DOS calculation
+FMIN = -1.0                                               # minimum of frequency DOS range
+FMAX = 25.0                                               # maximum of frequency DOS range
+MP = 2 2 2                                             # q-mesh for the DOS calculation
+FPITCH = 0.1                                              # frequency interval for DOS calculation
+SIGMA = 0.1                                               # smearing width for DOS calculation
+EIGENVECTORS = .TRUE.                                     # output eigenvectors
+SUBJOB = torque                                           # slurm or torque
+SUBJOB_FILENAME = pwmat.pbs                               # submit job filename
+DISPLACEMENT = 0.003                                       # amplitude of atomic displacement
+</pre></div>
+</div>
+<p>Note: MP_N123 is the k-mesh for supercell but MP must be the same as DIM (supercell size). Displacement should be small enough.
+(2) Run PWmatPhonon.py and it will generate phonon_std directory and automatically submit PWmat jobs to fininsh forces-001 and forces-002 calculations.
+(3) In phonon_std, modify band_dos.conf by adding lines: MESH_SYMMETRY = .FALSE., GAMMA_CENTER = .TRUE. (adjust FMAX and FMIN for drawing phonon band and DOS):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DIM = 2 2 2
+PRIMITIVE_AXIS = 1.0 0.0 0.0  0.0 1.0 0.0  0.0 0.0 1.0
+BAND = 0.0 0.0 0.0  0.5 0.0 0.0  0.5 0.5 0  0.0 0.5 0.0  0.0 0.0 0.0  0.0 0.0 0.5
+BAND_LABELS = $\Gamma$  X  S  Y  $\Gamma$  Z
+BAND_POINTS = 101
+FC_SYMMETRY = .TRUE.
+FREQUENCY_CONVERSION_FACTOR = 15.633302
+MP = 2 2 2
+DOS = .TRUE.
+FMIN = -1.0
+FMAX = 9.0
+FPITCH = 0.1
+SIGMA = 0.1
+EIGENVECTORS = .TRUE.
+MESH_SYMMETRY = .FALSE.
+GAMMA_CENTER = .TRUE.
+</pre></div>
+</div>
+<p>Then run extract_phonon_data.sh and it will generate the phonon DOS, band and mode file mesh.yaml.dat. The 0 K band and DOS are like this (although no imaginary frequency):</p>
+<img alt="../_images/banddos_HT0.png" src="../_images/banddos_HT0.png" />
+<p>We would like to calculate the anharmonic effects in the following calculation to get phonon spectrum at T = 300 K. This is how the directory phonon_std looks like after this step:</p>
+<img alt="../_images/std_high_temperature.png" src="../_images/std_high_temperature.png" />
+<ol class="arabic simple" start="4">
+<li><p>Copy atom.config from ‘phonon’ into the directory as well as etot.input and pseudopotential files. Modify MP_n123 to ‘2 2 2 0 0 0 3’  and set IN.ATOM = atom.sup.config. Prepare htp.input like this:</p></li>
+</ol>
+<dl class="simple">
+<dt>::</dt><dd><p>-97974          ！iseed (random seed for isign)
+300             ! temperature (K)
+2 2 2           ! m1,m2,m3 (must be the same as in PWphonon.in)
+atom.config     ! unit cell file (make sure same element together)
+1               ! dQ formula: 1, dQ=sqrt(kT/Freq^2);2, using energy, Freq=Freq0+alpha*dQ^2
+1               ! mod_fix: 1: choose all dQ; 2: select dQ from Freq.fix(run set_freq_fix.r)
+0.5             ! mixing parameter for dQ for the iterations</p>
+</dd>
+</dl>
+<p>Run gen_dR_config0.r inside phonon_std. It will generate: dQ.000, Freq.000 and atom_sup.config. Then run a PWmat calculation again.</p>
+<ol class="arabic simple" start="5">
+<li><p>After the PWmat calculation in step(4) is finished, one should run ‘gen_dR_config2.r 1’ inside phonon_std to generate dQ.001, Freq.001 and atom_sup.config. Then run a PWmat calculation again. The command ‘gen_dR_config2.r iter’ will take the OUT.FORCE and dQ.iter-1 to generate Freq.iter, and uses the scheme specified in htp.input to generate dQ.iter from Freq.iter. The above procedures form an iteration loop. This iteration could be implemented using the modified slurm.pbs (other scripts follow similar grammar):</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+#SBATCH --partition=gpu
+#SBATCH --job-name=ph
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --gres=gpu:4
+#SBATCH --gpus-per-task=1
+
+module load intel/2016
+module load cuda/8.0
+module load pwmat/2022.02.11
+
+for iter in {1..10}
+do
+ echo $iter
+  ~/SRC_highT_phonon/gen_dR_config2.r $iter
+     mpirun -np $SLURM_NPROCS -rdma PWmat | tee output
+     mv OUT.WG IN.WG
+     mv OUT.RHO IN.RHO
+     iter=$((iter+1))
+done
+</pre></div>
+</div>
+<p>We use 10 iterations here. If the convergence seemed not good, users could manually intepose using set_freq_fix.f, or change dQ.iter and gen_config_fromdQ.f. For the case of GaAs, after 3 iterations, the frequencies are converged. Here is the figure for the frequencies of different modes (from Freq.iter) on different iterations. The format of Freq.iter is:</p>
+<dl class="simple">
+<dt>::</dt><dd><p>nq  nband  THz^2_x  THz^2_y  THz^2_z</p>
+</dd>
+</dl>
+<p>Here nq and nband represent the q-points (totally 8 q-points here) and band index (totally 24 phonon modes here). So there will be 192 rows in Freq.iter. We choose THz^2_x to plot the frequencies of different modes:</p>
+<img alt="../_images/Freq_iter.png" src="../_images/Freq_iter.png" />
+<p>For the case of GaAs, after 3 iterations, the frequencies are converged. Finally, run ‘gen_force_set.r’ inside phonon_std to generate FORCE_SETS.new. Copy FORCE_SETS.new to FORCE_SETS and run new script <strong>extract_phonon_data2.sh</strong>, then users will ger the new phonon spectrum and files like: mesh.yaml.dat, band.dat. The extract_phonon_data2.sh is like follow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="n">PWmat2Phonopy</span> <span class="o">--</span><span class="n">pwmat</span> <span class="n">band_dos</span><span class="o">.</span><span class="n">conf</span> <span class="o">-</span><span class="n">c</span> <span class="o">../</span><span class="n">atom</span><span class="o">.</span><span class="n">config</span> <span class="o">-</span><span class="n">p</span>
+<span class="n">phonopy</span><span class="o">-</span><span class="n">bandplot</span> <span class="o">--</span><span class="n">gnuplot</span> <span class="n">band</span><span class="o">.</span><span class="n">yaml</span> <span class="o">&gt;</span> <span class="n">band</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">echo</span> <span class="s2">&quot;The data files can be used to plot&quot;</span>
+<span class="n">ls</span> <span class="o">*.</span><span class="n">dat</span>
+</pre></div>
+</div>
+<p>Note: in reality, it might also be affected by the sign(atom) (the random seed in htp.input). One might want to check that by doing a few random seed calculations.</p>
+</div>
+</div>
+<div class="section" id="pwphono3py">
+<h2>PWphono3py<a class="headerlink" href="#pwphono3py" title="Permalink to this headline">¶</a></h2>
+<p>This module is the interface between PWmat and phonoepy. Phono3py could be used to calculate phonon-phonon interaction and related properties using the supercell approach, including lattice thermal conductivity, phonon lifetime/linewidth and imaginary part of self energy.</p>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<p>We highly recommend to install phonon3py with conda, you can follow these steps to install it. The first step is to install anaconda3, so you can build an conda environment. After you have install anaconda3, you can create a new environment named phono3py (<strong>this is really important, or you python environment on mstation will be confused</strong>), specify that python version &gt;=3.6.</p>
+<dl class="simple">
+<dt>::</dt><dd><p>$ conda create –name phono3py python=3.x      #(version&gt;=3.6)</p>
+</dd>
+</dl>
+<p>Active the new environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate phono3py
+</pre></div>
+</div>
+<p>Then you can install the package in this environment. There are a few ways to install phono3py (<a class="reference external" href="https://phonopy.github.io/phono3py/install.html">https://phonopy.github.io/phono3py/install.html</a>), we recommend to use conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c atztogo phono3py
+</pre></div>
+</div>
+<p>Sometimes conda could not find the matched version, then you could use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install phono3py
+</pre></div>
+</div>
+<p>If it fails as well, use the following script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="n">mkdir</span> <span class="n">dev</span>
+<span class="n">cd</span> <span class="n">dev</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">phonopy</span><span class="o">/</span><span class="n">phonopy</span><span class="o">.</span><span class="n">git</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">phonopy</span><span class="o">/</span><span class="n">phono3py</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">phonopy</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">develop</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+<span class="n">cd</span> <span class="o">../</span><span class="n">phono3py</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">develop</span>
+<span class="n">echo</span> <span class="s2">&quot;[phono3py]&quot;</span> <span class="o">&gt;</span> <span class="n">site</span><span class="o">.</span><span class="n">cfg</span>
+<span class="n">echo</span> <span class="s2">&quot;extra_compile_args = -fopenmp&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">site</span><span class="o">.</span><span class="n">cfg</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">build</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Next you can install the interface:
+(1) Download PWphono3py-xxx.tar.gz from the module page.
+(2) Go to the directory where you put pwphono3py-xxx.tar.gz and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install pwphono3py-xxx.tar.gz
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Unzip the PWphono3py-xxx.tar.gz wherever you prefer by</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tar -zxvf pwphono3py-xxx.tar.gz
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Modify PYTHONPATH and PATH in ~/.bashrc, for instance:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PYTHONPATH=(where you place it)/pwphono3py-0.0.1:$PYTHONPATH
+export PATH=(where you place it)/pwphono3py-0.0.1/bin:$PATH
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Go to the directory pwphono3py-xxx and type</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Copy script pypwmat3.py to pwphono3py.egg-info/scripts/pypwmat3.py and all settled.</p></li>
+</ol>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>Users could calculate properties related to phonon-phonon interaction such as: thermal conductivity, phonon lifetime/lifewidth and imaginary part of self energy. Simple process is as follow:</p>
+<img alt="../_images/flow_3py.png" src="../_images/flow_3py.png" />
+<ol class="arabic simple">
+<li><p>Create a directory named ‘phonon3’. Prepare input files named etot_fc2.input, etot_fc3.input, atom.config and corresponding pseudopotential files inside ‘phonon3’. The main content of etot_fc2.input is as follows:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">4</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">scf</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Si</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">FORCE</span> <span class="o">=</span>  <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">WG</span> <span class="o">=</span> <span class="n">F</span>
+</pre></div>
+</div>
+<p>And the etot_fc3.input only changes ‘MP_N123 = 1 1 1 0 0 0’ and ‘4 1’ in first line correspondingly. Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pypwmat3.py --first
+</pre></div>
+</div>
+<p>The default configuration file PWphonon3.in will be generated. Users could edit it following the instructions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JOB</span> <span class="o">=</span> <span class="n">scf</span>                                                 <span class="c1">#</span>
+<span class="n">NODES_FC2</span> <span class="o">=</span> <span class="mi">1</span>    <span class="mi">4</span>                                            <span class="c1"># node1 node2 for pwmat parallel configuration</span>
+<span class="n">NODES_FC3</span> <span class="o">=</span> <span class="mi">4</span>    <span class="mi">1</span>                                            <span class="c1"># node1 node2 for pwmat parallel configuration</span>
+<span class="n">WALL_TIME</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>                                    <span class="c1"># wall time for the queue system (torque): hours:minutes:seconds</span>
+<span class="n">MP_N123_FC2</span> <span class="o">=</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>                                <span class="c1"># k-mesh for the supercell calculations; it is 2 2 2 0 0 0 for the unitcell calculation</span>
+<span class="n">MP_N123_FC3</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>                                <span class="c1"># k-mesh for the supercell calculations; it is 2 2 2 0 0 0 for the unitcell calculation</span>
+<span class="n">DIM_FC2</span> <span class="o">=</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span>                                           <span class="c1"># supercell dimension for 2 order force which will be used to make displacements.Turn it to 0,if there is no need</span>
+<span class="n">DIM_FC3</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span>                                           <span class="c1"># supercell dimension for 3 order force which will be used to make displacements</span>
+<span class="n">ACCELERATION</span> <span class="o">=</span> <span class="o">.</span><span class="kc">True</span><span class="o">.</span>                                     <span class="c1">#read in in.wg in.rho from forces-001 calculation</span>
+<span class="n">FC_SYMMETRY</span> <span class="o">=</span> <span class="o">.</span><span class="kc">True</span><span class="o">.</span>                                      <span class="c1"># This tag is used to symmetrize force constants partly</span>
+<span class="n">READ_FC2</span> <span class="o">=</span> <span class="o">.</span><span class="kc">True</span><span class="o">.</span>                                         <span class="c1">#create fc2</span>
+<span class="n">READ_FC3</span> <span class="o">=</span> <span class="o">.</span><span class="kc">True</span><span class="o">.</span>                                         <span class="c1">#create fc3</span>
+<span class="n">PA</span> <span class="o">=</span> <span class="o">.</span><span class="kc">False</span><span class="o">.</span>                                              <span class="c1"># Transformation matrix from a non-primitive cell to the primitive cell.</span>
+<span class="n">PRIMITIVE_AXIS</span> <span class="o">=</span> <span class="mi">0</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="mi">0</span>            <span class="c1"># the primitive cell for building the dynamical matrix</span>
+<span class="n">DISPLACEMENT</span> <span class="o">=</span> <span class="mf">0.03</span>                                       <span class="c1">#displament</span>
+</pre></div>
+</div>
+<p>Parameter in PWphonon.in is here:</p>
+<p>JOB: scf</p>
+<p>NODES_FC2, NODES_FC3: PWmat parallel configuration (Obtained from etot_fc2.input, etot_fc3.input)</p>
+<p>WALL_TIME: Wall time for the queue system (torque): hours: minutes: seconds</p>
+<p>MP_N123_FC2, MP_N123_FC3: k-mesh for the supercell calculations</p>
+<p>DIM_FC2, DIM_FC3: Supercell dimension for 2nd order force (3rd order force) which will be used to make displacements</p>
+<p>ACCELERATION: Read in in.wg in.rho from forces-001 calculation</p>
+<p>FC_SYMMETRY: This tag is used to symmetrize force constants partly</p>
+<p>READ_FC2, READ_FC3: Read 2nd order force (3rd order force) constants from fc2.hdf5, fc3.hdf5.</p>
+<p>PA, PRIMITIVE_AXIS: Transformation matrix from a non-primitive cell to the primitive cell</p>
+<p>DISPLACEMENT: Atomic displacement distance is specified. This value may be increased for the weak interaction systems and descreased when the force calculator is numerically very accurate.</p>
+<p>MESH: Sampling mesh</p>
+<p>CUTOFF_PAIR, CUTOFF_PAIR_DISTANCE: Reduce the number of supercells with displacements to be calculated</p>
+<p>BAND: Special q points in Brillioun zone</p>
+<p>BAND_LABELS: Labels of the special q points</p>
+<p>BAND_POINTS: Number of q-point along the high symmetry path</p>
+<p>BRILLOUIN_ZONE_INTEGRATION, SIGMA_VALUE: “–thm”: Tetrahedron method (default choice); “–sigma”: Smearing method; “–sigma-cutoff”: Cutoff parameter for smearing method; “–full-pp”: Calculate all elements of phonon-phonon interaction strength</p>
+<p>GP_OR_GA, GRID_POINTS_OR_GRID_ADDRESSES: gp: Grid points by their ID; ga: Grid points by address with three integer values</p>
+<p>NAC: Non-analytical term correction</p>
+<p>SPECIFIC_TEMPERATURES, TMAX/TMIN/TSTEP: Specific temperatures (in step 3)</p>
+<p>TEMPERATURE_LIFETIME: Specific temperatures for lifetime plot (in step kappaplot)</p>
+<p>TEMPERATURE_KACCUM: Specific temperature for kaccum plot (in step kaccum)</p>
+<ol class="arabic simple" start="2">
+<li><p>Type</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pypwmat3.py --second
+</pre></div>
+</div>
+<p>In this step, atom.configs with displacements are created. Files disp_fc3.yaml and disp_fc2.yaml are also created. Each force calculation will be executed under the directory named dispxxxxx (and disp_fc2-xxxxx), where xxxxx is sequential number. Note: It might generate lots of directory to calculate disp_fc3.yaml, which means hundreds of calculations. So be careful before using this module!</p>
+<img alt="../_images/screen_dir3py.png" src="../_images/screen_dir3py.png" />
+<ol class="arabic simple" start="3">
+<li><p>For thermal conductivity calculation, users need files including disp_fc3.yaml, disp_fc2.yaml and PWphonon3.in. Tyoe</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pypwmat3.py --third
+</pre></div>
+</div>
+<p>Then FORCES_FC3 and FORCES_FC2 are created, followd by fc3.hdf5 and fc2.hdf5. File kappa-mxxxxxx.hdf5 is the output file of thermal conductivity calculation. You can get the following data from this file: mesh, frequency, gamma, gamma_isotope, group_velocity, heat_capacity, kappa, mode-kappa, gv_by_gv, q-point, temperature, weight, ave_pp and kappa_unit_conversion. (Go to <a class="reference external" href="https://phonopy.github.io/phono3py/hdf5_howto.html">https://phonopy.github.io/phono3py/hdf5_howto.html</a> for details)
+(4)  To write grid points, type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$pypwmat3.py --fourth
+</pre></div>
+</div>
+<p>In this command, phonon lifetimes at many grid points are calculated in series. The phonon lifetime calculation at each grid point can be separately calculated since they are independent and no communication is necessary at the computation. File ir_grid_points.yaml is obtained.
+(5) To plot kappa, users need files kappa-mxxxxxx.hdf5 and PWphonon3.in. Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$pypwmat3.py --kappaplot
+</pre></div>
+</div>
+<p>Users could find the lifetime in the 31th temperature plotted in ’lifetime‘ by default or users could specify the temperature in PWphonon3.in. Thermal conductivity can be found in ’thermal_conductivity‘. File kaccum.dat is created in this step. The format if kaccum.dat is as follows: The first column gives frequency in THz, and the second to seventh columns give the cumulative lattice thermal conductivity of 6 elements, xx, yy, zz, yz, xz, xy. The eighth to 13th columns give the derivatives. There are sets of frequencies, which are separated by blank lines. Each set is for a temperature. There are the groups corresponding to the number of temperatures calculated.
+(6) You can get cumulative physical properties with respect to frequency or mean free path are calculated using this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$pypwmat3.py --kaccum
+</pre></div>
+</div>
+<p>Files kaccum.dat, cv.dat, gamma.dat, gv-norm.dat, mfp.dat. tau.dat created in plot kappa step are required. All the xxx.dat files can be viewed with a text editor. (Notepad++etc.). The following properties can be found in ‘kaccum’.</p>
+<div class="section" id="tersor-properties">
+<h4>tersor properties<a class="headerlink" href="#tersor-properties" title="Permalink to this headline">¶</a></h4>
+<p>Cumulative thermal conductivity with respect to frequency or mean free path.</p>
+<p><strong>kaccum.dat:</strong>
+In kaccum.dat, the first column gives frequency in THz, and the second to seventh columns give the cumulative lattice thermal conductivity of 6 elements, xx, yy, zz, yz, xz, xy. The eighth to 13th columns give the derivatives.</p>
+<img alt="../_images/kaccum_dat.png" src="../_images/kaccum_dat.png" />
+<img alt="../_images/kappa_xx.png" src="../_images/kappa_xx.png" />
+<p>In this example, kappa_xx, kappa_yy and kappa_zz almost unanimously.</p>
+<p><strong>mfp.dat:</strong> Mean free path</p>
+<img alt="../_images/mfp_xx.png" src="../_images/mfp_xx.png" />
+<p>In this example, mfp_xx, mfp_yy and mfp_zz almost unanimously.</p>
+</div>
+<div class="section" id="scalar-properties">
+<h4>scalar properties<a class="headerlink" href="#scalar-properties" title="Permalink to this headline">¶</a></h4>
+<p>Those values are normalized by the number of full grid points. This is understood as normalized for one primitive cell. Number of columns of output data is three, frequency, cumulative property, and derivative of cumulative property.</p>
+<p><strong>gamma.dat:</strong> Imaginary parts of self energies</p>
+<img alt="../_images/gamma.png" src="../_images/gamma.png" />
+<p><strong>tau.dat:</strong> Phonon lifetime</p>
+<img alt="../_images/tau.png" src="../_images/tau.png" />
+<p><strong>cv.dat:</strong> Model heat capacity</p>
+<img alt="../_images/cv.png" src="../_images/cv.png" />
+<p><strong>gv-norm.dat:</strong> Absolute value pf group velocity</p>
+<img alt="../_images/gv-norm.png" src="../_images/gv-norm.png" />
+</div>
+</div>
+</div>
+<div class="section" id="electron-phonon-coupling-epc">
+<h2>Electron-phonon coupling (EPC)<a class="headerlink" href="#electron-phonon-coupling-epc" title="Permalink to this headline">¶</a></h2>
+<p>This module could help users calculate electron-phonon coupling coefficient matrix using maximally localized Wannier functions (MLWFs). The core objective of calculating electron-phonon coupling is to calculate the matirx element <span class="math notranslate nohighlight">\(\langle\psi_{m\vec{k}_{1}}|\frac{\partial H}{\partial\nu_{b\vec{q}}}|\psi_{n\vec{k}_{2}}\rangle\)</span> in which <span class="math notranslate nohighlight">\(\vec{k}_{1}+\vec{q}=\vec{k}_{2}\)</span>. It usually need intensive k mesh around Fermi level for accurate decription of the electron-phonon coupling, which is really expensive using plane wave basis. One of the popular solution is to do a plane wave calculation with sparse k mesh first. Then project it to MLWFs. Since the MLWFs is highly localized in real space, it could generate highly delocalized plane waves after Fourier transformation. The new generated plane waves could be used to the interpolation of getting intensive k mesh wavefunctions.</p>
+<div class="section" id="basic-theory-of-mlwfs">
+<h3>Basic theory of MLWFs<a class="headerlink" href="#basic-theory-of-mlwfs" title="Permalink to this headline">¶</a></h3>
+<p>Bloch wavefunctions could be expanded by plane waves or atomic orbitals. Wannier functions are typical localized orbitals basis which is widely used in tight binding model</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\phi(\vec{r}-\vec{R_{\rho}})=\frac{1}{\sqrt{N_{p}}}\sum_{k}e^{-i\vec{k}\cdotp\vec{R_{p}}}\psi_{k}(\vec{r})\)</span></p>
+</div></blockquote>
+<p>However, they are not good basis due to the gauge flexibility, in other words, infinite Wannier functions could be generated like</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\phi(\vec{r}-\vec{R_{\rho}})=\frac{1}{\sqrt{N_{p}}}\sum_{k}e^{-i\vec{k}\cdotp\vec{R_{p}}}e^{i\phi_{k}}\psi_{k}(\vec{r})\)</span></p>
+</div></blockquote>
+<p>Although <span class="math notranslate nohighlight">\(e^{i\phi_{k}}\psi_{k}(\vec{r})\)</span> is physically equal to <span class="math notranslate nohighlight">\(\psi_{k}(\vec{r})\)</span>, this two Wannier functions are different, which will make trouble for subsequent processing. So we should choose a reasonable gauge if we want to use Wannier functions. Nicole Marzari and David Vanderbilt have found a reasonable gauge. Wannier functions contains both gauge invariance and gauge dependent parts, one could get the only maximally localized Wannier functions (MLWFs) by minimizing the gauge dependent part. Users could get more information about MLWFs in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Phys</span><span class="o">.</span><span class="n">Rev</span><span class="o">.</span><span class="n">B</span> <span class="mi">56</span><span class="p">,</span><span class="mf">12847.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepare-epc-utility-programs">
+<h3>Prepare EPC utility programs<a class="headerlink" href="#prepare-epc-utility-programs" title="Permalink to this headline">¶</a></h3>
+<p>Download EPC.tar.gz and untar it using ‘tar -xzvf EPC.tar.gz’.</p>
+<img alt="../_images/program_EPC.png" src="../_images/program_EPC.png" />
+<p>Edit ~/.bashrc or copy the needed utility files to specific directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PATH=(where you place it)/EPC:$PATH
+</pre></div>
+</div>
+</div>
+<div class="section" id="calculation-procedure">
+<h3>Calculation procedure<a class="headerlink" href="#calculation-procedure" title="Permalink to this headline">¶</a></h3>
+<p>To get the EPC matrix elements, users should calculate both wavefunctions and phonon modes. The procedure could be divided into four steps:</p>
+<ol class="arabic simple">
+<li><p>Do JOB = SCF to generate MLWFS</p></li>
+<li><p>Calculate phonon modes using module PyPWmat</p></li>
+<li><p>Do JOB = HPSI to write MLWFs into G space agian</p></li>
+<li><p>Calculate EPC matrix</p></li>
+</ol>
+<p>We will take AlAs as an example to display the procedure above.</p>
+<div class="section" id="scf-calculation-to-generate-mlwfs">
+<h4>SCF calculation to generate MLWFs<a class="headerlink" href="#scf-calculation-to-generate-mlwfs" title="Permalink to this headline">¶</a></h4>
+<p>Prepare input files of SCF calculations. The main tags in etot.input are like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="mi">4</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span>   <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span>   <span class="o">=</span> <span class="n">Al</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span>   <span class="o">=</span> <span class="n">As</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">SCF</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">PWSCF_OUTPUT</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">FORCE</span> <span class="o">=</span> <span class="n">T</span>
+</pre></div>
+</div>
+<p>Note: The MP_N123 here must be consistent with the following supercell of MLWFs. Users should close the symmetry of MP_N123 and keep PWSCF_OUTPUT = T.
+The atom.config might like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+<span class="n">Lattice</span> <span class="n">vector</span>
+ <span class="mi">0</span>   <span class="mf">2.799</span>   <span class="mf">2.799</span>
+ <span class="mf">2.799</span>   <span class="mi">0</span>   <span class="mf">2.799</span>
+ <span class="mf">2.799</span>   <span class="mf">2.799</span>   <span class="mi">0</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+<span class="mi">33</span>      <span class="mf">0.0000000</span>     <span class="mf">0.0000000</span>     <span class="mf">0.0000000</span>  <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">13</span>      <span class="mf">0.25</span>          <span class="mf">0.25</span>          <span class="mf">0.25</span>       <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>After the SCF calculation finished, type ‘in_wann.x’ inside the SCF directory to generate files wannier90.win and wannier90.pw2wan. To run in_wann.x, both atom.config and OUT.KPT are needed. Users might get the screen below if in_wann.x is successfully run.</p>
+<img alt="../_images/run_in_wann.png" src="../_images/run_in_wann.png" />
+<p>Next edit wannier90.win. Pay attention to several tags in wannier90.win:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_wann</span> <span class="o">=</span> <span class="mi">8</span>                   <span class="c1">#Number of WFs</span>
+<span class="n">num_bands</span> <span class="o">=</span> <span class="mi">8</span>                  <span class="c1">#In this module num_bands = num_wann</span>
+<span class="n">num_iter</span> <span class="o">=</span> <span class="mi">100</span>                 <span class="c1">#Number of iterations for the minimisation of WFs spread</span>
+<span class="n">mp_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span>                <span class="c1">#Dimensions of the Monkhorst-Pack grid of k-points</span>
+<span class="n">wannier_plot</span> <span class="o">=</span> <span class="n">T</span>               <span class="c1">#Plot the WFs</span>
+<span class="n">wannier_plot_supercell</span> <span class="o">=</span> <span class="mi">4</span>     <span class="c1">#Size of the supercell along all three dimensions for plotting the WFs</span>
+<span class="n">exclude_bands</span> <span class="o">=</span> <span class="mi">9</span><span class="o">-</span><span class="mi">18</span>           <span class="c1">#List of bands to exclude from the calculation</span>
+
+<span class="n">begin</span> <span class="n">projections</span>              <span class="c1">#begin projection</span>
+<span class="n">f</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span><span class="mf">0.000000</span><span class="p">,</span><span class="mf">0.000000</span><span class="p">:</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span>                <span class="c1">#site:ang_mtm (site: Fractional coordinates of As; ang_mtm: l=0,1,2,3 for s,p,d,f orbtals correspondingly)</span>
+<span class="n">f</span><span class="o">=</span><span class="mf">0.250000</span><span class="p">,</span><span class="mf">0.250000</span><span class="p">,</span><span class="mf">0.250000</span><span class="p">:</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span>       <span class="c1">#site:ang_mtm (site: Fractional coordinates of As; ang_mtm: l=0,1,2,3 for s,p,d,f orbtals correspondingly)</span>
+<span class="n">end</span> <span class="n">projections</span>                <span class="c1">#End projections</span>
+</pre></div>
+</div>
+<p>Note:
+(1) Num_wann depends on the numbers of orbitals. Since the valence electron orbitals for both Al and As are 1 s orbital and 3 p orbitals, num_wann=(1+3)+(1+3)=8.
+(2) The super-unit-cell is wannier_plot_supercell times the unit cell along all three linear dimensions (the ‘home’ unitcell is kept approximately in the middle) if wannier_plot_supercell is provided as a single integer. Otherwise, if three integers are provided, the super-unit-cell is wannier_plot_supercell(i) times the unit cell along the i-th liner dimension. In this example, the size of super-unit-cell should be consistent with k-mesh, which means 4x4x4 supercell.
+(3) Exclude_bands could be set from num_wann+1 to NUM_BANDS in SCF calculation. Users could set NUM_BANDS in etot.input or use the defualt value.
+(4) l=0,1,2,3 represent 1,3,5,7 projections. The summation of projections should be consistent with num_wann. Wannier90 also provide hybrid orbitals projections. See wannier90_user_guide for details.</p>
+<p>Users could use wannier90.pw2wan directly for systems without magnetism.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">inputpp</span>
+<span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;prefix&#39;</span>
+<span class="n">seedname</span> <span class="o">=</span> <span class="s1">&#39;wannier90&#39;</span>
+<span class="n">spin_component</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+<span class="n">write_mmn</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+<span class="n">write_amn</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+<span class="n">write_unk</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+
+
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$wannier90.x -pp wannier90
+$pw2wannier90.x &lt; wannier90.pw2wan
+$wannier90.x wannier90
+</pre></div>
+</div>
+<p>Users should use the wannier90.x provided in EPC, since the wannier90.x has been recompiled by us.
+Finally, users could get WFs. But one should check the wannier center to ensure your WFs are localized enough!</p>
+<img alt="../_images/WFs.png" src="../_images/WFs.png" />
+</div>
+<div class="section" id="calculate-phonon-modes-using-pypwmat">
+<h4>Calculate phonon modes using PyPWmat<a class="headerlink" href="#calculate-phonon-modes-using-pypwmat" title="Permalink to this headline">¶</a></h4>
+<p>See module PyPWmat for details. Please go familiar with module PyPWmat first! Edit PWphonon.in just like job=std and pay attention to three parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MP</span> <span class="o">=</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span>                       <span class="c1">#Consistent to k mesh</span>
+<span class="n">GAMMA_CENTER</span> <span class="o">=</span> <span class="o">.</span><span class="n">TRUE</span><span class="o">.</span>
+<span class="n">MESH_SYMMETRY</span> <span class="o">=</span> <span class="o">.</span><span class="n">FALSE</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Users could get mesh.yaml and mesh.yaml.dat. Copy them to the SCF directory.</p>
+</div>
+<div class="section" id="write-mlwfs-into-g-space-agian">
+<h4>Write MLWFs into G space agian<a class="headerlink" href="#write-mlwfs-into-g-space-agian" title="Permalink to this headline">¶</a></h4>
+<p>Type ‘DISPLACEMENT.x’ inside the SCF directory and users could get disp-xxx folds and scripts such as check-run.sh, ln-IN.WG.sh, run-disp.sh and run-hpsi.sh. Type ‘./run-disp.sh’ to run the SCF calculations in disp-xxx.
+Note: Makesure the suffix submit script is ‘.pbs’.
+After SCF calculations, go to disp-000 and type ‘G-wann.x’ to write WFs into G space. Go back to the upper folder and type ‘./ln-IN.WG.sh’. Then users could get fold hpsi and the needed files inside. Type ‘./run-hpsi.sh’, JOB = HPSI will be performed in disp-xxx.
+Finally, users could get OUT.HPSI, which will be used in next step.
+Note: Script named check-run.sh could be used to check whether the calculation is completed in each subdirectory.</p>
+</div>
+<div class="section" id="calculate-epc-matrix">
+<h4>Calculate EPC matrix<a class="headerlink" href="#calculate-epc-matrix" title="Permalink to this headline">¶</a></h4>
+<p>Go to SCF directory and type ‘calc_EPW.x’. Then users could get epw.out. Considering the huge number of matrix elements, users had better not output every elements unless it is necessary. One could use file epc.input to control the output range of <span class="math notranslate nohighlight">\(\langle\psi_{m\vec{k}_{1}}|\frac{\partial H}{\partial\nu_{b\vec{q}}}|\psi_{n\vec{k}_{2}}\rangle\)</span>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span> <span class="mi">5</span>    <span class="c1">#Range of m</span>
+<span class="mi">5</span> <span class="mi">5</span>    <span class="c1">#Range of n</span>
+<span class="mi">1</span> <span class="mi">3</span>    <span class="c1">#Range of k1</span>
+<span class="mi">1</span> <span class="mi">3</span>    <span class="c1">#Range of k2</span>
+</pre></div>
+</div>
+<p>We traverse all phonon modes in EPC calculations. Run calc_EPC.x after edit epc.input. Here is the sample of content in OUT.EPC:</p>
+<img alt="../_images/out_epc.png" src="../_images/out_epc.png" />
+<p>The first 3 lines of each block is <span class="math notranslate nohighlight">\(\vec{k}_{1}\)</span>, <span class="math notranslate nohighlight">\(\vec{q}\)</span>,:math:<cite>vec{k}_{2}</cite> satisfying <span class="math notranslate nohighlight">\(\vec{k}_{1}+\vec{q}=\vec{k}_{2}\)</span>. The following 3N lines could be divided into 11 columns. The first and second columns represent m and n. The 3th-6th columns represent the serial number of k1, b, q, k2, correspondingly. The 7th and 8th columns are eigen energy (in eV) of k1 and k2. The 9th column is the energy (in eV) generated from phonon frequency. The 10th and 11th columns are the real part and imaginary part of the EPC elements (in a.u.). The last column is the model (in eV) of matrix elements.
+Users could use ‘degenerate.x’ to degenerate the output EPC as needed. We consider the elements are degenrate if the 7th to 9th columns of them are the same. Then we will do an arithmetic average of their models.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials_and_examples/GaAs_HSE_REL_Calculation.html" class="btn btn-neutral float-left" title="HSE Relaxation calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../optical/optical.html" class="btn btn-neutral float-right" title="Optical properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
