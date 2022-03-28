@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machine Learning Force Field calculation &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="HSE Relaxation calculation" href="../tutorials_and_examples/GaAs_HSE_REL_Calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Machine Learning Force Field calculation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#theoretical-backgrounds">Theoretical Backgrounds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-setup">Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-pytorch-from-source">Compiling pytorch from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-training-data">Prepare training data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-and-features-generation">Configuration and features generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#engine-1-linear-model">Engine 1: Linear Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#training">1.Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">2.Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#engine-2-nonlinear-model-vv">Engine 2: Nonlinear Model(VV)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2. Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#engine-3-kalman-filter-based-neural-network">Engine 3: Kalman Filter-based Neural Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#during-and-after-training">2. During and after training</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#engine-4-deepmd-kalman">Engine 4: DeepMD + Kalman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-study-linear-model-in-sulphur">Case Study: Linear Model in Sulphur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-study-linear-model-in-bulk-cu">Case Study: Linear Model in bulk Cu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-study-linear-model-in-bcc-lithium">Case Study: Linear Model in BCC Lithium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-study-linear-model-in-fcc-lithium">Case Study: Linear Model in FCC Lithium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bad-case-study-linear-model-in-cuo">(Bad) Case Study: Linear Model in CuO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bad-case-study-linear-model-in-graphene">(Bad) Case Study: Linear Model in graphene</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Machine Learning Force Field calculation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/MLFF/MLFF.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="machine-learning-force-field-calculation">
+<h1>Machine Learning Force Field calculation<a class="headerlink" href="#machine-learning-force-field-calculation" title="Permalink to this headline">¶</a></h1>
+<p>Machine Learning Force Field for MD calculation</p>
+<div class="section" id="theoretical-backgrounds">
+<h2>Theoretical Backgrounds<a class="headerlink" href="#theoretical-backgrounds" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Phys. Rev. Lett. 98, 146401</div>
+<div class="line">Phys. Rev. B 99, 064103</div>
+</div>
+</div>
+<div class="section" id="environment-setup">
+<h2>Environment Setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>We recommmend using anaconda for package installing and management. You should first install Anaconda following the steps shown on the official website. Please don’t attempt to use miniconda instead of Anaconda, since it might incur various dependecy and path errors that are hard to debug.</p>
+<p>To install conda environment, use the following command. You may choose a new version of Anaconda.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">Anaconda3</span><span class="o">-</span><span class="mf">2020.07</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Then, create a new environment for this module.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">mlff</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
+</pre></div>
+</div>
+<p>Next, install relevant packages in the current environment. Notice that the first line has included the required packages for GPU acceleration. Make sure your CUDA version is larger than that of cudatoolkit.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span><span class="o">=</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span><span class="o">-</span><span class="n">intelex</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numba</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">tensorboard</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new</span><span class="p">:</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span> <span class="n">torchvision</span> <span class="n">torchaudio</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">10.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">pytorch</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span><span class="o">-</span><span class="n">intelex</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numba</span>
+</pre></div>
+</div>
+<div class="section" id="compiling-pytorch-from-source">
+<h3>Compiling pytorch from source<a class="headerlink" href="#compiling-pytorch-from-source" title="Permalink to this headline">¶</a></h3>
+<p>You might need to update submodules for multiple times due to unstable internet connection to GitHub server.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+</pre></div>
+</div>
+<p>After installation, re-enter the current environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">deactivate</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
+</pre></div>
+</div>
+<p>Now, enter the src directory and compile source codes. Intel 2020 module must be loaded.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">intel</span><span class="o">/</span><span class="mi">2020</span>
+<span class="n">cd</span> <span class="n">src</span>
+<span class="n">sh</span> <span class="n">build</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>After compilation is done, you should modify environment variables. The absolute path of src/bin should be exported in ~/.bashrc. You can use “echo $PWD” to obtain the absolute path.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vim ~/.bashrc
+export PATH=absolute/path/of/src/bin:$PATH
+source ~/.bashrc
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="prepare-training-data">
+<h2>Prepare training data<a class="headerlink" href="#prepare-training-data" title="Permalink to this headline">¶</a></h2>
+<p>The format of training data is same as the MOVEMENT files generated by PWmat’s molecular dynamics caculation. Please refer to PWmat manual for details involving MD calculations. <strong>Notice that it is very important to set energy_decomp = T in etot.input</strong>, otherwise there will be no feature to extract.</p>
+<p>A sample etot.input is shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">16</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">MD</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cu</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Au</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">MD_DETAIL</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">400</span> <span class="mf">0.8</span> <span class="mi">300</span> <span class="mi">300</span>
+<span class="n">E_Cut</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">double</span>
+<span class="n">energy_decomp</span> <span class="o">=</span> <span class="n">T</span>       <span class="c1">#this flag must be true</span>
+<span class="n">mp_n123</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="n">xcfunctional</span> <span class="o">=</span> <span class="n">GGA</span>
+<span class="n">E_error</span> <span class="o">=</span> <span class="mf">1.0e-6</span>
+<span class="n">Rho_error</span> <span class="o">=</span> <span class="mf">1.0e-4</span>
+</pre></div>
+</div>
+<p>The resultant MOVEMENT files should be combined into one single file. Use the following command to do so.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">MOVEMENT_1</span> <span class="n">MOVEMENT_2</span> <span class="o">...</span> <span class="o">&gt;</span> <span class="n">MOVEMENT</span>
+</pre></div>
+</div>
+<p>Names other than “MOVEMENT” are not allowed.</p>
+<p><strong>Principles for generating trianing data</strong></p>
+<p>As the first principle, training data set should well represent the 3N-dimensional phase space, where N is the number of atoms. That is, data should include the system’s spatial configurations as many as possible. The reason is sell-evident under the framework of energy decomposition. In our example, the training data is usually made up of images from more several MD results with varying condtitions. However, these images are sampled from the raw data, otherwise data size can be overwhelming. We now use some naïve rules to pick up images from the raw data. We may introduce more complex sampling method in the future.</p>
+</div>
+<div class="section" id="configuration-and-features-generation">
+<h2>Configuration and features generation<a class="headerlink" href="#configuration-and-features-generation" title="Permalink to this headline">¶</a></h2>
+<p>First, export the absolute path to src/bin in the ~/.bashrc. You can obtain the absolute path via command “pwd”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd src/bin
+pwd
+(copy the absolute path)
+vim ~/.bashrc
+export PATH=/absolute/path/to/bin:$PATH
+</pre></div>
+</div>
+<p>Create a new directory (call it examples) that will contain all the cases. This directory should be created in the directory that contains README.md. Enter directory examples, and create a new directory for a single system. In our exmaple, we study Copper, whose directory is called Cu1646.</p>
+<p>In Cu1646, create a directory callled <strong>PWdata</strong> and move the MOVEMENT file in it. A parameters.py file should appear in the same directory. An environmental configuration also has to be done.</p>
+<p><strong>codedir</strong>: the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. This step</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">codedir</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/your/path/to/MLFF_torch&#39;</span>
+</pre></div>
+</div>
+<p>For feature generation, the folllowing parameters should be set correctly.</p>
+<p><strong>atomType</strong>: the atomic numbers. In the example case, system consists of only Cu, thus atomType should be [29]. If the system contains more than one element, all atomic numbers should be specified. For instance, atomType should be [8,29] for CuO. Order does not matter here.</p>
+<p><strong>use_Ftype</strong>: features fed into the training process. 8 types of features are provided, which are</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>2-body(2b)</p></li>
+<li><p>3-body(3b)</p></li>
+<li><p>2-body Gaussian(2bgauss)</p></li>
+<li><p>3-body Cosine(3bcos)</p></li>
+<li><p>Multiple Tensor Potential(MTP)</p></li>
+<li><p>Spectral Neighbor Analysis Potential(SNAP)</p></li>
+<li><p>deepMD-Chebyshev(deepMD1)</p></li>
+<li><p>deepMD-Gaussian(deepMD2)</p></li>
+</ol>
+</div></blockquote>
+<p>Please refer to Theoretical Backgrounds section for more details. Usually, combinations such as [1,2],[3,4],[5],[7],[8] are used, but you are free to explore other combinations. In the given example, we use [1,2].</p>
+<p><strong>isCalcFeat</strong>: set to be True. Notice that this step will generate feature output files that can be reused by other training processes. They are stored in directory fread_dfeat.</p>
+<p><strong>maxNeighborNum</strong>: its default value is 100, so you can try it with altering. However, for some system it is not enough to accommodate all the neighbors, and the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below.</p>
+<img alt="../_images/feature_success.png" src="../_images/feature_success.png" />
+<p>If, however, you find that no MD information was printed, like the scenario shown below, you shoud assign <strong>maxNeighborNum</strong> with a larger number.</p>
+<img alt="../_images/feature_fail.png" src="../_images/feature_fail.png" />
+<p>After parameters are all set, run mlff.py to obtain the features.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Having generated the feature data, you can now feed them in various training engines. <strong>isCalcFeat</strong> should be turned off now.</p>
+</div>
+<div class="section" id="engine-1-linear-model">
+<h2>Engine 1: Linear Model<a class="headerlink" href="#engine-1-linear-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="training">
+<h3>1.Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>Turn on <strong>isFitLinModel</strong> to lanuch linear fitting. After training, turn off <strong>isFitLinModel</strong>.</p>
+</div>
+<div class="section" id="inference">
+<h3>2.Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<p>After training, you can use the model to run MD calculation in an alternative data set. We call this step inference. To do so, prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.</p>
+<p>Several parameters should be set.</p>
+<p><strong>isNewMd100</strong>: set True</p>
+<p><strong>imodel</strong>: set to be 1, which is linear model.</p>
+<p><strong>md_num_process</strong>: the mpi process number you wish to use. Its value can be up to the number of available cores in you CPU.</p>
+<p>Next, run mlff.py. You may also use the bash file we provided to submit a mlff job.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>A sample slurm script is given below. Notice that when submitting jobs through slurm, ntasks-per-node determines how many cores you can use.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1">#SBATCH --partition=mypartition</span>
+<span class="c1">#SBATCH --job-name=cu1646_l12</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --ntasks-per-node=1</span>
+<span class="c1">#SBATCH --threads-per-core=1</span>
+
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
+
+<span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>In our example, a new MOVEMENT file can be found after the inference step. You can copy plot_mlff_inference.py from utils/ directory to visualize the results. Below is the plot of results for Cu1646 case.</p>
+<img alt="../_images/cu1646_linear.png" src="../_images/cu1646_linear.png" />
+</div>
+</div>
+<div class="section" id="engine-2-nonlinear-model-vv">
+<h2>Engine 2: Nonlinear Model(VV)<a class="headerlink" href="#engine-2-nonlinear-model-vv" title="Permalink to this headline">¶</a></h2>
+<p>VV (vector * vector)goes beyond linear fitting by introducing nonlinearity. In linear model, we approximate the total energy by a linear combination of features. But in VV, we build a new set of features from the old ones. These new features are generated by feeding old ones into nonlinear functions. For example, they could be exp(-F_i), F_i* F_i, F_i* F_i <a href="#id1"><span class="problematic" id="id2">*</span></a>F_i, .etc.</p>
+<div class="section" id="id3">
+<h3>1.Training<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>First, perform feature generation and fitting as in linear model. To do so, set isCalcFeat=True and isFitLinModel=True, and run mlff.py.</p>
+<p>Next, run select_VV_MM.r twice to obtain some new features. In the first run,</p>
+</div>
+<div class="section" id="id4">
+<h3>2. Inference<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="engine-3-kalman-filter-based-neural-network">
+<h2>Engine 3: Kalman Filter-based Neural Network<a class="headerlink" href="#engine-3-kalman-filter-based-neural-network" title="Permalink to this headline">¶</a></h2>
+<p>In this engine, we use Kalman filter to improve the bare neural network(NN). Essentially, Kalman filter smooths the “spikes” of the high dimension cost function, curbing the likelihood of falling into local minimum.</p>
+<div class="section" id="id5">
+<h3>1.Training<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>First, several NN parameters should be set.</p>
+<p><strong>batch_size</strong>: must be 1. We may support different batch sizes in the future.</p>
+<p><strong>nLayer</strong> The layer of neural network. Notice that more layers does not mean better result! In our example, we set it to be 3.</p>
+<p><strong>nNode</strong> The dimension of nodes. We use 15 as default. Since a slight increase in it will lead to dramatic increase in training time. The reason is that the triaining scales as O(nNode^6).</p>
+<p>After this, several parameters should also be set.</p>
+<p><strong>natoms</strong> If more than one type of atom present, one should also set natoms correctly. For example, if the system of interest consists of 4 Cu atom and 7 Au atom, then you should set atomType = [29,79] and natoms = [4,7].</p>
+<p><strong>nFeatures</strong> It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42.</p>
+<p>We now use seper.py to devide data into a training set and a validation set. Currently, the division is a simple cut between first 80% and 20%. We might provide more complicated division method in the future.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seper</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Next, use gen_data.py to re-format data. After this step you will find them in the directory train_data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Finally, set the following parameters:</p>
+<p><strong>dR_neigh</strong>: set to be False</p>
+<p><strong>use_GKalman</strong>: set to be True</p>
+<p><strong>use_LKalman</strong>: set to be False</p>
+<p><strong>is_scale</strong>: set to be True</p>
+<p><strong>itype_Ei_mean</strong>: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">train_data</span><span class="o">/</span><span class="n">final_train</span>
+<span class="n">python</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;engy_scaled.npy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You don’t need an excact mean, and a rough estimate should suffice. For example, if the commands above returns something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">174.0633357</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">174.0604308</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">174.0453315</span><span class="p">],</span>
+   <span class="o">...</span><span class="p">,</span>
+   <span class="p">[</span><span class="mf">437.0013048</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">437.3404306</span><span class="p">],</span>
+   <span class="p">[</span><span class="mf">437.2137406</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>you can just set</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">itype_Ei_mean</span><span class="o">=</span><span class="p">[</span><span class="mf">174.0</span><span class="p">,</span><span class="mf">437.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>n_epoch</strong>: the number of epoch for training.</p>
+<p>You can now launch train.py. You should also specify a directory with flag -s to save the logs and models.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">s</span> <span class="n">records</span>
+</pre></div>
+</div>
+<p>You can also use scripts to submit a job on you cluster. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1">#SBATCH --partition=mypartition</span>
+<span class="c1">#SBATCH --job-name=myjobname</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --ntasks-per-node=32</span>
+<span class="c1">#SBATCH --threads-per-core=1</span>
+
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
+
+<span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">s</span> <span class="n">records</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="during-and-after-training">
+<h3>2. During and after training<a class="headerlink" href="#during-and-after-training" title="Permalink to this headline">¶</a></h3>
+<p>During training, you can monitor te progress by checking the logs in records directory.</p>
+<p><strong>epoch_loss.dat</strong>: loss, RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch</p>
+<p><strong>epoch_loss_valid.dat</strong>: RMSE_Etot, RMSE_Ei, RMSE_F of valid set in each epoch</p>
+<p><strong>model</strong>: directory that contains the obtained models. The latest and the best model will be saved.</p>
+<p>You should compare epoch_loss.dat and epoch_loss_valid.dat to see if an overfitting occurs.</p>
+</div>
+</div>
+<div class="section" id="engine-4-deepmd-kalman">
+<h2>Engine 4: DeepMD + Kalman<a class="headerlink" href="#engine-4-deepmd-kalman" title="Permalink to this headline">¶</a></h2>
+<p>Only 1 feature can be used at each time.</p>
+<p>Files in OP must be compiled first.</p>
+<p><strong>dR_neigh</strong>: set to be True</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">deepmd</span><span class="o">=</span><span class="kc">True</span> <span class="o">-</span><span class="n">n</span> <span class="n">DeepMD_cfg_dp</span> <span class="o">-</span><span class="n">s</span> <span class="n">record</span>
+</pre></div>
+</div>
+<p>Or submit the file via deepMD.sh</p>
+</div>
+<div class="section" id="case-study-linear-model-in-sulphur">
+<h2>Case Study: Linear Model in Sulphur<a class="headerlink" href="#case-study-linear-model-in-sulphur" title="Permalink to this headline">¶</a></h2>
+<p>From this section, we show mutiple examples in order to demonstrate the predictive ability of linear model in various systems. Notice that since these examples are almost pedagogical, and the parameters used wihtin, such as ones to control the formation of training and testing data and the combination of features, are by no means optimal. You should try different parameters to meet you needs in your own projects.</p>
+<p>We start with Sulphur bulk that contains 64 atoms. First, one should prepare training set and testing set. Right now, we only consider linear sampling. You may use python script make_set.py to generate them.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">make_set</span><span class="o">.</span><span class="n">py</span> <span class="n">MOVEMENT</span><span class="o">-</span><span class="mi">1</span> <span class="n">MOVEMENT</span><span class="o">-</span><span class="mi">2</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>You can change “sample_dist” to control the distance between two samples. For example, if a MOVEMENT file has 1000 images, then image 0, image 10, imag 20 … image 1000 will be picked put together as a new MOVEMENT file. In this case we use 10 for training set and 30 for test set. Evidently, sample_dist for training set and test set can determine the overlap between training set and test set.</p>
+<p>In our first try, feature 1 and 2 are used. The training result is shown below.</p>
+<img alt="../_images/S_bulk_lft_[1,2]_tr=10_te=30.png" src="../_images/S_bulk_lft_[1,2]_tr=10_te=30.png" />
+<p>The RMSE of the total energy is 0.946, which is not quite good. One might intuitively propose to include more images in the trianing data to improve the training result. However, from our experience this might not be the best option. Rather, adding more features might bring more improvement. The following example uses feature 1,2,3,and 4.</p>
+<img alt="../_images/S_bulk_lft_[1,2,3,4]_tr=10_te=30.png" src="../_images/S_bulk_lft_[1,2,3,4]_tr=10_te=30.png" />
+<p>Now, RMSE is 0.5093, an significant improvement in comparison to the previous trianing. We further add feature 5 in the training, and the result is shown below.</p>
+<img alt="../_images/S_bulk_lft_[1,2,3,4,5]_tr=10_te=30.png" src="../_images/S_bulk_lft_[1,2,3,4,5]_tr=10_te=30.png" />
+<p>By including feature 5, RMSE is lowered by alomst 50% again.</p>
+</div>
+<div class="section" id="case-study-linear-model-in-bulk-cu">
+<h2>Case Study: Linear Model in bulk Cu<a class="headerlink" href="#case-study-linear-model-in-bulk-cu" title="Permalink to this headline">¶</a></h2>
+<p>We show the training results of Cu bulk. The system contains 108 atoms. ample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4]. Notice that when only feature 1 and 2 are used, the training outcome is already quite good.</p>
+<img alt="../_images/Cu_[1,2].png" src="../_images/Cu_[1,2].png" />
+<img alt="../_images/Cu_[1,2,3,4].png" src="../_images/Cu_[1,2,3,4].png" />
+</div>
+<div class="section" id="case-study-linear-model-in-bcc-lithium">
+<h2>Case Study: Linear Model in BCC Lithium<a class="headerlink" href="#case-study-linear-model-in-bcc-lithium" title="Permalink to this headline">¶</a></h2>
+<p>We show the training results of BCC Lithium. The system contains 230 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5].</p>
+<img alt="../_images/Li_bcc_lft_[1,2]_tr=10_te=13.png" src="../_images/Li_bcc_lft_[1,2]_tr=10_te=13.png" />
+<img alt="../_images/Li_bcc_lft_[1,2,3,4]_tr=10_te=13.png" src="../_images/Li_bcc_lft_[1,2,3,4]_tr=10_te=13.png" />
+<img alt="../_images/Li_bcc_lft_[1,2,3,4,5]_tr=10_te=13.png" src="../_images/Li_bcc_lft_[1,2,3,4,5]_tr=10_te=13.png" />
+</div>
+<div class="section" id="case-study-linear-model-in-fcc-lithium">
+<h2>Case Study: Linear Model in FCC Lithium<a class="headerlink" href="#case-study-linear-model-in-fcc-lithium" title="Permalink to this headline">¶</a></h2>
+<p>We show the training results of FCC Lithium. The systems contains 192 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5].</p>
+<img alt="../_images/Li_fcc_lft_[1,2]_tr=10_te=13.png" src="../_images/Li_fcc_lft_[1,2]_tr=10_te=13.png" />
+<img alt="../_images/Li_fcc_lft_[1,2,3,4]_tr=10_te=13.png" src="../_images/Li_fcc_lft_[1,2,3,4]_tr=10_te=13.png" />
+<img alt="../_images/Li_fcc_lft_[1,2,3,4,5]_tr=10_te=13.png" src="../_images/Li_fcc_lft_[1,2,3,4,5]_tr=10_te=13.png" />
+</div>
+<div class="section" id="bad-case-study-linear-model-in-cuo">
+<h2>(Bad) Case Study: Linear Model in CuO<a class="headerlink" href="#bad-case-study-linear-model-in-cuo" title="Permalink to this headline">¶</a></h2>
+<p>Linear model is not a cure-all. In fact, we find that so far, linear model works reasonably well only in bulk systems that contains one type of atom. Below, we will show some systems that are not well modeled by the linear model.</p>
+<p>Below are the training results of Copper oxide. The system contains 64 atoms. Notice that RMSE of the total energy is not signicifanctly improved as the number of feature increses.</p>
+<img alt="../_images/CuO_[1,2].png" src="../_images/CuO_[1,2].png" />
+<img alt="../_images/CuO_[1,2,3,4].png" src="../_images/CuO_[1,2,3,4].png" />
+</div>
+<div class="section" id="bad-case-study-linear-model-in-graphene">
+<h2>(Bad) Case Study: Linear Model in graphene<a class="headerlink" href="#bad-case-study-linear-model-in-graphene" title="Permalink to this headline">¶</a></h2>
+<p>For 2D materials such as graphene, lienar model also appears to be much less effective. Below are the trianing results for graphene. The system contains 64 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5]. Notice that as number of feature increases, no obvious improvement is observed.</p>
+<img alt="../_images/Graphene_lft_[1,2]_tr=10_te=23.png" src="../_images/Graphene_lft_[1,2]_tr=10_te=23.png" />
+<img alt="../_images/Graphene_lft_[1,2,3,4]_tr=10_te=23.png" src="../_images/Graphene_lft_[1,2,3,4]_tr=10_te=23.png" />
+<img alt="../_images/Graphene_lft_[1,2,3,4,5]_tr=10_te=23.png" src="../_images/Graphene_lft_[1,2,3,4,5]_tr=10_te=23.png" />
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorials_and_examples/GaAs_HSE_REL_Calculation.html" class="btn btn-neutral float-left" title="HSE Relaxation calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
