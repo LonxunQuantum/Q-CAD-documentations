@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charge system relaxation calculation &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Charge system relaxation calculation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Examples/BN_C_Charge_Relaxation_Cal.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="charge-system-relaxation-calculation">
+<h1>Charge system relaxation calculation<a class="headerlink" href="#charge-system-relaxation-calculation" title="Permalink to this headline">¶</a></h1>
+<p>Relaxation for C-doped BN system</p>
+<div class="section" id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="mi">72</span>
+<span class="n">LATTICE</span>
+    <span class="mf">14.99639988</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+    <span class="o">-</span><span class="mf">7.49819994</span>    <span class="mf">12.98726326</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>    <span class="mf">20.00000000</span>
+<span class="n">POSITION</span>
+  <span class="mi">5</span>     <span class="mf">0.05556000</span>     <span class="mf">0.11111000</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">5</span>     <span class="mf">0.22221999</span>     <span class="mf">0.11111000</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">5</span>     <span class="mf">0.38888998</span>     <span class="mf">0.11111000</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">7</span>     <span class="mf">0.61111000</span>     <span class="mf">0.88889008</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">7</span>     <span class="mf">0.77777999</span>     <span class="mf">0.88889008</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">7</span>     <span class="mf">0.94444005</span>     <span class="mf">0.88889008</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.38888999</span>     <span class="mf">0.44444001</span>     <span class="mf">0.25000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">RELAX</span>
+<span class="n">NUM_ELECTRON</span> <span class="o">=</span> <span class="mi">288</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP3</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">RELAX_DETAIL</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">100</span> <span class="mf">0.01</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">E_ERROR</span> <span class="o">=</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>NUM_ELECTRON is the total number of occupied valence electron in the system, one can use it to make the system charged.</p></li>
+</ol>
+</div>
+<p>B.SG15.PBE.UPF, C.SG15.PBE.UPF, N.SG15.PBE.UPF</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>B.SG15.PEB.UPF, C.SG15.PBE.UPF, and N.SG15.PBE.UPF are the pseudopotential files.</p>
+</div>
+</div>
+<div class="section" id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h2>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>For RELAXATION calculation, files to watch during relaxations.</p></li>
+</ol>
+<p>&gt;RELAXSTEPS: concisely reports about the atomic relaxation steps. A typical RELAXSTEPS file looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">It</span><span class="o">=</span>   <span class="o">-</span><span class="mi">1</span> <span class="n">CORR</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267760205584E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.61E+00</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.41E+01</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.48E-03</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.40E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">33</span> <span class="n">dL</span><span class="o">=</span>  <span class="mf">0.00E+00</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span>  <span class="mf">0.00E+00</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span>  <span class="mf">0.00E+00</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.00E+00</span>
+<span class="n">It</span><span class="o">=</span>    <span class="mi">0</span>  <span class="n">NEW</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267351064854E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.20E+01</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.12E+02</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.21E-03</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.38E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">18</span> <span class="n">dL</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.37E+00</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span>  <span class="mf">0.29E+02</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.90E+01</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.93E+00</span>
+<span class="n">It</span><span class="o">=</span>    <span class="mi">1</span> <span class="n">CORR</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267810094490E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.17E+00</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.71E+00</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.56E-04</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.44E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">11</span> <span class="n">dL</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.95E-01</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span>  <span class="mf">0.12E+00</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.90E+01</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.10E+01</span>
+<span class="n">It</span><span class="o">=</span>    <span class="mi">2</span>  <span class="n">NEW</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267804036855E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.31E+00</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.17E+01</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.26E-03</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.42E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">12</span> <span class="n">dL</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.83E-01</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span>  <span class="mf">0.36E+01</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.24E+01</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.92E+00</span>
+<span class="o">...</span>
+<span class="n">It</span><span class="o">=</span>   <span class="mi">16</span> <span class="n">CORR</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267817922913E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.21E-02</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.67E-02</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.54E-04</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.14E-04</span> <span class="n">SCF</span><span class="o">=</span>     <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.55E-03</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.41E-02</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.60E-01</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.72E+00</span>
+<span class="n">It</span><span class="o">=</span>   <span class="mi">17</span> <span class="o">*</span><span class="n">END</span> <span class="n">E</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.1267817922913E+05</span>  <span class="n">Av_F</span><span class="o">=</span>  <span class="mf">0.21E-02</span> <span class="n">M_F</span><span class="o">=</span>  <span class="mf">0.67E-02</span> <span class="n">dE</span><span class="o">=</span>  <span class="mf">0.54E-04</span> <span class="n">dRho</span><span class="o">=</span>  <span class="mf">0.14E-04</span> <span class="n">SCF</span><span class="o">=</span>     <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.55E-03</span> <span class="n">p</span><span class="o">*</span><span class="n">F</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.41E-02</span> <span class="n">p</span><span class="o">*</span><span class="n">F0</span><span class="o">=</span> <span class="o">-</span><span class="mf">0.60E-01</span> <span class="n">Fch</span><span class="o">=</span>  <span class="mf">0.72E+00</span>
+</pre></div>
+</div>
+<p>&gt;REPORT: more detailed information about every electronic and ionic step</p>
+<ol class="arabic simple" start="3">
+<li><p>Other important files.</p></li>
+</ol>
+<p>&gt;final.config: holds the structure of the last ionic step, the structural result (also very important for restarting a relaxation)</p>
+<p>&gt;MOVEMENT: holds the structures of every ionic step during relaxations.</p>
+</div>
+<div class="section" id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="examples/BN_C_Charge_Relaxation_Cal.tar.gz">BN_C_Charge_Relaxation_Cal</a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

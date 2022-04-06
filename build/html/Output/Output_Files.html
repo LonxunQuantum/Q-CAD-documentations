@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Output Files &mdash; q-cad 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> q-cad
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field calculation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">q-cad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Output Files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Output/Output_Files.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="output-files">
+<h1>Output Files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h1>
+<p>The main output file of PWmat is the <strong>REPORT</strong>. The <strong>RELAXSTEPS</strong> file contains the total energies of the electronic and ionic SCF steps, and it is useful for the monitoring of the calculations.</p>
+<p>Here is a comprehensive list of all important output files:</p>
+<div class="section" id="directly-readable-files">
+<h2>Directly readable files:<a class="headerlink" href="#directly-readable-files" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File name</p></th>
+<th class="head"><p>Simple introduction</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>REPORT</p></td>
+<td><p>Main output file</p></td>
+</tr>
+<tr class="row-odd"><td><p>RELAXSTEPS</p></td>
+<td><p>Information about each electronic and ionic SCF step</p></td>
+</tr>
+<tr class="row-even"><td><p>MDSTEPS</p></td>
+<td><p>Information about each electronic and molecular dynamics step</p></td>
+</tr>
+<tr class="row-odd"><td><p>MOVEMENT</p></td>
+<td><p>Contains the atomic position, atomic force, et al for each ionic step</p></td>
+</tr>
+<tr class="row-even"><td><p>NEB.BARRIER</p></td>
+<td><p>Contains the energies along the images for each relaxation steps</p></td>
+</tr>
+<tr class="row-odd"><td><p>final.config</p></td>
+<td><p>Is the updated atom.config file after each calculation</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.KPT</p></td>
+<td><p>Contains the k-point vectors and their weights</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.SYMM</p></td>
+<td><p>Contains symmetry operation information</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.OCC</p></td>
+<td><p>The occupation of eigen states</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.VATOM</p></td>
+<td><p>The atom center potential for SCF or MD simulation</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.FERMI</p></td>
+<td><p>Contains the fermi energy</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.FORCE</p></td>
+<td><p>Forces on the atoms</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.STRESS</p></td>
+<td><p>Stess tensor</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.QDIV</p></td>
+<td><p>The atomic charge on each atom</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.ENDIV</p></td>
+<td><p>The decomposed atomic energy on each atom</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.ATOMSPIN</p></td>
+<td><p>Contains local charge and magnetic moment when SPIN = 222</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="binary-files">
+<h2>Binary files:<a class="headerlink" href="#binary-files" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File name</p></th>
+<th class="head"><p>Simple introduction</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>OUT.WG</p></td>
+<td><p>Contains wave function</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.HSEWR(i)</p></td>
+<td><p>Real space wave functions for the Fork exchange kernel for all the extended k-points on GPU(i)</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.REAL.RHOWF_SP</p></td>
+<td><p>The charge density or wave function in real space</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.RHO</p></td>
+<td><p>Charge density output file</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.RHO_2</p></td>
+<td><p>Charge density for spin down components</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.RHO_SOM</p></td>
+<td><p>A 2x2 complex spin matrix density</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.RHO_4DIELECTRIC</p></td>
+<td><p>The rho_e to be used to generate the dielectric function</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.RHO_POLARIZE</p></td>
+<td><p>The solvent induced polarization charge</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.V_POLARIZE</p></td>
+<td><p>The polarization potential generated by the polarization charge OUT.RHO_POLARIZE</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.RHOP_VHION</p></td>
+<td><p>The polarization charge multiplied by the electric static potentail of the solute molecule</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.VR</p></td>
+<td><p>Total potential output file</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.VR_hion</p></td>
+<td><p>Hartree + Vion, the electrostatic potential without XC potential</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.VR_2</p></td>
+<td><p>Potential for spin down components</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.VR_SOM</p></td>
+<td><p>A 2x2 complex spin matrix potential</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.VR_DELTA</p></td>
+<td><p>A real up-down potential</p></td>
+</tr>
+<tr class="row-odd"><td><p>OUT.SPIN_X/Y/Z</p></td>
+<td><p>Spin charge density in x/y/z direction at every r point</p></td>
+</tr>
+<tr class="row-even"><td><p>OUT.EIGEN</p></td>
+<td><p>The eigen energies output file</p></td>
+</tr>
+<tr class="row-odd"><td><p>bpsiiofil10000x</p></td>
+<td><p>Wave function to atomic orbital projection file for kpoint x</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
