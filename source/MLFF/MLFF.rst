@@ -254,7 +254,7 @@ A sample slurm script is given below. Notice that when submitting jobs through s
 
 In our example, a new MOVEMENT file can be found after the inference step. You can copy plot_mlff_inference.py from utils/ directory to visualize the results. Below is the plot of results for Cu1646 case. 
 
-.. image:: pictures/cu1646_linear.png
+.. image:: pictures/lft.png
 
 
 Prediction
@@ -365,7 +365,7 @@ After MD, you make visualize the results as introduced in the linear model secti
 
 The graph below shows a VV inference on Cu1646 case. However, there is no guarantee that the choice of parameters is optimal. We will further explore better combinations of parameters. 
 
-.. image:: pictures/cu1646_vv.png 
+.. image:: pictures/vv.png 
 
 Engine 3: Kalman Filter-based Neural Network
 --------------------------------------------
@@ -539,7 +539,7 @@ Run
 
 to generate plot of inference result. The following plot shows the KFNN inference result on cu1646 case. 
 
-.. image:: pictures/nn_test.png  
+.. image:: pictures/nn.png  
 
 Engine 4: Kalman Filter-based Deep Potential
 ---------------------------
