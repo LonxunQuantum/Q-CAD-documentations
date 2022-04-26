@@ -5,17 +5,12 @@ Machine Learning Force Field (MLFF) platform aims at generating force fields wit
 
         1. Linear Model
 
-        2. Nonlinear Model
+        2. Nonlinear VV Model
 
         3. Kalman Filter-based Neural Netowrk (KFNN)
 
-        4. Kalman Filter-based DeepMD (KF-DeepMD)
+        4. Kalman Filter-based Deep Potential Model(KFDP)
 
-Theoretical Backgrounds
------------------------
-| Phys. Rev. Lett. 98, 146401
-| Phys. Rev. B 99, 064103  
-| ...
 
 Environment Setup 
 -----------------
@@ -41,13 +36,7 @@ After mlff has been created, re-enter the current environment.
     conda deactivate
     conda activate mlff
 
-You should identify the architecture of your Nvidia GPU and install a compatible pytorch version accordingly. We use RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. Since we've had CUDA 11.3 loaded, pytorch with cudatoolkit 11.3 shoule be installed. 
-
-::
-
-    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-
-After this, install the rest packages. 
+After this, install the following packages. 
 
 ::
 
@@ -57,13 +46,21 @@ After this, install the rest packages.
     conda install numba         
     conda install tensorboard
 
-You can check the following article to determine which CUDA to use on your GPU device. 
+Next, you should identify the architecture of your Nvidia GPU and install a compatible pytorch version. We take RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. **Also**, the one-click installation via conda only supports 4 CUDA version, which are CUDA 10.2, CUDA 11.1 CUDA 11.3 and CUDA 11.5. Thus, CUDA 11.1, CUDA 11.3 and CUDA 11.5 are reasonable choice for RTX 3080Ti. We choose to use CUDA 11.3 as an example. Therefore, you can install pytorch with the following command
+
+::
+
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch 
+
+The way to load a speific CUDA version differs across platforms. If you are working on a cluster, it is common to use **module load** command to load specific CUDA library. If you are working on your own workstation, unless a specific CUDA version is pre-installed, you should install it on your own. Refer to Nvidia official website for more details. 
+
+You can check the following article to determine which CUDA to use on your GPU device.  
 
 ::
 
     https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/
 
-Next, enter src/op and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, use the the following to start a interactive job for compilation. 
+Having configured CUDA correctly, enter src/op and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, you can use the the following to start a interactive job for compilation. 
 
 ::
 
@@ -87,7 +84,7 @@ To compile, use the following command.
 
     python3 setup.py install  
 
-MLFF switches to use the above modules when GPU is available. However, this is a good option only for KF-DeepMD engine. For KFNN, training on GPU appears less efficient than on CPU. Certainly, we will bring modifications in future releases to better utlize the power of GPU in KFNN. We will eleborate on how to choose the computing device in following sections. 
+MLFF switches to use the above modules when GPU is available. However, this is a good option only for KFDP engine. For KFNN, training on GPU appears less efficient than on CPU. Certainly, we will bring modifications in future releases to better utlize the power of GPU in KFNN. We will eleborate on how to choose the computing device in following sections. 
 
 
 Now, enter the src directory and compile source codes. Intel 2020 module must be loaded. 
@@ -130,11 +127,6 @@ A sample etot.input is shown below.
     E_error = 1.0e-6
     Rho_error = 1.0e-4
 
-The resultant MOVEMENT files should be combined into one single file. MOVEMENT files can comes from the same kind of system with different atom number. Use the following command to do so. 
-
-::
-
-    cat MOVEMENT_1 MOVEMENT_2 ... > MOVEMENT 
 
 Names other than "MOVEMENT" are not allowed.  
 
@@ -155,10 +147,11 @@ First, export the absolute path to src/bin in the ~/.bashrc. You can obtain the 
     vim ~/.bashrc
     export PATH=/absolute/path/to/bin:$PATH
 
-Create a new directory (call it examples) that will contain all the cases. This directory should be created in the directory that contains README.md. Enter directory examples, and create a new directory for a single system. In our exmaple, we study Copper, whose directory is called Cu1646. 
+Create a new directory (call it examples) that will contain all the cases. This directory should be created in the directory that contains README.md. Enter examples, and create a new directory for a single system. In our exmaple, we study Copper, whose directory is called Cu1646. 
 
+In Cu1646, create a directory callled **PWdata**. In PWdata, **create a single directory for each MOVEMENT file you wish to train.**, and move all the MOVEMENT files in their corresponding directory. Name of the directory does not matter here. It is very important to put multiple MOVEMENT files in seperate directories: that being said, do not concatenate multiple MOVEMENT file into one. This is because in seper.py, a simple 80%-20% cut is used to form the training set and the validation set. You will probably end up with having a case that is not trained at all and only used as validation data! 
 
-In Cu1646, create a directory callled **PWdata** and move the MOVEMENT file in it. A parameters.py file should appear in the same directory. An environmental configuration also has to be done.
+A parameters.py file should appear in the same directory in which **PWdata** resides. An environmental configuration also has to be done. 
 
 **codedir**: the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. This step 
 
@@ -184,9 +177,9 @@ For feature generation, the folllowing parameters should be set correctly.
 
         6. Spectral Neighbor Analysis Potential(SNAP)
 
-        7. deepMD-Chebyshev(deepMD1)
+        7. Deep Potential-Chebyshev(dp1)
         
-        8. deepMD-Gaussian(deepMD2) 
+        8. Deep Potential-Gaussian(dp2) 
 
 Please refer to Theoretical Backgrounds section for more details. Usually, combinations such as [1,2],[3,4],[5],[6],[7],[8] are used, but you are free to explore other combinations. In the given example, we use [1,2]. Note that feature 6 could be slow. 
 
@@ -194,7 +187,7 @@ Please refer to Theoretical Backgrounds section for more details. Usually, combi
 
 **Rc_M**: the cutoff radius of feature generation, in Angstrom. Since all of our 8 features are "local", which assumes that atomic properties such as energy are determined by near neighbors, this parameter controls how many neighbors are taken into account when generating features. Its default value is 6, but we recommand you trying different values for different system. 
 
-**maxNeighborNum**: its default value is 100, so you can try it with altering. However, for some system it is not enough to accommodate all the neighbors, and the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below. 
+**maxNeighborNum**: its default value is 100. However, for some systems it is not enough to accommodate all the neighbors, and thus the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below. 
 
 .. image:: pictures/feature_success.png
 
@@ -206,6 +199,7 @@ After parameters are all set, run mlff.py to obtain the features.
 ::
     
     mlff.py
+
 
 Having generated the feature data, you can now feed them in various training engines. **isCalcFeat** should be turned off now. 
 
@@ -220,7 +214,14 @@ Turn on **isFitLinModel** to lanuch linear fitting. After training, turn off **i
 2.Inference
 ^^^^^^^^^^^
 
-After training, you can use the model to run MD calculation in an alternative data set. We call this step inference. Prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.  
+After training, you can use the model to run MD calculation. We call this step inference. There are two kinds of inference: test and prediction. In test, one first prepare a MOVEMENT file generated by Ab Initio calculation, use the obtained force field to calculate energy and force, and compare them against the Ab Initio results. This step can be seen as a more rigorous assessment of the quality of the force field. 
+
+In comparison, prediction solves real challenges. Like a Ab Initio MD calculation, it starts with a initial image, and simulates the ensuing process based on the force field. 
+
+Test
+""""
+
+Prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.  
 
 Several parameters should be set. 
 
@@ -253,7 +254,13 @@ A sample slurm script is given below. Notice that when submitting jobs through s
 
 In our example, a new MOVEMENT file can be found after the inference step. You can copy plot_mlff_inference.py from utils/ directory to visualize the results. Below is the plot of results for Cu1646 case. 
 
-.. image:: pictures/cu1646_linear.png
+.. image:: pictures/lft.png
+
+
+Prediction
+""""""""""
+
+
 
 
 Engine 2: Nonlinear Model(VV) 
@@ -358,7 +365,7 @@ After MD, you make visualize the results as introduced in the linear model secti
 
 The graph below shows a VV inference on Cu1646 case. However, there is no guarantee that the choice of parameters is optimal. We will further explore better combinations of parameters. 
 
-.. image:: pictures/cu1646_vv.png 
+.. image:: pictures/vv.png 
 
 Engine 3: Kalman Filter-based Neural Network
 --------------------------------------------
@@ -382,14 +389,11 @@ First, several NN parameters should be set.
 
 as default. Only change the first two pairs when necessary. It is also recommended not to make these number too large. 
 
-
 After this, several parameters should also be set.  
 
 **natoms** If more than one type of atom present, one should also set natoms correctly. For example, if the system of interest consists of 4 Cu atom and 7 Au atom, then you should set atomType = [29,79] and natoms = [4,7]. 
 
-**nFeatures** It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42. 
-
-We now use seper.py to devide data into a training set and a validation set. Currently, the division is a simple cut between first 80% and 20%. We might provide more complicated division method in the future. 
+We now use seper.py to devide data into a training set and a validation set. Currently, the division is a simple cut between first 80% and 20%. We might provide more complicated division method in the future. Run the following command in the same directory. 
 
 ::
 
@@ -403,6 +407,8 @@ Next, use gen_data.py to re-format data. After this step you will find them in t
 
 Finally, set the following parameters:
 
+**nFeatures** It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42. 
+
 **dR_neigh**: set to be False 
 
 **use_GKalman**: set to be True
@@ -410,6 +416,8 @@ Finally, set the following parameters:
 **use_LKalman**: set to be False
 
 **is_scale**: set to be True
+
+**storage_scaler**: set to be True. **This is important since it saves the scaler of data for later MD runs.** 
 
 **itype_Ei_mean**: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,
 
@@ -440,10 +448,10 @@ you can just set
 
 **n_epoch**: the number of epoch for training. You can start with a few hundred. 
 
-You can now launch train.py. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add **-c** flag. 
+You can now launch train.py. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add **--cpu** flag. 
 ::
     
-    train.py -s records -c 
+    train.py -s records --cpu
 
 You can also use scripts to submit a job on you cluster. For example, 
 
@@ -482,10 +490,62 @@ You can compare epoch_loss.dat and epoch_loss_valid.dat to see if an overfitting
 3. Inference 
 ^^^^^^^^^^^^
 
-Engine 4: Kalman Filter-based DeepMD
-------------------------------------
 
-In this module, we incorporates Kalman filter upon open source DeepMD kit. However, you may still use the DeepMD funtionalities alone without Kalman filter. 
+Copy **read_torch_wij.py** from diretory utils to the directory you are working in. Also, copy the compiled executable **main_MD.x** in QCAD/fortran_code into **src/bin**. 
+
+Run 
+
+::
+
+    python3 read_torch_wij.py
+
+in your working directory. You should find **Wij.txt** and **data_scaler.txt** in /fread_dfeat after this step. 
+
+Next, set the following parameters in parameters.py 
+
+**isNewMd100**: set to be true 
+
+**imodel**: 3, i.e. MD mode for NN
+
+**md_num_process**: number of process you wish to use. 
+
+Next, run 
+
+::
+
+    mlff.py
+
+or submit job via script
+
+::
+
+    #!/bin/sh
+    #SBATCH --partition=mycpupartition
+    #SBATCH --job-name=myjobname
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=32
+    #SBATCH --threads-per-core=1
+
+    conda activate mlff_debug
+
+    mlff.py
+
+This step is similar to the MD calculation in PWmat. After this, you can find a MOVEMENT file in the currently directory, which is generated by the MLFF-MD calculation. Copy plot_nn_test.py from /utils to the current working directory. 
+
+Run
+
+::
+
+    python3 plot_mlff_test.py 
+
+to generate plot of inference result. The following plot shows the KFNN inference result on cu1646 case. 
+
+.. image:: pictures/nn.png  
+
+Engine 4: Kalman Filter-based Deep Potential
+---------------------------
+
+In this module, we incorporates Kalman filter upon Deep Potential model. You may choose to run DP with or without Kalman filter. 
 
 1.Training
 ^^^^^^^^^^
@@ -494,11 +554,11 @@ Unlike all the other engines, you can only use 1 feature at each time. Having ma
 
 **dR_neigh**: set to be Trues 
 
-**use_LKalman**: set to be true if you wish to apply local Kalman filter upon deepMD. Note that **do not** attempt to use global KF, since memory usage will be unreasonably large. You should set the network configuration accordingly. See below. 
+**use_LKalman**: set to be true if you wish to apply local Kalman filter upon DP. Note that **do not** attempt to use global KF, since memory usage will be unreasonably large. You should set the network configuration accordingly. See below. 
 
 **batch_size**: without KF, batch size can be larger than 1. You can start with 4. But if KF is applied, batch size can only be 1
 
-**n_epoch**: You need a epoch number larger than in KFNN. DeepMD might take several thousands epochs to converge. However, since a single DeepMD epoch is faster, there is no substantial difference between the total training time of DeepMD and that of KFNN. If KF is used, epoch number can be smaller. 
+**n_epoch**: You need a epoch number larger than in KFNN. DP might take several thousands epochs to converge. However, since a single DP epoch is faster, there is no substantial difference between the total training time of DP and that of KFNN. If KF is used, epoch number can be smaller. 
 
 **nFeatures**: check the feature number in output/outx, with x being the feature index you chose. 
 
@@ -506,15 +566,15 @@ Having done the above, run **seper.py** and **gen_data.py** as in engine 3.
 
 To initiate training, you should also choose a network configuration class in accordance with the model. 
 
-**DeepMD_cfg_dp**: without KF
+**DP_cfg_dp**: without KF
 
-**DeepMD_cfg_dp_kf**: with KF 
+**DP_cfg_dp_kf**: with KF 
 
 In trainning, pass it in as an argument after flag **-n**.
 
 ::
     
-    train.py --deepmd=True -n DeepMD_cfg_dp -s record
+    train.py --dp=True -n DP_cfg_dp -s record
 
 You can also use the following script to submit job on your cluster. You have to submit this to nodes with at least 1 available GPU. 
 
@@ -530,5 +590,7 @@ You can also use the following script to submit job on your cluster. You have to
 
     conda activate mlff
 
-    train.py --deepmd=True -n DeepMD_cfg_dp -s record
+    train.py --dp=True -n DP_cfg_dp -s record 
+
+
 
