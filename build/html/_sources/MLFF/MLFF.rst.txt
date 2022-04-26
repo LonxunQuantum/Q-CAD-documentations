@@ -1,16 +1,26 @@
-Machine Learning Force Field calculation
+Machine Learning Force Field
 ========================================
-Machine Learning Force Field for MD calculation
+
+Machine Learning Force Field (MLFF) platform aims at generating force fields with accuracy comparable to Ab Initio DFT molecular dynamics. It provides 8 types of features with translation, rotation, and permutation invariance. It also supports 4 engines for training and prediction, which are: 
+
+        1. Linear Model
+
+        2. Nonlinear Model
+
+        3. Kalman Filter-based Neural Netowrk (KFNN)
+
+        4. Kalman Filter-based DeepMD (KF-DeepMD)
 
 Theoretical Backgrounds
 -----------------------
 | Phys. Rev. Lett. 98, 146401
 | Phys. Rev. B 99, 064103  
+| ...
 
 Environment Setup 
 -----------------
 
-We recommmend using anaconda for package installing and management. You should first install Anaconda following the steps shown on the official website. Please don't attempt to use miniconda instead of Anaconda, since it might incur various dependecy and path errors that are hard to debug. 
+We recommmend using anaconda for package installing and management. You should first install Anaconda following the steps shown on its official website. Please don't attempt to use miniconda instead of Anaconda, since it might incur various dependecy and path errors that are hard to debug. 
 
 To install conda environment, use the following command. You may choose a new version of Anaconda. 
 
@@ -24,44 +34,61 @@ Then, create a new environment for this module.
     
     conda create -n mlff python=3.8
 
-Next, install relevant packages in the current environment. Notice that the first line has included the required packages for GPU acceleration. Make sure your CUDA version is larger than that of cudatoolkit. 
-
-::
-
-    conda install pytorch=1.8.1
-    conda install pandas
-    conda install matplotlib
-    conda install scikit-learn-intelex
-    conda install numba 
-    conda install tensorboard
-
-
-::
-
-    new:
-    conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
-    conda install pandas
-    conda install matplotlib
-    conda install scikit-learn-intelex
-    conda install numba 
-
-Compiling pytorch from source
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-You might need to update submodules for multiple times due to unstable internet connection to GitHub server. 
-
-::  
+After mlff has been created, re-enter the current environment. 
     
-    git submodule update --init --recursive 
-
-
-
-After installation, re-enter the current environment. 
-
 :: 
-
+    
     conda deactivate
     conda activate mlff
+
+You should identify the architecture of your Nvidia GPU and install a compatible pytorch version accordingly. We use RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. Since we've had CUDA 11.3 loaded, pytorch with cudatoolkit 11.3 shoule be installed. 
+
+::
+
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+
+After this, install the rest packages. 
+
+::
+
+    conda install pandas
+    conda install matplotlib
+    conda install scikit-learn-intelex
+    conda install numba         
+    conda install tensorboard
+
+You can check the following article to determine which CUDA to use on your GPU device. 
+
+::
+
+    https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/
+
+Next, enter src/op and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, use the the following to start a interactive job for compilation. 
+
+::
+
+    srun -p mygpupartition --gres=gpu:1 --pty bash
+
+**You should make sure that your g++ compiler supports C++ 14 standard!** Also, you should modify the path in setup.py. It should be the bin directory in your CUDA path. To obtain the CUDA path, use 
+
+::
+
+    echo $CUDADIR
+
+and the path in setup.py file should therefore be:
+
+::
+
+    what/echo/CUDADIR/tells/you/bin
+
+To compile, use the following command.
+
+::
+
+    python3 setup.py install  
+
+MLFF switches to use the above modules when GPU is available. However, this is a good option only for KF-DeepMD engine. For KFNN, training on GPU appears less efficient than on CPU. Certainly, we will bring modifications in future releases to better utlize the power of GPU in KFNN. We will eleborate on how to choose the computing device in following sections. 
+
 
 Now, enter the src directory and compile source codes. Intel 2020 module must be loaded. 
 
@@ -72,7 +99,7 @@ Now, enter the src directory and compile source codes. Intel 2020 module must be
     sh build.sh
     
 
-After compilation is done, you should modify environment variables. The absolute path of src/bin should be exported in ~/.bashrc. You can use "echo $PWD" to obtain the absolute path. 
+After compilation, you should modify environment variables. The absolute path of src/bin should be exported in ~/.bashrc. You can use "echo $PWD" to obtain the absolute path.
 
 ::
 
@@ -103,7 +130,7 @@ A sample etot.input is shown below.
     E_error = 1.0e-6
     Rho_error = 1.0e-4
 
-The resultant MOVEMENT files should be combined into one single file. Use the following command to do so. 
+The resultant MOVEMENT files should be combined into one single file. MOVEMENT files can comes from the same kind of system with different atom number. Use the following command to do so. 
 
 ::
 
@@ -119,7 +146,9 @@ Configuration and features generation
 -------------------------------------
 
 First, export the absolute path to src/bin in the ~/.bashrc. You can obtain the absolute path via command "pwd". 
+
 ::
+
     cd src/bin
     pwd
     (copy the absolute path)
@@ -159,15 +188,17 @@ For feature generation, the folllowing parameters should be set correctly.
         
         8. deepMD-Gaussian(deepMD2) 
 
-Please refer to Theoretical Backgrounds section for more details. Usually, combinations such as [1,2],[3,4],[5],[7],[8] are used, but you are free to explore other combinations. In the given example, we use [1,2]. 
+Please refer to Theoretical Backgrounds section for more details. Usually, combinations such as [1,2],[3,4],[5],[6],[7],[8] are used, but you are free to explore other combinations. In the given example, we use [1,2]. Note that feature 6 could be slow. 
 
 **isCalcFeat**: set to be True. Notice that this step will generate feature output files that can be reused by other training processes. They are stored in directory fread_dfeat. 
+
+**Rc_M**: the cutoff radius of feature generation, in Angstrom. Since all of our 8 features are "local", which assumes that atomic properties such as energy are determined by near neighbors, this parameter controls how many neighbors are taken into account when generating features. Its default value is 6, but we recommand you trying different values for different system. 
 
 **maxNeighborNum**: its default value is 100, so you can try it with altering. However, for some system it is not enough to accommodate all the neighbors, and the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below. 
 
 .. image:: pictures/feature_success.png
 
-If, however, you find that no MD information was printed, like the scenario shown below, you shoud assign **maxNeighborNum** with a larger number. 
+If, however, you find that no information was printed, like the scenario shown below, you shoud assign **maxNeighborNum** with a larger number. 
 
 .. image:: pictures/feature_fail.png 
 
@@ -189,7 +220,7 @@ Turn on **isFitLinModel** to lanuch linear fitting. After training, turn off **i
 2.Inference
 ^^^^^^^^^^^
 
-After training, you can use the model to run MD calculation in an alternative data set. We call this step inference. To do so, prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.  
+After training, you can use the model to run MD calculation in an alternative data set. We call this step inference. Prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.  
 
 Several parameters should be set. 
 
@@ -228,17 +259,106 @@ In our example, a new MOVEMENT file can be found after the inference step. You c
 Engine 2: Nonlinear Model(VV) 
 -----------------------------
 
-VV (vector * vector)goes beyond linear fitting by introducing nonlinearity. In linear model, we approximate the total energy by a linear combination of features. But in VV, we build a new set of features from the old ones. These new features are generated by feeding old ones into nonlinear functions. For example, they could be exp(-F_i), F_i* F_i, F_i* F_i *F_i, .etc.
+VV(vector-vector) goes beyond linear fitting by introducing nonlinearity. In linear model, we approximate the total energy by a linear combination of features. But in VV, we build a new set of features from the old ones. These new features are generated by feeding old ones into nonlinear functions. For example, they could be exp(-F_i), F_i* F_i, F_i* F_i *F_i, .etc.
 
 1.Training
 ^^^^^^^^^^
 
 First, perform feature generation and fitting as in linear model. To do so, set isCalcFeat=True and isFitLinModel=True, and run mlff.py. 
 
-Next, run select_VV_MM.r twice to obtain some new features. In the first run, 
+After the first step, enter **fread_dfeat** directory and run 
+
+::
+
+    select_mm_VV.r
+
+This routine generate secondary features based on the exisisting ones. You should input the following parameters.
+
+**itype**: type of atom taken into account. If system only consists of 1 type of atom, input 1; if there are more than 1 type of atom, input should be 1, or 2, or 3, .etc. We will elaborate on how to deal with more than one type of atom below. 
+
+**iseed**: a minus integer seed. It is used to randomly form a temporary training set and test set. 
+
+**include feat**: input 0
+
+**iscan_MM, or not**: input 1
+
+You can observe that this routine is looping over the secondary features. Finally, 8000 secondary features are obtained. Each loop takes increasingly long time since it involves diagonalization of a dense matrix of increasing dimension. 
+
+Next, run select_VV_MM.r again to select the best secondary features. Input parameters as follows:
+
+**itype**: same as previous run
+
+**iseed**: same as previous run
+
+**include feat**: input 0
+
+**iscan_MM, or not**: input 0
+
+**input mm**: the number of secondary feature you wish to choose. 1000 to 2000 is a resonable range. 
+
+For system with more than one type of element, you should run the above process more than once. For clarity, we call the two runs of select_mm_VV.r a single "selection". For each type of element, you should run selection with resepct to each element. That is, run the whole selection with **itype=1**, and next **itype=2**, **itype=3**, etc. **iseed** and **input mm** must match in each selection. 
+
+Now, prepare a file called *select_VV.input*, which should have the following format 
+
+::  
+    
+    10
+    2000
+    20
+    0
+    20,4,2.0,0.001
+
+Except to modify the number to match your input mm parameter, you can use the rest as a template. 
+
+After this, run feat_dist_xp.r. Choose 1 when input selection pops up. 
+
+::
+
+    feat_dist_xp.r
+
+Finally, use fit_VV_forceMM.r to fit. You can observe that the numbe of feature used to fit, as well as the time to fit, significantly increased. 
+
+::
+
+    fit_VV_forceMM.r
 
 2. Inference 
-^^^^^^^^^^^^^ 
+^^^^^^^^^^^^^
+
+Quit from **fread_dfeat** to tyhe directory that contains parameters.py, and prepare a MD directory containing test data as introduced in Linear model section. Turn off **isCalcFeat** and **isFitLinModel** in parameters.py. Modify the following parameters to lanuch MD calculation
+
+**isNewMd100**: set to be true 
+
+**imodel**: 2, i.e. MD mode for VV
+
+**md_num_process**: number of process you wish to use. 
+
+Next, run 
+
+::
+
+    mlff.py
+
+or submit job via script
+
+::
+
+    #!/bin/sh
+    #SBATCH --partition=mycpupartition
+    #SBATCH --job-name=myjobname
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=32
+    #SBATCH --threads-per-core=1
+
+    conda activate mlff_debug
+
+    mlff.py
+
+After MD, you make visualize the results as introduced in the linear model section. 
+
+The graph below shows a VV inference on Cu1646 case. However, there is no guarantee that the choice of parameters is optimal. We will further explore better combinations of parameters. 
+
+.. image:: pictures/cu1646_vv.png 
 
 Engine 3: Kalman Filter-based Neural Network
 --------------------------------------------
@@ -254,7 +374,13 @@ First, several NN parameters should be set.
 
 **nLayer** The layer of neural network. Notice that more layers does not mean better result! In our example, we set it to be 3. 
 
-**nNode** The dimension of nodes. We use 15 as default. Since a slight increase in it will lead to dramatic increase in training time. The reason is that the triaining scales as O(nNode^6). 
+**nNode** The dimension of nodes. We have used 
+
+::
+
+    nNodes = np.array([[15,15],[15,15],[1,1]])
+
+as default. Only change the first two pairs when necessary. It is also recommended not to make these number too large. 
 
 
 After this, several parameters should also be set.  
@@ -294,7 +420,7 @@ Finally, set the following parameters:
     import numpy 
     numpy.load("engy_scaled.npy")
 
-You don't need an excact mean, and a rough estimate should suffice. For example, if the commands above returns something like this:
+You don't need an excact mean, and a rough estimate should suffice. For example, for a CuO system which contains 2 types of atom, if the commands above returns something like this:
 
 ::
 
@@ -312,13 +438,12 @@ you can just set
 
     itype_Ei_mean=[174.0,437.0] 
 
-**n_epoch**: the number of epoch for training. 
+**n_epoch**: the number of epoch for training. You can start with a few hundred. 
 
-You can now launch train.py. You should also specify a directory with flag -s to save the logs and models.
-
+You can now launch train.py. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add **-c** flag. 
 ::
     
-    train.py -s records 
+    train.py -s records -c 
 
 You can also use scripts to submit a job on you cluster. For example, 
 
@@ -328,120 +453,82 @@ You can also use scripts to submit a job on you cluster. For example,
     #SBATCH --partition=mypartition
     #SBATCH --job-name=myjobname
     #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=32
+    #SBATCH --ntasks-per-node=num_of_threads
     #SBATCH --threads-per-core=1
     
     conda activate mlff 
 
-    train.py -s records
+    train.py -s records 
 
+2. During training
+^^^^^^^^^^^^^^^^^^
 
-2. During and after training
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+During training, you can monitor te progress by checking the logs in **records**directory. 
 
-During training, you can monitor te progress by checking the logs in records directory. 
+**epoch_loss.dat**: loss, RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch. 
 
-**epoch_loss.dat**: loss, RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch
-
-**epoch_loss_valid.dat**: RMSE_Etot, RMSE_Ei, RMSE_F of valid set in each epoch
+**epoch_loss_valid.dat**: RMSE_Etot, RMSE_Ei, RMSE_F of valid set in each epoch.  
 
 **model**: directory that contains the obtained models. The latest and the best model will be saved. 
 
-You should compare epoch_loss.dat and epoch_loss_valid.dat to see if an overfitting occurs. 
+You can use -R to plug in previously trained models. It will automatically search for "latest.pt" in record/model 
 
-Engine 4: DeepMD + Kalman 
----------------------------
+::
 
+    train.py -R  
 
-Only 1 feature can be used at each time. 
+You can compare epoch_loss.dat and epoch_loss_valid.dat to see if an overfitting occurs. 
 
-Files in OP must be compiled first. 
+3. Inference 
+^^^^^^^^^^^^
 
-**dR_neigh**: set to be True 
+Engine 4: Kalman Filter-based DeepMD
+------------------------------------
+
+In this module, we incorporates Kalman filter upon open source DeepMD kit. However, you may still use the DeepMD funtionalities alone without Kalman filter. 
+
+1.Training
+^^^^^^^^^^
+
+Unlike all the other engines, you can only use 1 feature at each time. Having made sure this, modify the following parameters accordingly. 
+
+**dR_neigh**: set to be Trues 
+
+**use_LKalman**: set to be true if you wish to apply local Kalman filter upon deepMD. Note that **do not** attempt to use global KF, since memory usage will be unreasonably large. You should set the network configuration accordingly. See below. 
+
+**batch_size**: without KF, batch size can be larger than 1. You can start with 4. But if KF is applied, batch size can only be 1
+
+**n_epoch**: You need a epoch number larger than in KFNN. DeepMD might take several thousands epochs to converge. However, since a single DeepMD epoch is faster, there is no substantial difference between the total training time of DeepMD and that of KFNN. If KF is used, epoch number can be smaller. 
+
+**nFeatures**: check the feature number in output/outx, with x being the feature index you chose. 
+
+Having done the above, run **seper.py** and **gen_data.py** as in engine 3. 
+
+To initiate training, you should also choose a network configuration class in accordance with the model. 
+
+**DeepMD_cfg_dp**: without KF
+
+**DeepMD_cfg_dp_kf**: with KF 
+
+In trainning, pass it in as an argument after flag **-n**.
 
 ::
     
     train.py --deepmd=True -n DeepMD_cfg_dp -s record
 
-
-Or submit the file via deepMD.sh
-
-
-Case Study: Linear Model in Sulphur 
------------------------------------
-
-From this section, we show mutiple examples in order to demonstrate the predictive ability of linear model in various systems. Notice that since these examples are almost pedagogical, and the parameters used wihtin, such as ones to control the formation of training and testing data and the combination of features, are by no means optimal. You should try different parameters to meet you needs in your own projects. 
-
-We start with Sulphur bulk that contains 64 atoms. First, one should prepare training set and testing set. Right now, we only consider linear sampling. You may use python script make_set.py to generate them. 
+You can also use the following script to submit job on your cluster. You have to submit this to nodes with at least 1 available GPU. 
 
 ::
-    
-    python make_set.py MOVEMENT-1 MOVEMENT-2 ... 
 
-You can change "sample_dist" to control the distance between two samples. For example, if a MOVEMENT file has 1000 images, then image 0, image 10, imag 20 ... image 1000 will be picked put together as a new MOVEMENT file. In this case we use 10 for training set and 30 for test set. Evidently, sample_dist for training set and test set can determine the overlap between training set and test set. 
+    #!/bin/sh
+    #SBATCH --partition=mygpupartition
+    #SBATCH --job-name=cu1646_dp1
+    #SBATCH --gres=gpu:1 
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=4
+    #SBATCH --threads-per-core=1
 
-In our first try, feature 1 and 2 are used. The training result is shown below. 
+    conda activate mlff
 
-.. image:: pictures/S_bulk_lft_[1,2]_tr=10_te=30.png 
+    train.py --deepmd=True -n DeepMD_cfg_dp -s record
 
-The RMSE of the total energy is 0.946, which is not quite good. One might intuitively propose to include more images in the trianing data to improve the training result. However, from our experience this might not be the best option. Rather, adding more features might bring more improvement. The following example uses feature 1,2,3,and 4. 
-
-.. image:: pictures/S_bulk_lft_[1,2,3,4]_tr=10_te=30.png 
-
-Now, RMSE is 0.5093, an significant improvement in comparison to the previous trianing. We further add feature 5 in the training, and the result is shown below. 
-
-.. image:: pictures/S_bulk_lft_[1,2,3,4,5]_tr=10_te=30.png 
-
-By including feature 5, RMSE is lowered by alomst 50% again. 
-
-Case Study: Linear Model in bulk Cu 
-------------------------------------
-
-We show the training results of Cu bulk. The system contains 108 atoms. ample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4]. Notice that when only feature 1 and 2 are used, the training outcome is already quite good. 
-
-.. image:: pictures/Cu_[1,2].png
-
-.. image:: pictures/Cu_[1,2,3,4].png
-
-Case Study: Linear Model in BCC Lithium  
----------------------------------------
-We show the training results of BCC Lithium. The system contains 230 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5]. 
-
-.. image:: pictures/Li_bcc_lft_[1,2]_tr=10_te=13.png
-
-.. image:: pictures/Li_bcc_lft_[1,2,3,4]_tr=10_te=13.png
-
-.. image:: pictures/Li_bcc_lft_[1,2,3,4,5]_tr=10_te=13.png
-
-Case Study: Linear Model in FCC Lithium  
----------------------------------------
-We show the training results of FCC Lithium. The systems contains 192 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5]. 
-
-.. image:: pictures/Li_fcc_lft_[1,2]_tr=10_te=13.png
-
-.. image:: pictures/Li_fcc_lft_[1,2,3,4]_tr=10_te=13.png
-
-.. image:: pictures/Li_fcc_lft_[1,2,3,4,5]_tr=10_te=13.png
-
-(Bad) Case Study: Linear Model in CuO   
--------------------------------------
-
-Linear model is not a cure-all. In fact, we find that so far, linear model works reasonably well only in bulk systems that contains one type of atom. Below, we will show some systems that are not well modeled by the linear model. 
-
-Below are the training results of Copper oxide. The system contains 64 atoms. Notice that RMSE of the total energy is not signicifanctly improved as the number of feature increses. 
-
-.. image:: pictures/CuO_[1,2].png
-
-.. image:: pictures/CuO_[1,2,3,4].png
-
-
-(Bad) Case Study: Linear Model in graphene  
--------------------------------------------
-
-For 2D materials such as graphene, lienar model also appears to be much less effective. Below are the trianing results for graphene. The system contains 64 atoms. sample_dist is 10 and 13 for training set and testing set respectively. Features used for training are [1,2],[1,2,3,4],[1,2,3,4,5]. Notice that as number of feature increases, no obvious improvement is observed. 
-
-.. image:: pictures/Graphene_lft_[1,2]_tr=10_te=23.png
-
-.. image:: pictures/Graphene_lft_[1,2,3,4]_tr=10_te=23.png
-
-.. image:: pictures/Graphene_lft_[1,2,3,4,5]_tr=10_te=23.png
