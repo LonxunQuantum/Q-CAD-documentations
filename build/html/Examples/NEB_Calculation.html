@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEB (nudged elastic band) calculation &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dimer method to calculate saddle point" href="Dimer_Calculation.html" />
+    <link rel="prev" title="Transition dipole moment calculation include local field" href="Trans_dipole_moment_include_Calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Q-CAD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-files">Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#output-files">Output Files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Si_SCF_Calculation.html">SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_DOS_Calculation.html">DOS calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">HSE SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">HSE bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">Crystal Structure Optimization (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BN_C_Charge_Relaxation_Cal.html">Charge system relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cu-Au-Alloy-MD-Calculation.html">Ab Initio Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_Spin_Calculation.html">Spin-polarized calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">NEB (nudged elastic band) calculation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#first-step-relax-calculation-for-initial-and-final-states">First Step: “RELAX” calculation for initial and final states</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#second-step-scf-calculation-for-initial-and-finial-states">Second Step: “SCF” calculation for initial and finial states</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#third-step-neb-calculation">Third Step: “NEB” calculation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Dimer_Calculation.html">Dimer method to calculate saddle point</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Q-CAD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>NEB (nudged elastic band) calculation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Examples/NEB_Calculation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="neb-nudged-elastic-band-calculation">
+<h1>NEB (nudged elastic band) calculation<a class="headerlink" href="#neb-nudged-elastic-band-calculation" title="Permalink to this headline">¶</a></h1>
+<p>The diffusion barrier for Li on graphene.</p>
+<p>There are three steps, the first step is “RELAX” calculation for initial and final states, the second is “SCF” calculation, and the third is “NEB” calculation.</p>
+<div class="section" id="first-step-relax-calculation-for-initial-and-final-states">
+<h2>First Step: “RELAX” calculation for initial and final states<a class="headerlink" href="#first-step-relax-calculation-for-initial-and-final-states" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initial-state-relaxation">
+<h3>Initial state relaxation:<a class="headerlink" href="#initial-state-relaxation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-files">
+<h4>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h4>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">51</span>
+<span class="n">LATTICE</span>
+    <span class="mf">12.30000019</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+    <span class="o">-</span><span class="mf">6.15000010</span>    <span class="mf">10.65211263</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>    <span class="mf">20.00000000</span>
+<span class="n">POSITION</span>
+  <span class="mi">6</span>     <span class="mf">0.13302763</span>     <span class="mf">0.06631131</span>     <span class="mf">0.50001912</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.13244991</span>     <span class="mf">0.26622178</span>     <span class="mf">0.50007744</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.13302290</span>     <span class="mf">0.46671968</span>     <span class="mf">0.50002064</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>     <span class="mf">0.86685591</span>     <span class="mf">0.73343720</span>     <span class="mf">0.50000920</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.86668410</span>     <span class="mf">0.93331589</span>     <span class="mf">0.49999358</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">3</span>     <span class="mf">0.39999999</span>     <span class="mf">0.39999999</span>     <span class="mf">0.58526884</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>  <span class="mi">2</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">RELAX</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">RELAX_DETAIL</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">100</span> <span class="mf">0.01</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">SYS_TYPE</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>SYS_TYPE: specifies type of the system and automatically adjust the parameter “FERMIDE”, 1: semiconductor or insulator (default, FERMIDE=0.025); 2: metallic (FERMIDE=0.2).</p></li>
+</ol>
+</div>
+<p>C.SG15.PBE.UPF, Li.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="calculations">
+<h4>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h4>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<p>2.Abtain the final.config file, which contains the position of the last ionic step of the relaxation, and can be used for step two “SCF” calculation.</p>
+</div>
+<div class="section" id="download">
+<h4>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="examples/Step1_initial_relax_cal.tar.gz">Step1_initial_relax_cal</a></p>
+</div>
+</div>
+<div class="section" id="final-state-relaxation">
+<h3>Final state relaxation:<a class="headerlink" href="#final-state-relaxation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h4>Input files<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">51</span>
+<span class="n">LATTICE</span>
+    <span class="mf">12.30000019</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+    <span class="o">-</span><span class="mf">6.15000010</span>    <span class="mf">10.65211263</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>    <span class="mf">20.00000000</span>
+<span class="n">POSITION</span>
+  <span class="mi">6</span>     <span class="mf">0.13330299</span>     <span class="mf">0.06669701</span>     <span class="mf">0.49998566</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.13316367</span>     <span class="mf">0.26655079</span>     <span class="mf">0.50000705</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.13316402</span>     <span class="mf">0.46660047</span>     <span class="mf">0.50000705</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>     <span class="mf">0.86753884</span>     <span class="mf">0.73377247</span>     <span class="mf">0.50007857</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">6</span>     <span class="mf">0.86696519</span>     <span class="mf">0.93367340</span>     <span class="mf">0.50002931</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">3</span>     <span class="mf">0.60000002</span>     <span class="mf">0.60000002</span>     <span class="mf">0.58521177</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>  <span class="mi">2</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">RELAX</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">RELAX_DETAIL</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">100</span> <span class="mf">0.01</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">SYS_TYPE</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>C.SG15.PBE.UPF, Li.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="id2">
+<h4>Calculations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<p>2.Abtain the final.config file, which contains the position of the last ionic step of the relaxation, and can be used for step two “SCF” calculation.</p>
+</div>
+<div class="section" id="id3">
+<h4>Download<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="examples/Step1_final_relax_cal.tar.gz">Step1_final_relax_cal</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="second-step-scf-calculation-for-initial-and-finial-states">
+<h2>Second Step: “SCF” calculation for initial and finial states<a class="headerlink" href="#second-step-scf-calculation-for-initial-and-finial-states" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initial-state-scf">
+<h3>Initial state scf:<a class="headerlink" href="#initial-state-scf" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h4>Input files<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
+<span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
+  <span class="mf">0.1230000019E+02</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>
+ <span class="o">-</span><span class="mf">0.6150000100E+01</span>    <span class="mf">0.1065211263E+02</span>    <span class="mf">0.0000000000E+00</span>
+  <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.2000000000E+02</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+  <span class="mi">6</span>      <span class="mf">0.133312758</span>      <span class="mf">0.066687242</span>      <span class="mf">0.499990024</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149613</span>      <span class="mf">0.266557805</span>      <span class="mf">0.500008510</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149503</span>      <span class="mf">0.466579100</span>      <span class="mf">0.500008574</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>      <span class="mf">0.867547638</span>      <span class="mf">0.733777090</span>      <span class="mf">0.500077817</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.866970187</span>      <span class="mf">0.933684078</span>      <span class="mf">0.500023723</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">3</span>      <span class="mf">0.600000020</span>      <span class="mf">0.600000020</span>      <span class="mf">0.585322202</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Copy final.config from previous initial state RELAX calculation, and rename atom.config</p></li>
+</ol>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>  <span class="mi">2</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">SCF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">E_ERROR</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SYS_TYPE</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>C.SG15.PBE.SOC.UPF, Li.SG15.PBE.SOC.UPF</p>
+</div>
+<div class="section" id="id5">
+<h4>Calculations<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<p>2.Read total energy from REPORT, and as input parameter for next NEB calculation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;E_tot(eV)&quot;</span> <span class="n">REPORT</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-.</span><span class="mf">79460153820497E+04</span>    <span class="o">-.</span><span class="mf">3343E-03</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4>Download<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="examples/Step2_initial_scf_cal.tar.gz">Step2_initial_scf_cal</a></p>
+</div>
+</div>
+<div class="section" id="final-state-scf">
+<h3>Final state scf:<a class="headerlink" href="#final-state-scf" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4>Input files<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
+<span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
+  <span class="mf">0.1230000019E+02</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>
+ <span class="o">-</span><span class="mf">0.6150000100E+01</span>    <span class="mf">0.1065211263E+02</span>    <span class="mf">0.0000000000E+00</span>
+  <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.2000000000E+02</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+  <span class="mi">6</span>      <span class="mf">0.133312758</span>      <span class="mf">0.066687242</span>      <span class="mf">0.499990024</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149613</span>      <span class="mf">0.266557805</span>      <span class="mf">0.500008510</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149503</span>      <span class="mf">0.466579100</span>      <span class="mf">0.500008574</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>      <span class="mf">0.867547638</span>      <span class="mf">0.733777090</span>      <span class="mf">0.500077817</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.866970187</span>      <span class="mf">0.933684078</span>      <span class="mf">0.500023723</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">3</span>      <span class="mf">0.600000020</span>      <span class="mf">0.600000020</span>      <span class="mf">0.585322202</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Copy final.config from previous final state RELAX calculation, and rename atom.config</p></li>
+</ol>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>  <span class="mi">2</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">SCF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">E_ERROR</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">SYS_TYPE</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>C.SG15.PBE.SOC.UPF, Li.SG15.PBE.SOC.UPF</p>
+</div>
+<div class="section" id="id8">
+<h4>Calculations<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<p>2.Read total energy from REPORT, and as input parameter for next NEB calculation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;E_tot(eV)&quot;</span> <span class="n">REPORT</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-.</span><span class="mf">79460153754978E+04</span>    <span class="o">-.</span><span class="mf">3548E-03</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h4>Download<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="examples/Step2_final_scf_cal.tar.gz">Step2_final_scf_cal</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="third-step-neb-calculation">
+<h2>Third Step: “NEB” calculation<a class="headerlink" href="#third-step-neb-calculation" title="Permalink to this headline">¶</a></h2>
+<p>atom_initial.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
+<span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
+  <span class="mf">0.1230000019E+02</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>
+ <span class="o">-</span><span class="mf">0.6150000100E+01</span>    <span class="mf">0.1065211263E+02</span>    <span class="mf">0.0000000000E+00</span>
+  <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.2000000000E+02</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+  <span class="mi">6</span>      <span class="mf">0.133312758</span>      <span class="mf">0.066687242</span>      <span class="mf">0.499990024</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149613</span>      <span class="mf">0.266557805</span>      <span class="mf">0.500008510</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149503</span>      <span class="mf">0.466579100</span>      <span class="mf">0.500008574</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>      <span class="mf">0.867547638</span>      <span class="mf">0.733777090</span>      <span class="mf">0.500077817</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.866970187</span>      <span class="mf">0.933684078</span>      <span class="mf">0.500023723</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">3</span>      <span class="mf">0.600000020</span>      <span class="mf">0.600000020</span>      <span class="mf">0.585322202</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Copy final.config from previous initial state RELAX calculation, and rename atom.config</p></li>
+</ol>
+</div>
+<p>atom_final.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
+<span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
+  <span class="mf">0.1230000019E+02</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>
+ <span class="o">-</span><span class="mf">0.6150000100E+01</span>    <span class="mf">0.1065211263E+02</span>    <span class="mf">0.0000000000E+00</span>
+  <span class="mf">0.0000000000E+00</span>    <span class="mf">0.0000000000E+00</span>    <span class="mf">0.2000000000E+02</span>
+<span class="n">Position</span><span class="p">,</span> <span class="n">move_x</span><span class="p">,</span> <span class="n">move_y</span><span class="p">,</span> <span class="n">move_z</span>
+  <span class="mi">6</span>      <span class="mf">0.133312758</span>      <span class="mf">0.066687242</span>      <span class="mf">0.499990024</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149613</span>      <span class="mf">0.266557805</span>      <span class="mf">0.500008510</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.133149503</span>      <span class="mf">0.466579100</span>      <span class="mf">0.500008574</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="o">...</span>
+  <span class="mi">6</span>      <span class="mf">0.867547638</span>      <span class="mf">0.733777090</span>      <span class="mf">0.500077817</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">6</span>      <span class="mf">0.866970187</span>      <span class="mf">0.933684078</span>      <span class="mf">0.500023723</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+  <span class="mi">3</span>      <span class="mf">0.600000020</span>      <span class="mf">0.600000020</span>      <span class="mf">0.585322202</span>     <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>Copy final.config from previous final state RELAX calculation, and rename atom.config</p></li>
+</ol>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>  <span class="mi">2</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">NEB</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom_initial</span><span class="o">.</span><span class="n">config</span>
+<span class="n">NEB_DETAIL</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-.</span><span class="mf">79460153820497E+04</span><span class="p">,</span> <span class="o">-.</span><span class="mf">79460153754978E+04</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">atom_final</span><span class="o">.</span><span class="n">config</span> <span class="c1">#IMTH, NSTEP, FORCE_TOL, NIMAGE, AK, TYPE_SPRING, E0, EN, ITYPE_AT2, ATOM2.CONFIG</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">SYS_TYPE</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">1.JOB = NEB: specifies NEB or CI-NEB calculation.</div>
+<div class="line">2.IMTH: the algorithm used for atomic relaxation..</div>
+<div class="line">3.NSTEP: the maximum number of line-minimization steps in the relaxation process.</div>
+<div class="line">4.FORCE_TOL: the atomic force tolerance (eV/Å) to stop the relaxation.</div>
+<div class="line">5.NIMAGE: the number of images in the NEB.</div>
+<div class="line">6.AK: the spring constant for the image string (eV/ <span class="math notranslate nohighlight">\(Å^{2}\)</span>) .</div>
+<div class="line">7.TYPE_SPRING: the type of string used in NEB algorithm.</div>
+<div class="line">8.E0,EN: the precalculated energy of initial and final configurations.</div>
+<div class="line">9.ITYPE_AT2: the type of ATOM2.CONFIG</div>
+<div class="line">10.ATOM2.CONFIG: if ITYPE_AT2=1, ATOM2.CONFIG is the configuraton of final state; if ITYPE_AT2=2, ATOM2.CONFIG should contain all the NIMAGE, initial and final images. It can copy from MOVEMENT.</div>
+</div>
+</div>
+<p>C.SG15.PBE.SOC.UPF, Li.SG15.PBE.SOC.UPF</p>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<p>2.For NEB calculation, the main report file is NEB.BARRIER, which concisely report the energies along the images for different relaxation interation steps. A typical NEB.BARRIER file looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">iter</span><span class="o">=</span>           <span class="mi">0</span>  <span class="n">Etot</span><span class="p">(</span><span class="n">eV</span><span class="p">),</span><span class="n">dist</span><span class="p">(</span><span class="n">Bohr</span><span class="p">),</span><span class="n">angle</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">))</span>
+ <span class="mi">0</span>      <span class="o">-</span><span class="mf">0.79460153820497E+04</span>    <span class="mf">0.775127E+00</span>   <span class="mf">0.000000E+00</span>
+ <span class="mi">1</span>      <span class="o">-</span><span class="mf">0.79458967676866E+04</span>    <span class="mf">0.775511E+00</span>   <span class="mf">0.999799E+00</span>
+ <span class="mi">2</span>      <span class="o">-</span><span class="mf">0.79456608594139E+04</span>    <span class="mf">0.775152E+00</span>   <span class="mf">0.999772E+00</span>
+ <span class="mi">3</span>      <span class="o">-</span><span class="mf">0.79455479350017E+04</span>    <span class="mf">0.775153E+00</span>   <span class="mf">0.999044E+00</span>
+ <span class="mi">4</span>      <span class="o">-</span><span class="mf">0.79456646396218E+04</span>    <span class="mf">0.775533E+00</span>   <span class="mf">0.999760E+00</span>
+ <span class="mi">5</span>      <span class="o">-</span><span class="mf">0.79458997436463E+04</span>    <span class="mf">0.775116E+00</span>   <span class="mf">0.999770E+00</span>
+ <span class="mi">6</span>      <span class="o">-</span><span class="mf">0.79460153754978E+04</span>    <span class="mf">0.000000E+00</span>   <span class="mf">0.000000E+00</span>
+<span class="o">--------------------------------------</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="nb">iter</span><span class="o">=</span>          <span class="mi">46</span>  <span class="n">Etot</span><span class="p">(</span><span class="n">eV</span><span class="p">),</span><span class="n">dist</span><span class="p">(</span><span class="n">Bohr</span><span class="p">),</span><span class="n">angle</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">th</span><span class="p">))</span>
+ <span class="mi">0</span>      <span class="o">-</span><span class="mf">0.79460153820497E+04</span>    <span class="mf">0.872956E+00</span>   <span class="mf">0.000000E+00</span>
+ <span class="mi">1</span>      <span class="o">-</span><span class="mf">0.79459501924940E+04</span>    <span class="mf">0.880202E+00</span>   <span class="mf">0.460050E+00</span>
+ <span class="mi">2</span>      <span class="o">-</span><span class="mf">0.79458020191154E+04</span>    <span class="mf">0.876583E+00</span>   <span class="mf">0.843128E+00</span>
+ <span class="mi">3</span>      <span class="o">-</span><span class="mf">0.79457334923844E+04</span>    <span class="mf">0.876550E+00</span>   <span class="mf">0.978611E+00</span>
+ <span class="mi">4</span>      <span class="o">-</span><span class="mf">0.79458018757778E+04</span>    <span class="mf">0.883367E+00</span>   <span class="mf">0.838971E+00</span>
+ <span class="mi">5</span>      <span class="o">-</span><span class="mf">0.79459501006750E+04</span>    <span class="mf">0.876284E+00</span>   <span class="mf">0.451718E+00</span>
+ <span class="mi">6</span>      <span class="o">-</span><span class="mf">0.79460153754978E+04</span>    <span class="mf">0.000000E+00</span>   <span class="mf">0.000000E+00</span>
+<span class="o">--------------------------------------</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">1.Etot(eV)(second column): the total energy of the image.</div>
+<div class="line">2.dist(Bohr)(third column): the distance between the neighboring images.</div>
+<div class="line">3.angle(cos(th))(fourth column): the <span class="math notranslate nohighlight">\(cos(\theta\)</span>) of the angle theta between two R(image + 1) − R(image), and R(image) − R(image − 1).</div>
+</div>
+</div>
+<p><a class="reference external" href="examples/Step3_neb_cal.tar.gz">Step3_neb_cal</a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Trans_dipole_moment_include_Calculation.html" class="btn btn-neutral float-left" title="Transition dipole moment calculation include local field" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Dimer_Calculation.html" class="btn btn-neutral float-right" title="Dimer method to calculate saddle point" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

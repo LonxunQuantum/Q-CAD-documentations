@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ab Initio Molecular Dynamics &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Q-CAD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Q-CAD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Ab Initio Molecular Dynamics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Examples/Cu-Au-Alloy-MD-Calculation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="ab-initio-molecular-dynamics">
+<h1>Ab Initio Molecular Dynamics<a class="headerlink" href="#ab-initio-molecular-dynamics" title="Permalink to this headline">¶</a></h1>
+<p>Ab Initio Molecular Dynamics calculation for Cu-Au alloy</p>
+<div class="section" id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="mi">32</span>
+<span class="n">LATTICE</span>
+     <span class="mf">7.68000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">7.68000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">7.68000000</span>
+<span class="n">POSITION</span>
+ <span class="mi">79</span>     <span class="mf">0.25000000</span>     <span class="mf">0.25000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">79</span>     <span class="mf">0.00000000</span>     <span class="mf">0.25000000</span>     <span class="mf">0.75000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">79</span>     <span class="mf">0.75000000</span>     <span class="mf">0.25000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="o">...</span>
+ <span class="mi">29</span>     <span class="mf">0.25000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.75000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">29</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">29</span>     <span class="mf">0.75000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.75000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">MD</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cu</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Au</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">MD_DETAIL</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">100</span> <span class="mi">1</span> <span class="mi">300</span> <span class="mi">300</span> <span class="c1">#MD, MSTEP, DT, TEMP1, TEMP2</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>MD_DETAIL: controls the molecular dynamics details.</p></li>
+<li><p>MD: the method of MD algorithm, 1: Verlet(NVE).</p></li>
+<li><p>MSTEP: the number of MD stpes.</p></li>
+<li><p>DT: the time length for each MD step (fs, 1fs=1.0E-15s).</p></li>
+<li><p>TEMP1, TEMP2: the beginning and final temperature (in Kelvin).</p></li>
+</ol>
+</div>
+<p>Cu.SG15.PBE.UPF, Au.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h2>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>For MD calculation, files to watch during relaxations.</p></li>
+</ol>
+<p>&gt;MDSTEPS: concisely reports about the atomic relaxation steps. A typical RELAXSTEPS file looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.100000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631878E+06</span>  <span class="o">-</span><span class="mf">0.1391656624E+06</span>   <span class="mf">0.2474566470E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">598.25336</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">598.25336</span> <span class="n">dE</span><span class="o">=</span> <span class="mf">0.10E-02</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.32E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">6</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.75E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.973E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.200000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631867E+06</span>  <span class="o">-</span><span class="mf">0.1391656490E+06</span>   <span class="mf">0.2462251387E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">595.27606</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">596.76471</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">82E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.23E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.75E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.921E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.300000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631839E+06</span>  <span class="o">-</span><span class="mf">0.1391656291E+06</span>   <span class="mf">0.2445185018E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">591.15008</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">594.89316</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">84E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.18E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.74E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.860E+00</span>
+<span class="o">...</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.980000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631836E+06</span>  <span class="o">-</span><span class="mf">0.1391647989E+06</span>   <span class="mf">0.1615347915E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">390.52793</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">464.12570</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">90E-02</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.43E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.893E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.990000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631835E+06</span>  <span class="o">-</span><span class="mf">0.1391648020E+06</span>   <span class="mf">0.1618521791E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.29525</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">463.39004</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">18E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.40E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.102E+01</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.100000E+03</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631880E+06</span>  <span class="o">-</span><span class="mf">0.1391648061E+06</span>   <span class="mf">0.1618121193E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.19840</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">462.66812</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">26E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.33E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.974E+00</span>
+</pre></div>
+</div>
+<p>&gt;REPORT: more detailed information about every electronic and MD step</p>
+<ol class="arabic simple" start="3">
+<li><p>Other important files.</p></li>
+</ol>
+<p>&gt;final.config: holds the structure of the last MD step.</p>
+<p>&gt;MOVEMENT: holds the structures of every MD steps.</p>
+</div>
+<div class="section" id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="examples/Cu-Au-Alloy-md-Cal.tar.gz">Cu-Au-Alloy-md-Cal</a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -179,6 +179,15 @@ Examples
    /Examples/Graphene_CELL_REL_Calculation
    /Examples/GaAs_HSE_REL_Calculation
    /Examples/BN_C_Charge_Relaxation_Cal
+   /Examples/Cu-Au-Alloy-MD-Calculation
+   /Examples/Ni_SCF_Spin_Calculation
+   /Examples/CdSe_SOC_Band_Calculation
+   /Examples/Fe_Spin222_SCF_Calculation
+   /Examples/Ni_SCF_DFTU_Calculation
+   /Examples/Trans_dipole_moment_exclude_Calculation
+   /Examples/Trans_dipole_moment_include_Calculation
+   /Examples/NEB_Calculation
+   /Examples/Dimer_Calculation
 
 Tutorials
 ---------

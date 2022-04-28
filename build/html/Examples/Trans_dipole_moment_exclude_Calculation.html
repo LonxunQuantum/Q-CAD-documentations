@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transition dipole moment calculation exclude local field &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Transition dipole moment calculation include local field" href="Trans_dipole_moment_include_Calculation.html" />
+    <link rel="prev" title="DFT+U Calculation" href="Ni_SCF_DFTU_Calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Q-CAD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-files">Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#output-files">Output Files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Si_SCF_Calculation.html">SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_DOS_Calculation.html">DOS calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">HSE SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">HSE bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">Crystal Structure Optimization (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BN_C_Charge_Relaxation_Cal.html">Charge system relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cu-Au-Alloy-MD-Calculation.html">Ab Initio Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_Spin_Calculation.html">Spin-polarized calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Transition dipole moment calculation exclude local field</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#first-step-scf-calculation">First Step: “SCF” calculation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#second-step-nonscf-calculation">Second Step: “NONSCF” calculation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#third-step-dos-calculation">Third Step: “DOS” calculation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fourth-step-run-tdm-x">Fourth Step: run TDM.x</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NEB_Calculation.html">NEB (nudged elastic band) calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Dimer_Calculation.html">Dimer method to calculate saddle point</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Q-CAD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>Transition dipole moment calculation exclude local field</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Examples/Trans_dipole_moment_exclude_Calculation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="transition-dipole-moment-calculation-exclude-local-field">
+<h1>Transition dipole moment calculation exclude local field<a class="headerlink" href="#transition-dipole-moment-calculation-exclude-local-field" title="Permalink to this headline">¶</a></h1>
+<p>Transition dipole moment calculaton in CsPbI3.</p>
+<p>There are four steps, the first step is “SCF” calculation, the second is “NONSCF” calculation, the third is “DOS” calculation, and the fourth step is to process the data with TDM.x tool.</p>
+<div class="section" id="first-step-scf-calculation">
+<h2>First Step: “SCF” calculation<a class="headerlink" href="#first-step-scf-calculation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="input-files">
+<h3>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
+<span class="n">LATTICE</span>
+     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>
+<span class="n">POSITION</span>
+ <span class="mi">55</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">82</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">SCF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cs</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Pb</span><span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP3</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">CONVERGENCE</span> <span class="o">=</span> <span class="n">difficult</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Cs.SG15.PBE.UPF, Pb-d.SG15.PBE.UPF, I.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="calculations">
+<h3>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h3>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+</div>
+</div>
+<div class="section" id="second-step-nonscf-calculation">
+<h2>Second Step: “NONSCF” calculation<a class="headerlink" href="#second-step-nonscf-calculation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Input files<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
+<span class="n">LATTICE</span>
+     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>
+<span class="n">POSITION</span>
+ <span class="mi">55</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">82</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">NONSCF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cs</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Pb</span><span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP3</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">VR</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">KPT</span> <span class="o">=</span> <span class="n">T</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>1.How to get IN.VR and IN.KPT, please refer to the example <a class="reference external" href="Si_Band_Calculation.html">Bandstructure calculation</a>.
+2.The file gen.kpt:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>BAND                      # COMMENT line
+20                      # number of k-points between X and R
+0.000  0.500  0.000  X  # reciprocal coordinates; label ‘X’ for X point
+0.500  0.500  0.500  R
+20
+0.500  0.500  0.500  R
+0.500  0.500  0.000  M
+20
+0.500  0.500  0.000  M
+0.000  0.000  0.000  G
+20
+0.000  0.000  0.000  G
+0.500  0.500  0.500  R</p>
+</div>
+</div>
+<p>Cs.SG15.PBE.SOC.UPF, Pb-d.SG15.PBE.SOC.UPF, I.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="id2">
+<h3>Calculations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+</div>
+</div>
+<div class="section" id="third-step-dos-calculation">
+<h2>Third Step: “DOS” calculation<a class="headerlink" href="#third-step-dos-calculation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Input files<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
+<span class="n">LATTICE</span>
+     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">6.39011884</span>
+<span class="n">POSITION</span>
+ <span class="mi">55</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">82</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">53</span>     <span class="mf">0.00000000</span>     <span class="mf">0.50000000</span>     <span class="mf">0.00000000</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>  <span class="mi">1</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">DOS</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cs</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Pb</span><span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP3</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Ecutp</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">WG</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">KPT</span> <span class="o">=</span> <span class="n">T</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>1.Read IN.WG from previous NONSCF calculation OUT.WG.
+2.You also need copy OUT.EIGEN and OUT.FERMI from previous NONSCF calculation.
+3.IN.KPT is the same as previous NONSCF calculation.</p>
+</div>
+<p>Cs.SG15.PBE.SOC.UPF, Pb-d.SG15.PBE.SOC.UPF, I.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="id4">
+<h3>Calculations<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+</div>
+</div>
+<div class="section" id="fourth-step-run-tdm-x">
+<h2>Fourth Step: run TDM.x<a class="headerlink" href="#fourth-step-run-tdm-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Input files<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>TDM.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>           <span class="c1">#flag: possible values 0, 1. 0: no nonlocal potential; 1: nonlocal potential is taken into account</span>
+<span class="mi">37</span> <span class="mi">38</span>       <span class="c1">#i,j: TDM between j and j state.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p>flag 0: TDM.x will read TDM.input, OUT.WG, OUT.EIGEN and OUT.GKK.</p></li>
+<li><p>flag 1: TDM.x will read TDM.input and OUT.momentK.* (* represents multiple files)</p></li>
+</ol>
+</div>
+<p>2.After run TDM.x, you will get transition_moment file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ikpt</span>  <span class="n">X</span><span class="o">-</span><span class="n">component</span>  <span class="n">Y</span><span class="o">-</span><span class="n">component</span>  <span class="n">Z</span><span class="o">-</span><span class="n">component</span>   <span class="n">Total</span><span class="p">(</span><span class="n">e</span><span class="o">^</span><span class="mi">2</span><span class="o">*</span><span class="n">bohr</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>       <span class="n">X</span><span class="o">-</span><span class="n">real</span>       <span class="n">X</span><span class="o">-</span><span class="n">imag</span>       <span class="n">Y</span><span class="o">-</span><span class="n">real</span>       <span class="n">Y</span><span class="o">-</span><span class="n">imag</span>       <span class="n">Z</span><span class="o">-</span><span class="n">real</span>       <span class="n">Z</span><span class="o">-</span><span class="n">imag</span>
+<span class="mi">1</span>   <span class="mf">0.7198E-11</span>   <span class="mf">0.2949E+02</span>   <span class="mf">0.4606E-11</span>          <span class="mf">0.2949E+02</span>  <span class="o">-</span><span class="mf">0.1739E-05</span>   <span class="mf">0.2043E-05</span>   <span class="mf">0.1961E+01</span>   <span class="mf">0.5064E+01</span>  <span class="o">-</span><span class="mf">0.6900E-06</span>   <span class="mf">0.2032E-05</span>
+<span class="mi">2</span>   <span class="mf">0.6357E-12</span>   <span class="mf">0.2951E+02</span>   <span class="mf">0.3241E-11</span>          <span class="mf">0.2951E+02</span>  <span class="o">-</span><span class="mf">0.5834E-06</span>   <span class="mf">0.5435E-06</span>   <span class="mf">0.2084E+01</span>  <span class="o">-</span><span class="mf">0.5017E+01</span>   <span class="mf">0.6696E-06</span>   <span class="mf">0.1671E-05</span>
+<span class="mi">3</span>   <span class="mf">0.1115E-10</span>   <span class="mf">0.2962E+02</span>   <span class="mf">0.4501E-11</span>          <span class="mf">0.2962E+02</span>   <span class="mf">0.2978E-05</span>  <span class="o">-</span><span class="mf">0.1510E-05</span>  <span class="o">-</span><span class="mf">0.5258E+01</span>  <span class="o">-</span><span class="mf">0.1404E+01</span>   <span class="mf">0.9306E-06</span>  <span class="o">-</span><span class="mf">0.1907E-05</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="mi">83</span>   <span class="mf">0.1498E+02</span>   <span class="mf">0.1315E+01</span>   <span class="mf">0.7419E+01</span>          <span class="mf">0.2371E+02</span>   <span class="mf">0.5129E+00</span>  <span class="o">-</span><span class="mf">0.3836E+01</span>  <span class="o">-</span><span class="mf">0.1307E+00</span>   <span class="mf">0.1139E+01</span>  <span class="o">-</span><span class="mf">0.3821E+00</span>   <span class="mf">0.2697E+01</span>
+<span class="mi">84</span>   <span class="mf">0.2322E+02</span>   <span class="mf">0.5479E+01</span>   <span class="mf">0.7938E+01</span>          <span class="mf">0.3663E+02</span>   <span class="mf">0.3863E+01</span>   <span class="mf">0.2879E+01</span>  <span class="o">-</span><span class="mf">0.2275E+01</span>  <span class="o">-</span><span class="mf">0.5526E+00</span>  <span class="o">-</span><span class="mf">0.1589E+01</span>  <span class="o">-</span><span class="mf">0.2327E+01</span>
+<span class="mi">85</span>   <span class="mf">0.3655E+02</span>   <span class="mf">0.4251E+01</span>   <span class="mf">0.2792E+01</span>          <span class="mf">0.4359E+02</span>  <span class="o">-</span><span class="mf">0.5741E+01</span>  <span class="o">-</span><span class="mf">0.1895E+01</span>   <span class="mf">0.1737E+01</span>   <span class="mf">0.1111E+01</span>   <span class="mf">0.4033E+00</span>   <span class="mf">0.1622E+01</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="download">
+<h3>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="examples/momoment_without_nonlocal_cal.tar.gz">momoment_without_nonlocal_cal</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ni_SCF_DFTU_Calculation.html" class="btn btn-neutral float-left" title="DFT+U Calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Trans_dipole_moment_include_Calculation.html" class="btn btn-neutral float-right" title="Transition dipole moment calculation include local field" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

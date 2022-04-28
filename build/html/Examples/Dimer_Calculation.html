@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dimer method to calculate saddle point &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Phonon calculation" href="../phonon/phonon.html" />
+    <link rel="prev" title="NEB (nudged elastic band) calculation" href="NEB_Calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Q-CAD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-files">Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#output-files">Output Files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Si_SCF_Calculation.html">SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_DOS_Calculation.html">DOS calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">HSE SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">HSE bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">Crystal Structure Optimization (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BN_C_Charge_Relaxation_Cal.html">Charge system relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cu-Au-Alloy-MD-Calculation.html">Ab Initio Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_Spin_Calculation.html">Spin-polarized calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NEB_Calculation.html">NEB (nudged elastic band) calculation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Dimer method to calculate saddle point</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calculations">Calculations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#download">Download</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Q-CAD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
+      <li>Dimer method to calculate saddle point</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Examples/Dimer_Calculation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="dimer-method-to-calculate-saddle-point">
+<h1>Dimer method to calculate saddle point<a class="headerlink" href="#dimer-method-to-calculate-saddle-point" title="Permalink to this headline">¶</a></h1>
+<p>H diffusion in a frozen Ir lattice</p>
+<div class="section" id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<p>atom.config</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
+<span class="n">LATTICE</span>
+     <span class="mf">3.84347853</span>     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">3.84347853</span>     <span class="mf">0.00000000</span>
+     <span class="mf">0.00000000</span>     <span class="mf">0.00000000</span>     <span class="mf">3.84347853</span>
+<span class="n">POSITION</span>
+ <span class="mi">77</span>     <span class="mf">0.12500000</span>     <span class="mf">0.12500000</span>     <span class="mf">0.12500000</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+ <span class="mi">77</span>     <span class="mf">0.12500937</span>     <span class="mf">0.63473653</span>     <span class="mf">0.63473930</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">77</span>     <span class="mf">0.63473766</span>     <span class="mf">0.12500788</span>     <span class="mf">0.63474031</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="mi">77</span>     <span class="mf">0.63473926</span>     <span class="mf">0.63473848</span>     <span class="mf">0.12501068</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+  <span class="mi">1</span>     <span class="mf">0.47985749</span>     <span class="mf">0.47985229</span>     <span class="mf">0.47985339</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">DIMER_DIR_N</span>
+ <span class="mi">77</span>         <span class="mf">0.000000000000000</span>         <span class="mf">0.000000000000000</span>         <span class="mf">0.000000000000000</span> <span class="c1">#element number, fractional coordinates of direction</span>
+ <span class="mi">77</span>        <span class="o">-</span><span class="mf">0.012059410733252</span>        <span class="o">-</span><span class="mf">0.012827111941020</span>        <span class="o">-</span><span class="mf">0.008025300664088</span>
+ <span class="mi">77</span>        <span class="o">-</span><span class="mf">0.013847872075022</span>        <span class="o">-</span><span class="mf">0.009967273033432</span>        <span class="o">-</span><span class="mf">0.007927057981427</span>
+ <span class="mi">77</span>        <span class="o">-</span><span class="mf">0.013434331335085</span>        <span class="o">-</span><span class="mf">0.012626295573776</span>        <span class="o">-</span><span class="mf">0.003144488942515</span>
+  <span class="mi">1</span>         <span class="mf">0.071022910801012</span>         <span class="mf">0.074799719412651</span>         <span class="mf">0.085081889050619</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>1.DIMER_DIR_N: specifies the initial direction along the dimer.</p>
+</div>
+<p>etot.input</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="mi">4</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">DIMER</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Ir</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">ECUT</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">ECUT2</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">3</span>
+<span class="n">E_ERROR</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">FERMIDE</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>1.JOB = DIMER: specifies a calculation of dimer method.</p>
+</div>
+<p>Ir.SG15.PBE.UPF, H.SG15.PBE.UPF</p>
+</div>
+<div class="section" id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h2>
+<p>1.You can submit PWmat tasks in different ways:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Run the command directly</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#PBS -N SCF
+#PBS -l nodes=1:ppn=4
+#PBS -q batch
+#PBS -l walltime=100:00:00
+
+ulimit -s unlimited
+cd $PBS_O_WORKDIR
+
+mpirun -np 4 PWmat | tee output
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Submit the task with a pbs script</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>For DIMER calculation, the final configuration is writen in final.config, the configurations of each translation step ore in MOVEMENT.</p></li>
+<li><p>Another file DIMERSTEPS can be used to check the convergency, dates in DIMERSTEPS:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STEP</span>         <span class="n">FORCE</span>      <span class="n">FORCE</span><span class="o">/</span><span class="n">dR</span>        <span class="n">ENERGY</span>     <span class="n">CURVATURE</span>         <span class="n">ANGLE</span>        <span class="n">NSTEPS</span>      <span class="n">DISTANCE</span>
+        <span class="n">MAX</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">Ang</span><span class="p">)</span> <span class="n">ROT</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">Ang</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>          <span class="p">(</span><span class="n">eV</span><span class="p">)</span>                         <span class="n">ROT</span>           <span class="n">ROT</span>         <span class="n">TRANS</span>
+    <span class="mi">1</span>       <span class="mf">0.97540</span>       <span class="mf">3.24074</span>  <span class="o">-</span><span class="mf">11578.64674</span>      <span class="o">-</span><span class="mf">0.04126</span>       <span class="mf">0.04787</span>             <span class="mi">1</span>       <span class="mf">0.10000</span>
+    <span class="mi">2</span>       <span class="mf">0.33231</span>       <span class="mf">1.08127</span>  <span class="o">-</span><span class="mf">11578.67713</span>      <span class="o">-</span><span class="mf">0.03043</span>       <span class="mf">0.03043</span>             <span class="mi">1</span>      <span class="o">-</span><span class="mf">0.07131</span>
+    <span class="mi">3</span>       <span class="mf">0.40229</span>       <span class="mf">1.16503</span>  <span class="o">-</span><span class="mf">11578.67639</span>      <span class="o">-</span><span class="mf">0.02366</span>       <span class="mf">0.01931</span>             <span class="mi">1</span>       <span class="mf">0.02685</span>
+    <span class="mi">4</span>       <span class="mf">0.19611</span>       <span class="mf">0.94741</span>  <span class="o">-</span><span class="mf">11578.68556</span>      <span class="o">-</span><span class="mf">0.02616</span>       <span class="mf">0.01533</span>             <span class="mi">1</span>       <span class="mf">0.10000</span>
+    <span class="mi">5</span>       <span class="mf">0.19684</span>       <span class="mf">0.70913</span>  <span class="o">-</span><span class="mf">11578.68577</span>      <span class="o">-</span><span class="mf">0.02493</span>       <span class="mf">0.01250</span>             <span class="mi">1</span>      <span class="o">-</span><span class="mf">0.00189</span>
+    <span class="mi">6</span>       <span class="mf">0.21610</span>       <span class="mf">1.98167</span>  <span class="o">-</span><span class="mf">11578.68433</span>      <span class="o">-</span><span class="mf">0.02524</span>       <span class="mf">0.02234</span>             <span class="mi">1</span>       <span class="mf">0.10000</span>
+    <span class="mi">7</span>       <span class="mf">0.15590</span>       <span class="mf">1.31524</span>  <span class="o">-</span><span class="mf">11578.68344</span>      <span class="o">-</span><span class="mf">0.02669</span>       <span class="mf">0.01483</span>             <span class="mi">1</span>       <span class="mf">0.03999</span>
+    <span class="mi">8</span>       <span class="mf">0.27853</span>       <span class="mf">1.01864</span>  <span class="o">-</span><span class="mf">11578.68047</span>      <span class="o">-</span><span class="mf">0.02487</span>       <span class="mf">0.01141</span>             <span class="mi">1</span>       <span class="mf">0.04234</span>
+    <span class="mi">9</span>       <span class="mf">0.07919</span>       <span class="mf">0.72661</span>  <span class="o">-</span><span class="mf">11578.68151</span>      <span class="o">-</span><span class="mf">0.02434</span>       <span class="mf">0.01165</span>             <span class="mi">1</span>       <span class="mf">0.02893</span>
+   <span class="mi">10</span>       <span class="mf">0.07897</span>       <span class="mf">0.88689</span>  <span class="o">-</span><span class="mf">11578.68147</span>      <span class="o">-</span><span class="mf">0.02679</span>       <span class="mf">0.01048</span>             <span class="mi">1</span>       <span class="mf">0.00062</span>
+   <span class="mi">11</span>       <span class="mf">0.08531</span>       <span class="mf">0.57502</span>  <span class="o">-</span><span class="mf">11578.68097</span>      <span class="o">-</span><span class="mf">0.02615</span>       <span class="mf">0.00763</span>             <span class="mi">1</span>       <span class="mf">0.01706</span>
+   <span class="mi">12</span>       <span class="mf">0.02929</span>       <span class="mf">1.68360</span>  <span class="o">-</span><span class="mf">11578.68063</span>      <span class="o">-</span><span class="mf">0.02664</span>       <span class="mf">0.02057</span>             <span class="mi">1</span>       <span class="mf">0.03746</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">1.STEP: the index of current transition step.</div>
+<div class="line">2.FORCE MAX: the maximum of current transition step, unit <span class="math notranslate nohighlight">\(eV/Angstrom\)</span>.</div>
+<div class="line">3.FORCE ROT/dR: the rotational force / dimer_dR, unit <span class="math notranslate nohighlight">\(eV/(Angstrom)^{2}\)</span>.</div>
+<div class="line">4.ENERGY: the energy of the dimer center, unit eV.</div>
+<div class="line">5.CURVATURE: the curvature along the dimer.</div>
+<div class="line">6.ANGLE ROT: the number of rotated in rotational steps, unit rad.</div>
+<div class="line">7.NSTEPS ROT: the number of rotational steps in current transiton step.</div>
+<div class="line">8.DISTANCE TRANS: the step size of current transition step, unit Bohr.</div>
+</div>
+</div>
+</div>
+<div class="section" id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="examples/DIMER_Cal.tar.gz">DIMER_Cal</a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NEB_Calculation.html" class="btn btn-neutral float-left" title="NEB (nudged elastic band) calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../phonon/phonon.html" class="btn btn-neutral float-right" title="Phonon calculation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, LongXun.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
