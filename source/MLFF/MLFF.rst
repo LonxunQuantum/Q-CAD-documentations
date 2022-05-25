@@ -4,7 +4,7 @@ Machine Learning Force Field
 An overview
 --------
 
-Machine Learning Force Field (MLFF) an is open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/MLFF. 
+Machine Learning Force Field (MLFF) an is open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/MLFF, or http://www.pwmat.com/pwmat-resource/module-download/file/MLFF.zip. 
 
 This package contains 8 types of features with translation, rotation, and permutation invariance, which are
 
@@ -41,9 +41,15 @@ Installation
 
 **On Mcloud**
 
-Mcloud is equipped with a ready-to-use MLFF environment. 
+Mcloud is equipped with a ready-to-use MLFF environment. Use the following commands to load MLFF environment
 
-*content under construction*
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
 
 **On your own workstation** 
 
@@ -198,11 +204,11 @@ It is very important to put multiple MOVEMENT files in seperate directories: tha
 Go back to Cu_bulk, and create a python script called **parameters.py**. Like etot.input in PWmat, it is the master script that contains the relevant parameters. **In MLFF workflow, this is the only file user needs to modify**. 
 
 
-You should first add **codedir** in parameters.py. It should be the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. On Mcloud, such a path is simply 
+You should first add **codedir** in parameters.py. It should be the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. **On Mcloud, such a path is simply** 
 
 ::
     
-    codedir=r'/your/path/to/MLFF_torch' 
+    codedir=r'/share/app/MLFF' 
 
 Now, the feature generation may starts. Set the following parameters in **parameters.py**: 
 
@@ -288,7 +294,18 @@ Finally, use mlff.py to start a test.
 
     mlff.py
 
-Copy the above to a file, and name it **run.sh**. Use the following command to submit:
+Copy the above to a file, and name it **run.sh**. Notice that if you are working on Mcloud, replace **conda activate mlff** with the following block:
+
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
+
+
+Use the following command to submit:
 
 ::
 
@@ -467,6 +484,16 @@ or submit job via script
 
     mlff.py
 
+Notice that if you are working on **Mcloud**, replace **conda activate mlff** with the following block:
+
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
+
 After MD, you can visualize the results as introduced in the linear model section. 
 
 The graph below shows a VV inference on Cu1646 case. However, there is no guarantee that the choice of parameters is optimal. We will further explore better combinations of parameters. 
@@ -492,37 +519,11 @@ In this Model, we use Kalman filter to improve the bare neural network(NN). Esse
 
 First, several NN parameters should be set. 
 
-**batch_size**: must be 1 in KFNN. We may support different batch sizes in the future. 
-
-**nLayer** The layer of neural network. Notice that more layers does not mean better result! The default value is 3.  
-
-**nNode**: Number of nodes in each layer. The default setting is 15, 15, 1. The format of network setting looks like this:
-
-::
-
-    nNodes = np.array([[15],[15],[1]]) 
-
-This means the first and the second layer have 15 nodes each, and the final layer is the output layer with only 1 node. 
-
-If the system has more than one type of element, each type should be assigned with a network. For exmaple, for a system with 2 types of element, set up the networks in the following manner: 
-
-::
-
-    nNodes = np.array([[15,15],[15,15],[1,1]]) 
-
-You can adjust the network size according to your need. Be advised, however, that due to the heavy computation required by KF, node number per atom should not be too large, and 15 appears reasonable in our test. 
-
-After this, several parameters should also be set.  
-
 **natoms** If more than one type of atom present, one should also set natoms correctly. For example, if the system of interest consists of 4 Cu atom and 7 Au atom, then you should set atomType = [29,79] and natoms = [4,7]. 
 
 **nFeatures** It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42. 
-
-**dR_neigh**: set to be False 
         
 **use_GKalman**: set to be True
-
-**use_LKalman**: set to be False
 
 **is_scale**: set to be True
 
@@ -555,7 +556,28 @@ you can just set
 
     itype_Ei_mean=[174.0,437.0] 
 
-**n_epoch**: the number of epoch for training. You can start with a few hundred. 
+**n_epoch**: the number of epoch for training. You can start with 100. 
+
+At first, you might want to modify the setting of NN network. However, if you are not totally familiar with the NN theory, it is ok to use the default value.  
+
+**nLayer** The layer of neural network. Notice that more layers does not mean better result! The default value is 3.  
+
+**nNode**: Number of nodes in each layer. The default setting is 15, 15, 1. The format of network setting looks like this:
+
+::
+
+    nNodes = np.array([[15],[15],[1]]) 
+
+This means the first and the second layer have 15 nodes each, and the final layer is the output layer with only 1 node. 
+
+If the system has more than one type of element, each type should be assigned with a network. For exmaple, for a system with 2 types of element, set up the networks in the following manner: 
+
+::
+
+    nNodes = np.array([[15,15],[15,15],[1,1]]) 
+
+You can adjust the network size according to your need. Be advised, however, that due to the heavy computation required by KF, node number per atom should not be too large, and 15 appears reasonable in our test. 
+
 
 **Please note that right now, only total energy is used as training data in KFNN. We will include atomic energy and forces in the future releases.**
 
@@ -591,6 +613,16 @@ On Mcloud or your own cluster, use a script to submit a job. For example,
     conda activate mlff 
 
     train.py -s records 
+
+Notice that if you are working on **Mcloud**, replace **conda activate mlff** with the following block:
+
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
 
 2. During training
 ^^^^^^^^^^^^^^^^^^
@@ -655,6 +687,16 @@ or submit job via a script
     conda activate mlff_debug
 
     mlff.py
+
+Notice that if you are working on **Mcloud**, replace **conda activate mlff** with the following block:
+
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
 
 This step is similar to the MD calculation in PWmat. After this, you can find a MOVEMENT file in the currently directory, which is generated by the MLFF-MD calculation. Use 
 
@@ -725,6 +767,15 @@ You can also use the following script to submit job on your cluster. You have to
 
     train.py --dp=True -n DP_cfg_dp -s record 
 
+Notice that if you are working on **Mcloud**, replace **conda activate mlff** with the following block:
+
+::
+
+    source /share/app/anaconda3/etc/profile.d/conda.sh
+    module load intel/2020
+    module load cuda/11.3
+    module load MLFF/2022.05.23
+    conda activate mlff
 
 2. Inference 
 ^^^^^^^^^^^^
@@ -740,7 +791,7 @@ Also remove the previous directory that contains training data
 
 ::
     
-    rm train_data -r 
+    rm train_data/ fread_dfeat/ output/ input/ -r 
 
 Now, perform data processing as in training: 
 
