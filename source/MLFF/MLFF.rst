@@ -4,7 +4,9 @@ Machine Learning Force Field
 An overview
 --------
 
-Machine Learning Force Field (MLFF) an is open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/MLFF, or http://www.pwmat.com/pwmat-resource/module-download/file/MLFF.zip. 
+Machine Learning Force Field (MLFF) is an open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/MLFF, or http://www.pwmat.com/pwmat-resource/module-download/file/MLFF.zip. 
+
+You can also access our online AIMD data archive via https://www.jianguoyun.com/p/DUWoiP4Ql-_OChiEk8IEIAA
 
 This package contains 8 types of features with translation, rotation, and permutation invariance, which are
 
@@ -24,7 +26,7 @@ and 4 engines for training and prediction, which are
         3. Kalman Filter-based Neural Netowrk (KFNN)
         4. Kalman Filter-based Deep Potential Model(KFDP)
 
-In practice, user may freely combining features with models (except for Deep Potential model, since it defines feature differerntly). A illustration of such a process is shown below. In future, we will also add support for user-defined features and training model. 
+In practice, user may freely combine features with models (except for Deep Potential model, since it defines feature differerntly). A illustration of such a process is shown below. In the future, we will also add support for user-defined features and training models. 
 
 .. image:: pictures/feat_model.png 
 
