@@ -24,9 +24,9 @@ and 4 engines for training and prediction, which are
         1. Linear Model
         2. Nonlinear VV Model
         3. Kalman Filter-based Neural Netowrk (KFNN)
-        4. Kalman Filter-based Deep Potential Model(KFDP)
+        4. Kalman Filter-based DP-torch Model(KFDP)
 
-In practice, user may freely combine features with models (except for Deep Potential model, since it defines feature differerntly). A illustration of such a process is shown below. In the future, we will also add support for user-defined features and training models. 
+In practice, user may freely combining features with models (except for DP-torch model, since it defines feature differerntly). A illustration of such a process is shown below. In future, we will also add support for user-defined features and training model. 
 
 .. image:: pictures/feat_model.png 
 
@@ -719,15 +719,15 @@ The procedure for KFNN prediction is the same as in the linear model. You should
 
 The procedure is the same as that of linear model.
  
-Model 4: Kalman Filter-based Deep Potential 
+Model 4: Kalman Filter-based DP-torch
 ---------------------------
 
-In this model, we incorporate Kalman filter with Deep Potential model. You may choose to run DP with or without Kalman filter. 
+In this model, we incorporate Kalman filter with DP-torch model. You may choose to run DP-torch with or without Kalman filter. 
 
 1.Training
 ^^^^^^^^^^
 
-Deep Potential model does not require input feature, but you still need a placeholder. Use feature 1 for this purpose. Next, set the following parameters. 
+DP-torch model does not require input feature, but you still need a placeholder. Use feature 1 for this purpose. Next, set the following parameters. 
 
 **dR_neigh**: set to be True
 
@@ -735,7 +735,7 @@ Deep Potential model does not require input feature, but you still need a placeh
 
 **batch_size**: without KF, batch size can be larger than 1. You can start with 4. But if KF is applied, batch size can only be 1
 
-**n_epoch**: You need a epoch number larger than in KFNN. DP might take several thousands epochs to converge. However, since a single DP epoch is faster, there is no substantial difference between the total training time of DP and that of KFNN. If KF is used, epoch number can be smaller. 
+**n_epoch**: You need a epoch number larger than in KFNN. DP-torch might take several thousands epochs to converge. However, since a single DP-torch epoch is faster, there is no substantial difference between the total training time of DP-torch and that of KFNN. If KF is used, epoch number can be smaller. 
 
 **nFeatures**: check the feature number in output/outx, with x being the feature index you chose. 
 
@@ -811,6 +811,13 @@ Finally, run
 
 RMSE of total energy and force will be reported at the end. A plot will also be generated. 
 
+Below are the test results of DP-torch with Kalman filter and without Kalman Filter. 
+
+
+.. image:: pictures/dp.png
+
+.. image:: pictures/kfdp.png    
+
 Prediction
 """"""""""
 
@@ -818,7 +825,7 @@ First, backing up all the files in /PWdata. Create 2 files for MD calculation:
 
 **atom.config**: The initial image for MD calculation. Other names are not allowed. 
 
-**md.input**: The input file for MD calculation. For Deep Potential model prediction, this file should look like this:
+**md.input**: The input file for MD calculation. For DP-torch model prediction, this file should look like this:
 
 ::
 
@@ -843,4 +850,4 @@ Finally, use main_MD.x to start calculation. Notice that for this model, do not 
 
     main_MD.x
 
-The current version of DP prediction is a bit slow. We will release accelerated version in the future. 
+The current version of DP-torch prediction is a bit slow. We will release accelerated version in the future. 
