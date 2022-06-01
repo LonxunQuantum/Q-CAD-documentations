@@ -16,8 +16,8 @@ This package contains 8 types of features with translation, rotation, and permut
         4. 3-body Cosine(3bcos) 
         5. Multiple Tensor Potential(MTP)
         6. Spectral Neighbor Analysis Potential(SNAP)
-        7. Deep Potential-Chebyshev(dp1)        
-        8. Deep Potential-Gaussian(dp2) 
+        7. DP-Chebyshev(dp1)        
+        8. DP-Gaussian(dp2) 
 
 and 4 engines for training and prediction, which are 
 
@@ -86,7 +86,21 @@ After this, install the following packages.
     conda install numba         
     conda install tensorboard
 
-Next, you should identify the architecture of your Nvidia GPU and install a compatible pytorch version. We take RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. **Also**, the one-click installation via conda only supports 4 CUDA version, which are CUDA 10.2, CUDA 11.1 CUDA 11.3 and CUDA 11.5. Thus, CUDA 11.1, CUDA 11.3 and CUDA 11.5 are reasonable choice for RTX 3080Ti. We choose to use CUDA 11.3 as an example. Therefore, you can install pytorch with the following command
+Next, you should identify the architecture of your Nvidia GPU and install a compatible pytorch version. We take RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. **Also**, the one-click installation via conda only supports 4 CUDA versions, which are CUDA 10.2, CUDA 11.1 CUDA 11.3 and CUDA 11.5. Thus, CUDA 11.1, CUDA 11.3 and CUDA 11.5 are reasonable choices for RTX 3080Ti. We can therefore use CUDA 11.3 for PyTorch. 
+
+If you are wokring on a cluster, you should contact the system adsministrator to load the appropriate CUDA version.
+
+If you are working on your own workstation, you might need to install CUDA manually: Visit https://developer.nvidia.com/cuda-toolkit-archive to obtain the correct version, and install locally. After installation, you should set the following environment variables correctly, so that the latest CUDA can be detected:
+
+::
+
+    export PATH=/my/cuda/path/bin:$PATH
+    export LD_LIBRARY_PATH=/my/cuda/path/lib64:$LD_LIBRARY_PATH
+    export CUDADIR=/my/cuda/path
+
+In default, CUDA will be installed in /usr/local. 
+
+Having done the above, you can install pytorch with the following command
 
 ::
 
@@ -106,7 +120,13 @@ Having configured CUDA correctly, enter src/op and run the following commands to
 
     srun -p mygpupartition --gres=gpu:1 --pty bash
 
-**You should make sure that your g++ compiler supports C++ 14 standard!** Also, you should modify the path in setup.py. It should be the bin directory in your CUDA path. To obtain the CUDA path, use 
+**You should make sure that your g++ compiler supports C++ 14 standard!** G++ version greater than 7 will do.  
+
+.. Warning::
+    If you are working on Centos, do not attempt to upgrade GCC/G++ by yourself. Contact system administrator for help. 
+
+
+Also, you should modify the path in setup.py. It should be the bin directory in your CUDA path. To obtain the CUDA path, use 
 
 ::
 
