@@ -220,6 +220,8 @@ In Cu_bulk, create a directory callled **PWdata**. In PWdata, **create a single 
 
 .. image:: pictures/data123.png 
 
+Notice that in each directory, the name of MOVEMENT file must be "MOVEMENT". Other names are not allowed. 
+
 It is very important to put multiple MOVEMENT files in seperate directories: that being said, do not concatenate multiple MOVEMENT files into one. This is because in **seper.py** which will be used in KFNN and KFDP, a simple 80%-20% cut is used to form the training set and the validation set. Without doing so, you will probably end up with having a case that is not trained at all and only used as validation data! 
 
 
@@ -539,7 +541,7 @@ In this Model, we use Kalman filter to improve the bare neural network(NN). Esse
 1.Training
 ^^^^^^^^^^
 
-First, several NN parameters should be set. 
+First, several NN parameters should be set in **parameters.py**. 
 
 **natoms** If more than one type of atom present, one should also set natoms correctly. For example, if the system of interest consists of 4 Cu atom and 7 Au atom, then you should set atomType = [29,79] and natoms = [4,7]. 
 
@@ -552,6 +554,7 @@ First, several NN parameters should be set.
 **storage_scaler**: set to be True. **This is important since it saves the scaler of data for later MD runs.** 
 
 **itype_Ei_mean**: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,
+
 
 ::
 
@@ -578,6 +581,13 @@ you can just set
 
     itype_Ei_mean=[174.0,437.0] 
 
+**kfnn_trainEtot, kfnn_trainEi, kfnn_trainForce**: flags to control which quantities are used to train the network. In default, Etot and Force are used, i.e. **kfnn_trainEtot=True** and **kfnn_trainForce=True** are set in the default parameters. If you wish use a different combination, for exanple, Ei and force, you should use the following setting:
+
+::
+
+    kfnn_trainEtot=False
+    kfnn_trainEi=True
+
 **n_epoch**: the number of epoch for training. You can start with 100. 
 
 At first, you might want to modify the setting of NN network. However, if you are not totally familiar with the NN theory, it is ok to use the default value.  
@@ -601,7 +611,6 @@ If the system has more than one type of element, each type should be assigned wi
 You can adjust the network size according to your need. Be advised, however, that due to the heavy computation required by KF, node number per atom should not be too large, and 15 appears reasonable in our test. 
 
 
-**Please note that right now, only total energy is used as training data in KFNN. We will include atomic energy and forces in the future releases.**
 
 We now use **seper.py** to devide data into a training set and a validation set. Currently, the default division is a simple cut between first 80% and 20%. Run the following command in the same directory. 
 
