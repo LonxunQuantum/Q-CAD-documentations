@@ -850,7 +850,7 @@ Below are the test results of DP-torch with Kalman filter and without Kalman Fil
 Prediction
 """"""""""
 
-First, backing up all the files in /PWdata. Create 2 files for MD calculation:
+First, create 2 files for MD calculation:
 
 **atom.config**: The initial image for MD calculation. Other names are not allowed. 
 
@@ -859,24 +859,35 @@ First, backing up all the files in /PWdata. Create 2 files for MD calculation:
 ::
 
     atom.config             (input file name)
-    1, 100, 1.0, 600, 600   (MD_DETAILS in PWmat MD calculation)
+    1, 100, 1.0, 600, 600   (MD_DETAILS in PWmat MD calculation, refer to PWmat manaul for more details)
     F                       (Place holder)
-    4                       (Type of model, 4 stands for dp)
+    5                       (Type of model, 5 stands for dp)
     1                       (interval for MD movement. No need to change)
-    1                       (Types of atom)
+    2                       (Types of atom)
     29 58                   (Atomic number and mass)
+    8 16                    (start a new line if you have more than 1 type of atom)
 
+Next, run read_torch_wij_dp.py to extract the informations from the network. Note that in default this script look for /record/model/better.pt as the raw data. Also, **dstd.npy** and **davg.npy** are also used. They are generated during the training, so do not remove them after the training is done. 
 
-Also, add the following parameters in **parameters.py**
+::
 
-**dp_predict**: set to be True 
+    read_torch_wij_dp.py
+..
+    Also, add the following parameters in **parameters.py**
 
-**test_ratio**: set to 1. 
+..
+    **dp_predict**: set to be True 
+    **test_ratio**: set to 1. 
 
-Finally, use main_MD.x to start calculation. Notice that for this model, do not use mpirun 
+Finally, use main_MD.x to start calculation. 
 
 ::
 
     main_MD.x
 
-The current version of DP-torch prediction is a bit slow. We will release accelerated version in the future. 
+Or
+
+::
+    
+    mpirun -n NUM_THREADS main_MD.x
+
