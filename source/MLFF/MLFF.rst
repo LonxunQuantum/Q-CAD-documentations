@@ -169,7 +169,7 @@ After compilation, you should modify environment variables. The absolute path of
 
 MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in  order to use it. 
 
-First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD** and make
+First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD/fortran_code** and make
 
 ::
 
