@@ -125,7 +125,7 @@ Having configured CUDA correctly, enter src/op and run the following commands to
 **You should make sure that your g++ compiler supports C++ 14 standard!** G++ version greater than 7 will do.  
 
 .. Warning::
-    If you are working on Centos, do not attempt to upgrade GCC/G++ by yourself. Contact system administrator for help. 
+    For stability consideration, do not attempt to upgrade GCC/G++ by yourself. Contact system administrator for help. 
 
 
 Also, you should modify the path in setup.py. It should be the bin directory in your CUDA path. To obtain the CUDA path, use 
@@ -164,6 +164,36 @@ After compilation, you should modify environment variables. The absolute path of
     vim ~/.bashrc 
     export PATH=absolute/path/of/src/bin:$PATH
     source ~/.bashrc 
+
+**LAMMPS**
+
+MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in  order to use it. 
+
+First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD** and make
+
+::
+
+    make 
+
+You can ignore the following prompt from making
+
+::
+
+    \cp main_MD.x ../../bin/
+    cp: cannot create regular file ‘../../bin/’: Not a directory
+
+Now, go back to LAMMPS's **src** and run 
+
+::
+
+    make mpi
+
+This will generate an executable called **lmp_mpi** in /src. You might need to add an environment variable to make this executable visible elsewhere. 
+
+::
+
+    export PATH=/path/to/your/lammps/src/:$PATH
+
 
 Generate AIMD training data 
 --------------------------
@@ -388,7 +418,7 @@ If you are working on Mcloud or other clusters, use the following script. Modify
 
 The outputs of prediction are the same as those of PWmat MD calculation. 
 
-**LAMMPS**
+**Using LAMMPS**
 
 To use LAMMPS as the MD engine, you should add these lines in LAMMPS's input file:
 
@@ -398,12 +428,18 @@ To use LAMMPS as the MD engine, you should add these lines in LAMMPS's input fil
     pair_style qcad
     pair_coeff  * * 1 5 29
 
-The first line specify pair style. In the second line, the first to stars are place holder. "1" represents the model you are using (in this case it is linear model). 5 means calculating neighbors every 5 steps. 29 is the first type of atom in the system. Notice that for system with more than 1 type of element, the atom numbers of all element should listed. For example, if the system is CuO, the second line should be: 
+The first line specify pair style. In the second line, the first 2 stars are place holders which need to to be changed. "1" represents the model you are using (in this case it is linear model). 5 means calculating neighbors every 5 steps. 29 is the first type of atom (in this case, Cu) in the system. Notice that for system with more than 1 type of element, the atom numbers of all elements should listed. For example, if the system is CuO, the second line should be: 
 
 ::
 
     pair_coeff  * * 1 5 8 29
 
+
+With the above settled, you can run LAMMPS with the following command, or submit through scripts
+
+::
+
+    mpirun -n myNodeNum lmp_mpi -in lammps.in
 
 Model 2: Nonlinear Model(VV) 
 -------------------------
@@ -537,7 +573,7 @@ The procedure is identical to that of linear model.
 
 **LAMMPS**
 
-The procedure is the same as that of linear model. 
+The procedure is the same as shown in the linear model. 
 
 Model 3: Kalman Filter-based Neural Network
 --------------------------------------------
@@ -571,7 +607,7 @@ You don't need an excact mean, and a rough estimate should suffice. For example,
     array([[174.0633357],
        [174.0604308],
        [174.0453315],
-       ...,
+       ..., 
        [437.0013048],
        [437.3404306],
        [437.2137406]])
@@ -751,7 +787,7 @@ The procedure for KFNN prediction is the same as in the linear model. You should
 
 **LAMMPS**
 
-The procedure is the same as that of linear model.
+The procedure is the same as shown in the linear model. 
  
 Model 4: Kalman Filter-based DP-torch
 ---------------------------
@@ -872,7 +908,7 @@ First, create 2 files for MD calculation:
     29 58                   (Atomic number and mass)
     8 16                    (start a new line if you have more than 1 type of atom)
 
-Next, run read_torch_wij_dp.py to extract the informations from the network. Note that in default this script look for /record/model/better.pt as the raw data. Also, **dstd.npy** and **davg.npy** are also used. They are generated during the training, so do not remove them after the training is done. 
+Next, run read_torch_wij_dp.py to extract the informations from the network. Note that in default this script look for /record/model/better.pt as the raw data. Note that **dstd.npy** and **davg.npy** are also used. They are generated during the training, so do not remove them after the training is done. 
 
 ::
 
