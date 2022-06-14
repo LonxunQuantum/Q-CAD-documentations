@@ -167,22 +167,34 @@ After compilation, you should modify environment variables. The absolute path of
 
 **LAMMPS**
 
-MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in  order to use it. 
+MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in order to use it. Intel Fortran and C++ compilers are required. 
 
-First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD/fortran_code** and make
+First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD/fortran_code**, and *remove* line 118 in the makefile:
+
+::
+
+    \cp main_MD.x ../../bin/
+
+After this, run make
 
 ::
 
     make 
 
-You can ignore the following prompt from making
+Now, go back to LAMMPS's **src/** and run 
 
 ::
 
-    \cp main_MD.x ../../bin/
-    cp: cannot create regular file ‘../../bin/’: Not a directory
+    make yes-qcad
 
-Now, go back to LAMMPS's **src** and run 
+
+This step tells LAMMPS to include our interface during compiling. After this, copy **src/QCAD/Makefile.mpi** into **src/MAKE**
+
+::
+
+    cp /QCAD/Makefile.mpi /MAKE
+
+Now run make 
 
 ::
 
@@ -193,6 +205,8 @@ This will generate an executable called **lmp_mpi** in /src. You might need to a
 ::
 
     export PATH=/path/to/your/lammps/src/:$PATH
+
+
 
 
 Generate AIMD training data 
