@@ -116,7 +116,7 @@ You can check the following article to determine which CUDA to use on your GPU d
 
     https://arnon.dk/matching-sm-architectures-arch-and-gencode-for-various-nvidia-cards/
 
-Having configured CUDA correctly, enter src/op and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, you can use the the following to start a interactive job for compilation. 
+Having configured CUDA correctly, enter **src/op** and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, you can use the the following to start a interactive job for compilation. 
 
 ::
 
@@ -167,22 +167,34 @@ After compilation, you should modify environment variables. The absolute path of
 
 **LAMMPS**
 
-MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in  order to use it. 
+MLFF provides an interface for LAMMPS. You should build LAMMPS from the source code in order to use it. Intel Fortran and C++ compilers are required. 
 
-First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD** and make
+First, obtain LAMMPS's source code and unzip it. Copy the whole **QCAD** directory in MLFF into LAMMPS's **src** directory. Enter **QCAD/fortran_code**, and *remove* line 118 in the makefile:
+
+::
+
+    \cp main_MD.x ../../bin/
+
+After this, run make
 
 ::
 
     make 
 
-You can ignore the following prompt from making
+Now, go back to LAMMPS's **src/** and run 
 
 ::
 
-    \cp main_MD.x ../../bin/
-    cp: cannot create regular file ‘../../bin/’: Not a directory
+    make yes-qcad
 
-Now, go back to LAMMPS's **src** and run 
+
+This step tells LAMMPS to include our interface during compiling. After this, copy **src/QCAD/Makefile.mpi** into **src/MAKE**
+
+::
+
+    cp /QCAD/Makefile.mpi /MAKE
+
+Now run make 
 
 ::
 
@@ -193,6 +205,8 @@ This will generate an executable called **lmp_mpi** in /src. You might need to a
 ::
 
     export PATH=/path/to/your/lammps/src/:$PATH
+
+
 
 
 Generate AIMD training data 
@@ -260,15 +274,7 @@ Notice that in each directory, the name of MOVEMENT file must be "MOVEMENT". Oth
 
 It is very important to put multiple MOVEMENT files in seperate directories: that being said, do not concatenate multiple MOVEMENT files into one. This is because in **seper.py** which will be used in KFNN and KFDP, a simple 80%-20% cut is used to form the training set and the validation set. Without doing so, you will probably end up with having a case that is not trained at all and only used as validation data! 
 
-
-Go back to Cu_bulk, and create a python script called **parameters.py**. Like etot.input in PWmat, it is the master script that contains the relevant parameters. **In MLFF workflow, this is the only file user needs to modify**. 
-
-
-You should first add **codedir** in parameters.py. It should be the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. **On Mcloud, such a path is simply** 
-
-::
-    
-    codedir=r'/share/app/MLFF' 
+Go back to Cu_bulk, and create a python script called **parameters.py**. Like etot.input in PWmat, it is the master script that contains the relevant parameters. **In MLFF workflow, this is the only file user needs to modify**.     
 
 Now, the feature generation may starts. Set the following parameters in **parameters.py**: 
 
@@ -278,22 +284,24 @@ Now, the feature generation may starts. Set the following parameters in **parame
 
 **isCalcFeat**: set to be True. Notice that this step will generate feature output files that can be reused by other training processes. They are stored in directory fread_dfeat. 
 
-Besides, you should also pay attention to 2 extra parameters that are relevant: 
+Besides, you should pay attention to the following parameter: 
 
-**Rc_M**: the cutoff radius of feature generation, in Angstrom. Since all of our 8 features are "local", which assumes that atomic properties such as energy are determined by near neighbors, this parameter controls how many neighbors are taken into account when generating features. Its default value is 6, but we recommand you trying different values for different system. 
+..
+    **Rc_M**: the cutoff radius of feature generation, in Angstrom. Since all of our 8 features are "local", which assumes that atomic properties such as energy are determined by near neighbors, this parameter controls how many neighbors are taken into account when generating features. Its default value is 6, but we recommand you trying different values for different system.   
 
-**maxNeighborNum**: size of buffer, with default value 100. However, for some systems it is not enough to accommodate all the neighbors, and thus the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below. 
+**maxNeighborNum**: size of neighbor buffer, with default value 100. However, for some systems it is not enough to accommodate all the neighbors, and the feature generation fails. The following warning will pop up: 
 
+::
+    
+     Error! maxNeighborNum too small
 
-.. image:: pictures/feature_success.png
+..
+    When this happens, you should assign **maxNeighborNum** with a larger number. For each type of feature, the required neighbor buffer size is also printed on the screen. For example, for feature 2, the following screen output indicates that **maxNeighborNum** should be at least 135. 
 
-If, however, you find that no information was printed, like the scenario shown below, you shoud assign **maxNeighborNum** with a larger number. 
-
-.. image:: pictures/feature_fail.png 
-
-For our example, a correct parameters.py should look like this 
-
-.. image:: pictures/parameters.png  
+    ::
+        
+        gen_3b_feature.x
+        max,nfeat0m = 135
 
 After parameters.py are all set, run mlff.py in the current directory to obtain the features. 
 
@@ -361,7 +369,7 @@ Copy the above to a file, and name it **run.sh**. Notice that if you are working
     source /share/app/anaconda3/etc/profile.d/conda.sh
     module load intel/2020
     module load cuda/11.3
-    module load MLFF/2022.05.23
+    module load MLFF/2022.06.13
     conda activate mlff
 
 
@@ -434,6 +442,11 @@ The first line specify pair style. In the second line, the first 2 stars are pla
 
     pair_coeff  * * 1 5 8 29
 
+You should also make sure that Intel MKL library is loaded. On MCloud, use the following command: 
+
+::  
+
+    module load mkl
 
 With the above settled, you can run LAMMPS with the following command, or submit through scripts
 
@@ -591,6 +604,35 @@ First, several NN parameters should be set in **parameters.py**.
 
 **storage_scaler**: set to be True. **This is important since it saves the scaler of data for later MD runs.** 
 
+**kfnn_trainEtot, kfnn_trainEi, kfnn_trainForce**: flags to control which quantities are used to train the network. In default, Etot and Force are used, i.e. **kfnn_trainEtot=True** and **kfnn_trainForce=True** are set in the default parameters. If you wish use a different combination, for exanple, Ei and force, you should use the following setting:
+
+::
+
+    kfnn_trainEtot=False
+    kfnn_trainEi=True
+
+**n_epoch**: the number of epoch for training. You can start with 100. 
+
+You might also want to modify the setting of NN network:
+
+**nLayer** The layer of neural network. Notice that more layers does not mean better result! The default value is 3.  
+
+**nodeDim**: Number of nodes in each layer. It should be a Python array. The default setting is [15, 15, 1].  
+
+We now use **seper.py** to devide data into a training set and a validation set. Currently, the default division is a simple cut between first 80% and 20%. Run the following command in the same directory. 
+
+::
+
+    seper.py
+
+Next, use gen_data.py to re-formulate data. After this step you will find them in the directory **train_data**. 
+
+::
+
+    gen_data.py
+
+After this step, add this parameter in parameters.py
+
 **itype_Ei_mean**: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,
 
 ::
@@ -618,52 +660,7 @@ you can just set
 
     itype_Ei_mean=[174.0,437.0] 
 
-**kfnn_trainEtot, kfnn_trainEi, kfnn_trainForce**: flags to control which quantities are used to train the network. In default, Etot and Force are used, i.e. **kfnn_trainEtot=True** and **kfnn_trainForce=True** are set in the default parameters. If you wish use a different combination, for exanple, Ei and force, you should use the following setting:
-
-::
-
-    kfnn_trainEtot=False
-    kfnn_trainEi=True
-
-**n_epoch**: the number of epoch for training. You can start with 100. 
-
-You might also want to modify the setting of NN network. However, if you are not totally familiar with the NN theory, it is ok to use the default value.  
-
-**nLayer** The layer of neural network. Notice that more layers does not mean better result! The default value is 3.  
-
-**nNode**: Number of nodes in each layer. The default setting is 15, 15, 1. The format of network setting looks like this:
-
-::
-
-    nNodes = np.array([[15],[15],[1]]) 
-
-This means the first and the second layer have 15 nodes each, and the final layer is the output layer with only 1 node. 
-
-If the system has more than one type of element, each type should be assigned with a network. For exmaple, for a system with 2 types of element, set up the networks in the following manner: 
-
-::
-
-    nNodes = np.array([[15,15],[15,15],[1,1]]) 
-
-You can adjust the network size according to your need. Be advised, however, that due to the heavy computation required by KF, node number per atom should not be too large, and 15 appears reasonable in our test. 
-
-
-
-We now use **seper.py** to devide data into a training set and a validation set. Currently, the default division is a simple cut between first 80% and 20%. Run the following command in the same directory. 
-
-::
-
-    seper.py
-
-Next, use gen_data.py to re-formulate data. After this step you will find them in the directory **train_data**. 
-
-::
-
-    gen_data.py
-
-After this step, add this parameter in parameters.py
-
-**nFeatures** It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42. 
+**nFeatures** Number of features. It should be the sum of the number(s) in the last line of /fread_dfeat/feat.info. In our example, nFeatures is 42, which is the sum of 24 (from feature 1) and 18 (from feature 2). Notice that this number should be the same for all elements. 
 
 You can now launch **train.py**. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add **--cpu** flag.
 
@@ -774,7 +771,7 @@ This step is similar to the MD calculation in PWmat. After this, you can find a 
 
 ::
 
-    plot_mlff_test.py 
+    plot_nn_test.py 
 
 to generate plot of the test result. The following plot shows the KFNN inference result on cu1646 case. 
 
@@ -786,8 +783,8 @@ Prediction
 The procedure for KFNN prediction is the same as in the linear model. You should alter the type of model for inference (which should be 3 in this case) accordingly.    
 
 **LAMMPS**
-
-The procedure is the same as shown in the linear model. 
+    
+The procedure is the same as shown in the linear model.     
  
 Model 4: Kalman Filter-based DP-torch
 ---------------------------
@@ -807,7 +804,7 @@ DP-torch model does not require input feature, but you still need a placeholder.
 
 **n_epoch**: You need a epoch number larger than in KFNN. DP-torch might take several thousands epochs to converge. However, since a single DP-torch epoch is faster, there is no substantial difference between the total training time of DP-torch and that of KFNN. If KF is used, epoch number can be smaller. 
 
-**nFeatures**: check the feature number in output/outx, with x being the feature index you chose. 
+**nFeatures**: adjust as in model 3. 
 
 Having done the above, run **seper.py** and **gen_data.py** as in model 3. 
 
