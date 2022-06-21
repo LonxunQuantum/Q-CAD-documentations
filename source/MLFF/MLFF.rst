@@ -660,7 +660,7 @@ you can just set
 
     itype_Ei_mean=[174.0,437.0] 
 
-**nFeatures** It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42. 
+**nFeatures** Number of features. It should be the sum of the number(s) in the last line of /fread_dfeat/feat.info. In our example, nFeatures is 42, which is the sum of 24 (from feature 1) and 18 (from feature 2). Notice that this number should be the same for all elements. 
 
 You can now launch **train.py**. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add **--cpu** flag.
 
@@ -804,7 +804,7 @@ DP-torch model does not require input feature, but you still need a placeholder.
 
 **n_epoch**: You need a epoch number larger than in KFNN. DP-torch might take several thousands epochs to converge. However, since a single DP-torch epoch is faster, there is no substantial difference between the total training time of DP-torch and that of KFNN. If KF is used, epoch number can be smaller. 
 
-**nFeatures**: check the feature number in output/outx, with x being the feature index you chose. 
+**nFeatures**: adjust as in model 3. 
 
 Having done the above, run **seper.py** and **gen_data.py** as in model 3. 
 
