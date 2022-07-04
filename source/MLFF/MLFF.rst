@@ -619,19 +619,26 @@ You might also want to modify the setting of NN network:
 
 **nodeDim**: Number of nodes in each layer. It should be a Python array. The default setting is [15, 15, 1].  
 
-We now use **seper.py** to devide data into a training set and a validation set. Currently, the default division is a simple cut between first 80% and 20%. Run the following command in the same directory. 
+Next, use **seper.py** to devide data into a training set and a validation set. The following parameters in **parameters.py** should be adjusted according to the need
+
+**test_ratio**: it is used to control the ratio of the validation set among the whole datat set. Its default value is 0.2, meaning that the training set includes 80% of the whole data set, and the validation set the rest 20%. 
+
+**is_rand_seper**: controls if random shuffle is applied before the devision to avoid sequantial dependence. The default value is FALSE, meaning that seper.py will simply make the first 80% of data as training set, and the rest 20% as validation set. 
+
+Run the following command in the same directory. 
 
 ::
 
     seper.py
 
-Next, use gen_data.py to re-formulate data. After this step you will find them in the directory **train_data**. 
+Finally, use gen_data.py to re-formulate the data. After this step you will find them in the directory **train_data**. 
 
 ::
 
     gen_data.py
 
-After this step, add this parameter in parameters.py
+
+After this step, modify these parameters in **parameters.py**
 
 **itype_Ei_mean**: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,
 
