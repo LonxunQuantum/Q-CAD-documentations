@@ -1226,6 +1226,29 @@ Usage: **my_trainer.set_group_size(val)** or pass in at the instantiation
 
 Usage: **my_trainer.set_block_size(val)** or pass in at the instantiation  
 
+**********
+
+**embedding_net_config**: configuration of the embedding network, i.e. number of nodes in each layer. Default is [25, 25, 25] with KF, and [25, 50, 100] without KF 
+
+Usage: **my_trainer.set_embedding_net_config(val)** or pass in at the instantiation  
+
+********
+
+**fitting_net_config**: configuration of the fitting network, i.e. number of nodes in each layer. Default is [50, 50, 50, 1] with KF, and [240, 240, 240, 1] without KF 
+
+Usage: **my_trainer.set_fitting_net_config(val)** or pass in at the instantiation  
+
+***********
+
+**Rmin**: low cut-offin DP's smoothing function. Default is 3.0
+
+Usage: **my_trainer.set_Rmin(val)** or pass in at the instantiation  
+
+**********
+
+**Rmax**: high cut-off in DP's smoothing function. Default is 5.4
+
+Usage: **my_trainer.set_Rmax(val)** or pass in at the instantiation  
 
 Local parameters:Training
 ^^^^^^^^^^^^^^
