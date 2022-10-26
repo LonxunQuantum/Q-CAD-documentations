@@ -46,7 +46,7 @@ Mcloud is equipped with a ready-to-use MLFF environment. Use the following comma
     source /share/app/anaconda3/etc/profile.d/conda.sh
     module load intel/2020
     module load cuda/11.3
-    module load MLFF/2022.05.23
+    module load PWmatMLFF/1.0
     conda activate mlff
 
 On your own workstation 
