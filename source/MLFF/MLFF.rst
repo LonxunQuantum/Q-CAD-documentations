@@ -4,7 +4,7 @@ PWMat Machine Learning Force Field
 Overview
 ----------
 
-PWmat Machine Learning Force Field (PWmatMLFF) is an open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/MLFF, or http://www.pwmat.com/pwmat-resource/module-download/file/MLFF.zip. 
+PWmat Machine Learning Force Field (PWmatMLFF) is an open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either **PWmat** or **VASP** format. You can access the code from https://github.com/LonxunQuantum/PWmatMLFF. 
 
 You can also access our online AIMD data archive via https://www.jianguoyun.com/p/DUWoiP4Ql-_OChiEk8IEIAA
 
@@ -46,7 +46,7 @@ Mcloud is equipped with a ready-to-use MLFF environment. Use the following comma
     source /share/app/anaconda3/etc/profile.d/conda.sh
     module load intel/2020
     module load cuda/11.3
-    module load MLFF/2022.05.23
+    module load PWmatMLFF/1.0
     conda activate mlff
 
 On your own workstation 
@@ -89,7 +89,7 @@ After this, install the following packages.
 
 ::
     
-    git clone https://github.com/mir-group/pair_nequip.git
+    git clone https://github.com/mir-group/nequip.git
 
 Next, check if your CUDA version is **11.3**. If not, update to or install CUDA 11.3. Install pytorch with the following command 
 
@@ -302,7 +302,7 @@ All MOVEMENT files must be stored in the directory **/PWdata**. If more than one
         """
             generate training data 
             ONLY NEED TO BE DONE ONCE
-        """"
+        """
         linReg.generate_data() 
         
         """
@@ -652,39 +652,39 @@ All MOVEMENT files must be stored in the directory **/PWdata**. If more than one
 
     from PWmatMLFF.gnn_network import gnn_network
 
-        if __name__ == "__main__":
-            
-            # atomic symbols. MUST-HAVE 
-            atom_type = ["Cu","O"]
+    if __name__ == "__main__":
         
-            # creating class instance. MUST-HAVE
-            gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
-                                        chemical_symbols = atom_type
+        # atomic symbols. MUST-HAVE 
+        atom_type = ["Cu","O"]
+        
+        # creating class instance. MUST-HAVE
+        gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
+                                    chemical_symbols = atom_type
                                         )
-            
-            gnn_trainer.set_epoch_num(20)
+        gnn_trainer.set_epoch_num(20)
 
-            # set number of image in training and validation
-            # Notice that nequip picks up training and validation set randomly. 
-            gnn_trainer.set_num_train_img(400)
-            gnn_trainer.set_num_valid_img(400)
-            
-            # create directory for current session 
-            gnn_trainer.set_session_dir("record")
+        # set number of image in training and validation
+        # Notice that nequip picks up training and validation set randomly. 
+        gnn_trainer.set_num_train_img(400)
+        gnn_trainer.set_num_valid_img(400)
+        
+        # create directory for current session 
+        gnn_trainer.set_session_dir("record")
 
-            # specify task name
-            gnn_trainer.set_task_name("20220902-test")
+        # specify task name
+        gnn_trainer.set_task_name("20220902-test")
             
-            # generate data 
-            # ONLY NEED TO BE DONE ONCE! 
-            gnn_trainer.generate_data() 
+        # generate data 
+        # ONLY NEED TO BE DONE ONCE! 
+        gnn_trainer.generate_data() 
 
-            # lanuch training 
-            gnn_trainer.train() 
+        # lanuch training 
+        gnn_trainer.train() 
             
 
 Evaluation
 ^^^^^^^^^^
+
 
 You must specify the directory used for training when running evaluation. Images that are used in neither training nor validation are to be evaluated. 
 
@@ -692,19 +692,19 @@ You must specify the directory used for training when running evaluation. Images
 
     from PWmatMLFF.gnn_network import gnn_network
 
-        if __name__ == "__main__":
+    if __name__ == "__main__":
             
-            # atomic symbols. MUST-HAVE 
-            atom_type = ["Cu","O"]
+        # atomic symbols. MUST-HAVE 
+        atom_type = ["Cu","O"]
         
-            # creating class instance. MUST-HAVE. 
-            gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
+        # creating class instance. MUST-HAVE. 
+        gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
                                         chemical_symbols = atom_type
-                                        ) 
+                                 ) 
             
-            # lanuch evaluation 
-            # Notice that train_dir MUST BE SPECIFIED. 
-            gnn_trainer.evaluate(device = "cpu",train_dir = "record/20220902-test")
+        # lanuch evaluation 
+        # Notice that train_dir MUST BE SPECIFIED. 
+        gnn_trainer.evaluate(device = "cpu",train_dir = "record/20220902-test")
 
 
 Prediction
@@ -716,19 +716,19 @@ GNN force field can only be used in LAMMPS. First, you should deploy the model.
 
     from PWmatMLFF.gnn_network import gnn_network
 
-        if __name__ == "__main__":
+    if __name__ == "__main__":
             
-            # atomic symbols. MUST-HAVE 
-            atom_type = ["Cu","O"]
+        # atomic symbols. MUST-HAVE 
+        atom_type = ["Cu","O"]
         
-            # creating class instance. MUST-HAVE. 
-            gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
+        # creating class instance. MUST-HAVE. 
+        gnn_trainer = gnn_network(  device = "cuda", # choose the device for training 
                                         chemical_symbols = atom_type
-                                        ) 
-            
-            # lanuch evaluation 
-            # Notice that train_dir MUST BE SPECIFIED. 
-            gnn_trainer.evaluate(device = "cpu",train_dir = "record/20220902-test")
+                                    ) 
+        
+        # lanuch evaluation 
+        # Notice that train_dir MUST BE SPECIFIED. 
+        gnn_trainer.evaluate(device = "cpu",train_dir = "record/20220902-test")
 
 You also need to compile LAMMPS manually to support the GNN pair style. See section **""LAMMPS MD calculation""**. 
 
@@ -1016,6 +1016,12 @@ Global parameters
 In this case increase the value. 
 
 Usage: **my_trainer.set_neigh_num(val)** or pass in at the instantiation 
+
+*****
+
+**nn_layer_config**: dimension of the nueral network. Default is [15,15,1]. 
+
+Usage: pass in at the instantiation **ONLY**
 
 ****
 
@@ -1469,3 +1475,168 @@ Complete list of parameters in member function **deploy()**:
 
 **out_file**: name of the output file
 
+
+*****
+
+Appendix I: features Wiki
+--------------------
+
+This section provides a brief introduction on the features used in PWMatMLFF. The related literature is also listed, for readers' reference.  
+
+What are features? 
+++++++++++++++++++
+
+Features (or descriptors) are quantities that describe the local atomic environment of an atom. They are required preserve the translational, rotational, and permutational symmetries. Features are usually used as the input of various regressors(linear model, NN, .etc), which output atomic energies and forces. 
+
+Features are differentiable functions of the spatial coordinates, so that force can be calculated as
+
+.. math::
+    \mathbf{F_i} = - \frac{d E_{tot}}{d \mathbf{R_i}} = - \sum_{j,\alpha} \frac{\partial E_j}{\partial G_{j,\alpha}} \frac{\partial G_{j,\alpha}}{ \partial \mathbf{R_i}}
+
+where :math:`j` is the index of neighbor atom within the cutoff radius, and :math:`\alpha` the index of feature. 
+
+Additionally, features are required to be rotionally, translationally, and permutaionally invariant. 
+
+2-b and 3-b features with piecewise cosine functions (feature 1 & 2)
++++++++++++++++++++
+
+Given a center atom, the piecewise cosine functions are used as the basis to describe its local environment. The praph below gives you an idea of how they look like.  
+
+.. figure:: pictures/piecewise_cos.png 
+
+We now define the pieceswise cosine functions, in both 2-body and 3-body feaures. Given the inner and outer cut :math:`R_{inner}` and :math:`R_{outer}`, the degree of the basis :math:`M`, the width of piecewise function :math:`h`, and the interatomic distance between the center atom :math:`i` and the neighbor :math:`j` :math:`R_{ij}`, one defines the basis function as 
+
+.. math:: 
+    \phi_\alpha (R_{ij}) = 
+    \begin{cases}    
+        \frac{1}{2}\cos(\frac{R_{ij}-R_{\alpha}}{h}\pi) + \frac{1}{2} &, |R_{ij} - R_{\alpha}| < h \\
+                                                                        0 &, \text{otherwise} \\ 
+    \end{cases}
+
+with 
+
+.. math::
+    R_{\alpha} = R_{inner} + (\alpha - 1) h,\ \alpha = 1,2,...,M
+
+The expression of **2-b feature** with center atom :math:`i` is thus 
+
+.. math::
+    G_{\alpha,i} = \sum_{m} \phi_{\alpha}(R_{ij})
+
+and **3-b feature**
+
+.. math::
+    G_{\alpha\beta\gamma,i} = \sum_{j,k} \phi_{\alpha}(R_{ij}) \phi_{\beta}(R_{ik})  \phi_{\gamma}(R_{jk}) 
+
+where :math:`\sum_{m}` and :math:`\sum_{m,n}` sum over all atoms within cutoff :math:`R_{outer}` of atom :math:`i` 
+
+In practice, these two features are usually used in pair. 
+
+*Reference*: 
+
+Huang, Y., Kang, J., Goddard, W. A. & Wang, L.-W. Density functional theory based neural network force fields from energy decompositions. Phys. Rev. B 99, 064103 (2019) 
+
+2-b and 3-b Gaussian feature (feature 3 & 4)
++++++++++++++++
+
+These two are the features first used in Behler-Parrinello Neural Network. Given the cutoff radius :math:`R_c`, and the interatomic distance :math:`R_{ij}` with center atom :math:`i`, define cutoff function :math:`f_c`
+
+.. math:: 
+    f_c(R_{ij}) = 
+    \begin{cases}    
+        \frac{1}{2}\cos(\frac{\pi R_{ij}}{R_c}) + \frac{1}{2} &, R_{ij} < R_c \\
+                                                                        0 &, \text{otherwise} \\ 
+    \end{cases}
+
+
+The **2-b Gaussian** feature of atom :math:`i` is defined as
+
+.. math::
+    G_i = \sum_{j \neq i} e^{(-\eta(R_{ij} - R_s)^2)} f_c (R_{ij})
+    
+where :math:`\eta` and :math:`R_s` are parameters defined by user. 
+
+The **3-b Gaussian** feature of atom :math:`i` is defined as
+
+.. math::
+    G_i = 2^{1-\zeta} \sum_{j,k \neq i} (1+\lambda \cos \theta_{ijk} )^\zeta\ e^{-\eta(R_{ij}^2 + R_{ik}^2 + R_{jk}^2)} f_c (R_{ij}) f_c (R_{ik}) f_c (R_{jk})
+
+where 
+
+.. math::
+    \cos \theta_{ijk} = \frac{\mathbf{R_{ij}} \cdot \mathbf{R_{ik}}}{|\mathbf{R_{ij}}||\mathbf{R_{ik}}|} 
+
+and :math:`\eta`, :math:`\zeta`, and :math:`\lambda = \pm1` are parameters defined by user. 
+
+In practice, these two features are usually used in pair. 
+
+*Reference*: 
+
+J. Behler and M. Parrinello, Generalized Neural-Network Representation of High Dimensional Potential-Energy Surfaces. Phys. Rev. Lett. 98, 146401 (2007)
+
+
+Moment Tensor Potential (feature 5) 
+++++++++++++++
+
+In MTP, the local environment of the center atom :math:`i` is characterized by 
+
+.. math::
+    \mathbf{n_i} = (z_i, z_j, \mathbf{r_{ij}})
+
+where :math:`z_i` is the atom type of the center atom, :math:`z_j` atom type of the neighbor :math:`j`, and :math:`\mathbf{r_{ij}}` the relative coordinates of neighbors. Next, energy contribution of each atom is expanded as
+
+.. math::
+    E_i(\mathbf{n_i}) = \sum_\alpha c_\alpha B_\alpha(\mathbf{n_i})
+
+where :math:`B_\alpha` are the basis functions of choice and :math:`c_\alpha` the parameters to be fitted. 
+
+We now introduce moment tensors :math:`M_{\mu\nu}` to define the basis functions
+
+.. math::
+    M_{\mu\nu} (\mathbf{n_i}) = \sum_j f_\mu (|\mathbf{r_{ij}}|,z_i,z_j) \bigotimes_\nu \mathbf{r_{ij}}
+
+These moments contain both radial and angular parts. The radial parts can be expanded as 
+
+.. math::
+    f_\mu (|\mathbf{r_{ij}}|,z_i,z_j) = \sum_\beta c^{(\beta)}_{\mu,z_i,z_j} Q^{(\beta)}(|\mathbf{r_{ij}}|)
+
+where :math:`Q^{(\beta)}(|\mathbf{r_{ij}}|)` are the radial basis funtions. Specifically, 
+
+.. math:: 
+    Q^{(\beta)}(|\mathbf{r_{ij}}|) = 
+    \begin{cases}   
+        \phi^{(\beta)}(|\mathbf{r_{ij}}|) (R_{cut} - (|\mathbf{r_{ij}}|))^2 &, (|\mathbf{r_{ij}}|) < R_{cut} \\
+        0 &,\text{otherwise}
+    \end{cases}
+
+where :math:`\phi^{(\beta)}` are polynomials (e.g. Chebyshev polynomials) defined on the interval [:math:`R_{min},R_{cut}`] 
+
+The angular part :math:`\bigotimes_\nu \mathbf{r_{ij}}`, which means taking tensor product of :math:`\mathbf{r_{ij}}` :math:`\nu` times, contains the angular information of the neighborhood :math:`\mathbf{n_i}`. :math:`\nu` determines the rank of moment tensor. With :math:`\nu=0` one gets a constant scalar, :math:`\nu=1` a vector (rank-1 tensor), :math:`\nu=2` a matrix (rank-2 tensor), .etc.  
+
+Define further the *level* of moments as
+
+.. math::
+    lev(M_{\mu \nu}) = 2 + 4\mu + \nu
+
+This is an empirical formula. 
+
+
+*Reference*:
+
+I.S. Novikov, etal, The MLIP package: moment tensor potential with MPI and active learning. Mach. Learn.: Sci. Technol, 2, 025002 (2021)
+
+Spectral Neighbor Analysis Potential (feature 6) 
+++++++++++++++
+
+
+DP-Chebyshev (feature 7) 
++++++++++++++++++
+
+This feature attempts to mimic the behavior of DP's embedding network. It uses the Chebyshev polynomial as the basis. 
+
+
+DP-Gaussian (feature 8) 
++++++++++++++++++
+
+
+This feature attempts to mimic the behavior of DP's embedding network. 
