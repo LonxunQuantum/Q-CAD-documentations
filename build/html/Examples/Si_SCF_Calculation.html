@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SCF calculation &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>SCF calculation &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -58,6 +61,15 @@
 <li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="BN_C_Charge_Relaxation_Cal.html">Charge system relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cu-Au-Alloy-MD-Calculation.html">Ab Initio Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_Spin_Calculation.html">Spin-polarized calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation exclude local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NEB_Calculation.html">NEB (nudged elastic band) calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Dimer_Calculation.html">Dimer method to calculate saddle point</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials">Tutorials</a></li>
@@ -66,7 +78,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -82,9 +95,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
-      <li>SCF calculation</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../PWmat.html">PWmat</a></li>
+      <li class="breadcrumb-item active">SCF calculation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Examples/Si_SCF_Calculation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -94,11 +107,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="scf-calculation">
-<h1>SCF calculation<a class="headerlink" href="#scf-calculation" title="Permalink to this headline">¶</a></h1>
+  <section id="scf-calculation">
+<h1>SCF calculation<a class="headerlink" href="#scf-calculation" title="Permalink to this heading"></a></h1>
 <p>SCF calculation for Si</p>
-<div class="section" id="input-files">
-<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="mi">2</span>
 <span class="n">LATTICE</span>
@@ -141,9 +154,9 @@
 <p class="admonition-title">Note</p>
 <p>Si.SG15.PEB.UPF is the pseudopotential file.</p>
 </div>
-</div>
-<div class="section" id="calculations">
-<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this heading"></a></h2>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -172,19 +185,19 @@ mpirun -np 4 PWmat | tee output
 <li><p>For SCF calculation, the main output is REPORT file, you can read total energy and calculation time from it.</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;E_tot(eV)&quot;</span> <span class="n">REPORT</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-.</span><span class="mf">21456142286654E+03</span>    <span class="o">-.</span><span class="mf">3243E-05</span>
+<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-</span><span class="mf">.21456142286654E+03</span>    <span class="o">-</span><span class="mf">.3243E-05</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;total computation time&quot;</span> <span class="n">REPORT</span>
 <span class="o">&gt;</span> <span class="n">total</span> <span class="n">computation</span> <span class="n">time</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span><span class="o">=</span>   <span class="mf">10.0428440570831</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="download">
-<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="examples/Si_SCF_Cal.tar.gz">Si_SCF_Cal</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Optical properties &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Optical properties &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -65,7 +69,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -81,9 +86,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
-      <li>Optical properties</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../PWmat.html">PWmat</a></li>
+      <li class="breadcrumb-item active">Optical properties</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/optical/optical.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -93,13 +98,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="optical-properties">
-<h1>Optical properties<a class="headerlink" href="#optical-properties" title="Permalink to this headline">¶</a></h1>
+  <section id="optical-properties">
+<h1>Optical properties<a class="headerlink" href="#optical-properties" title="Permalink to this heading"></a></h1>
 <p>In this section, several modules are provided to calculate absorption spectrum, infrared spectrum, Raman scattering spectrum and second harmonic generation.</p>
 <p>The core concept to calculate optical properties is to calculate the real part and imaginary part of dielectric constant, i.e. <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> and <span class="math notranslate nohighlight">\(\epsilon_{2}\)</span>.</p>
 <p>Note: we unity call <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> as dielectric constant and <span class="math notranslate nohighlight">\(\epsilon_{2}\)</span> as absorption spectrum!</p>
-<div class="section" id="aborption-spectrum-for-non-periodic-systems">
-<h2>Aborption spectrum for non-periodic systems<a class="headerlink" href="#aborption-spectrum-for-non-periodic-systems" title="Permalink to this headline">¶</a></h2>
+<section id="aborption-spectrum-for-non-periodic-systems">
+<h2>Aborption spectrum for non-periodic systems<a class="headerlink" href="#aborption-spectrum-for-non-periodic-systems" title="Permalink to this heading"></a></h2>
 <p>This module is used to calculate optical absorption spectrum by rt-TDDFT method. It is only applcable to non-periodic systems such as clusters or molecules. File <strong>plot_tddft_absorp.x</strong> has been added to utility, users who get PWmat version after 2018.12.07 could use it diectly.</p>
 <p>In rt-TDDFT solution, the dielectric constants are calculated based on the following definition for non-periodic system</p>
 <blockquote>
@@ -118,8 +123,8 @@
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(E(r,t)=(z-z_{0})*E_{z}*\delta (t-t_{0})\)</span></p>
 </div></blockquote>
-<div class="section" id="example-ch4">
-<h3>Example: CH4<a class="headerlink" href="#example-ch4" title="Permalink to this headline">¶</a></h3>
+<section id="example-ch4">
+<h3>Example: CH4<a class="headerlink" href="#example-ch4" title="Permalink to this heading"></a></h3>
 <p>Take the absorption of single molecule CH4 as an example. The atoms in atom.config should be set not to move (0 0 0):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span>
 <span class="n">Lattice</span> <span class="n">vector</span>
@@ -178,16 +183,16 @@ md_detail=1 500 0.01 0 0 # md_method, total MD steps, MD step time, temperature1
 <p>Run PWmat calculation. Type ‘plot_tddft_absorp.x’ after finish the calculation and the screen might like</p>
 <img alt="../_images/screen-plot_tddft_absorp.png" src="../_images/screen-plot_tddft_absorp.png" />
 <p>Pay attention to the 5 input values: polar direction, MD steps, MD step time, kick amplitude and broaden_factor. The first 4 values should be consistent with etot.input and IN.TDDFTOPT! Users could plot the absorption spectrum using file ‘absorp_spectrum.data’.</p>
-</div>
-</div>
-<div class="section" id="bulk-optical-absorption-spectrum-calculations">
-<h2>Bulk optical absorption spectrum calculations<a class="headerlink" href="#bulk-optical-absorption-spectrum-calculations" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="bulk-optical-absorption-spectrum-calculations">
+<h2>Bulk optical absorption spectrum calculations<a class="headerlink" href="#bulk-optical-absorption-spectrum-calculations" title="Permalink to this heading"></a></h2>
 <p>This module is used to introduce how to calculate optical absorption spectrum for bulk systems using RPA and rt-TDDFT methods (without local field effect). In addition to commonly used HSE06, PWmat could run the range separated bybrid (RSH, also called it HSE in PWmat) function with HSE_alpha, HSE_omega, HSE_beta parameters, representing short range mixing, long range mixing and transition position, correspondingly.The RSH could describe the long range dielectric screening with HSE_beta. So it is thus believed could describe the correct Coulomb interaction in electron-hole interaction. Further information for rt-TDDFT+RSH could be found in</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DOI</span><span class="p">:</span> <span class="mf">10.1021</span><span class="o">/</span><span class="n">acs</span><span class="o">.</span><span class="n">jctc</span><span class="o">.</span><span class="mi">7</span><span class="n">b01058</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DOI</span><span class="p">:</span> <span class="mf">10.1021</span><span class="o">/</span><span class="n">acs</span><span class="o">.</span><span class="n">jctc</span><span class="mf">.7</span><span class="n">b01058</span>
 </pre></div>
 </div>
-<div class="section" id="methods">
-<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <p>PWmat provides two paths to get dielectric constant and absorption spectrum: RPA and rt-TDDFT.</p>
 <p>For RPA calulation without the local field effect, imaginary part is based on Fermi Golden rule directly</p>
 <blockquote>
@@ -205,9 +210,9 @@ md_detail=1 500 0.01 0 0 # md_method, total MD steps, MD step time, temperature1
 <p>we use <span class="math notranslate nohighlight">\(A(t)\)</span> (<span class="math notranslate nohighlight">\(E(t)=dA(t)/dt\)</span>) and current <span class="math notranslate nohighlight">\(J(t)\)</span> (<span class="math notranslate nohighlight">\(J(t)=dD(t)/dt\)</span>) for periodic system. Spatially, <span class="math notranslate nohighlight">\(A(t)\)</span> is a constant. And roughly speaking <span class="math notranslate nohighlight">\(J(t)\)</span> is also a constant in periodic system. In the current calculation, we use a sharp Gaussian function in time to represent <span class="math notranslate nohighlight">\(E(t)\)</span> (so <span class="math notranslate nohighlight">\(A(t)\)</span>) is almost a step like function.</p>
 <p>The optical absorption process is usually accompanied by the creation of electron-hole pairs. So the electron-hole interaction and excition dynamics are important calculation indicator, which is a great challenge for DFT calculation due to the single partical image. The RPA method could give rather good <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span>, but the <span class="math notranslate nohighlight">\(\epsilon_{2}\)</span> shape might not be so good due to the rough description of correlation effects. The rt-TDDFT could describ the response process better, which could give better <span class="math notranslate nohighlight">\(\epsilon_{2}\)</span> shape. But the correlation effect is also depend on how precise the functional is. Usually, rt-TDDFT might give non-ideal peak position and peak height. GW+Bethe-Salpeter equation (GW+BSE) is an establish method to calculate the exciton, and light absorption spectrum in bulk system which has the explicit electron-hole interactions (with screening). However, it is too expensive to implement the GW+BSE, not to mention the ultrafast dynamics. So the hope is that rt-TDDFT could also have the explicit electron-hole interaction, with the hse_beta = <span class="math notranslate nohighlight">\(\epsilon\)</span> as the screening. Previous work had shown that rt-TDDFT+RSH could give good results in several organic molecular crystals (10.1021/acs.jctc.7b01058):</p>
 <img alt="../_images/RSH_provement.png" src="../_images/RSH_provement.png" />
-</div>
-<div class="section" id="calculation-procedure">
-<h3>Calculation procedure<a class="headerlink" href="#calculation-procedure" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="calculation-procedure">
+<h3>Calculation procedure<a class="headerlink" href="#calculation-procedure" title="Permalink to this heading"></a></h3>
 <p>In this section, we take Si primitive cell as an example to calculate optical absorption using RPA and rt-TDDFT. We use the following atom.config file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
 <span class="n">Lattice</span> <span class="n">vector</span>
@@ -219,8 +224,8 @@ md_detail=1 500 0.01 0 0 # md_method, total MD steps, MD step time, temperature1
   <span class="mi">14</span>    <span class="mf">0.00000000000</span>     <span class="mf">0.00000000000</span>     <span class="mf">0.000000000000</span>  <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>   <span class="mf">1.0</span>
 </pre></div>
 </div>
-<div class="section" id="linear-response-method">
-<h4>Linear response method<a class="headerlink" href="#linear-response-method" title="Permalink to this headline">¶</a></h4>
+<section id="linear-response-method">
+<h4>Linear response method<a class="headerlink" href="#linear-response-method" title="Permalink to this heading"></a></h4>
 <p>Users could implement the linear response method by the following 4 steps:</p>
 <ol class="arabic simple">
 <li><p>Do a JOB = SCF calculation with reasonable number of kpoints (One could use: LDA, PBE or HSE for this calculation). Take this etot.input for instance:</p></li>
@@ -288,9 +293,9 @@ HSE_OMEGA = 0.625
 <p>We use the average values to compare with experiments for convenience:</p>
 <img alt="../_images/RPA.png" src="../_images/RPA.png" />
 <p>As one can see, RPA method could not give the right shape. For PBE functional, the center of mass is kind of correct, which means the corresponding real part might be good. But it underestimates the absorption edge for about 0.6 eV. RSH functional could give the almost the right absorption edge, but the center of mass is even wrose than PBE.</p>
-</div>
-<div class="section" id="rt-tddft-method">
-<h4>rt-TDDFT method<a class="headerlink" href="#rt-tddft-method" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="rt-tddft-method">
+<h4>rt-TDDFT method<a class="headerlink" href="#rt-tddft-method" title="Permalink to this heading"></a></h4>
 <p>We use a two step process for rt-TDDFT calculation for absorption spectrum calculations. An external field A(t) towards [111] is given:</p>
 <img alt="../_images/At.png" src="../_images/At.png" />
 <p>Users could set this field by</p>
@@ -413,11 +418,11 @@ HSE_OMEGA = 0.625
 <p>The <span class="math notranslate nohighlight">\(\epsilon_{2}(\omega)=0\)</span> will be normalized using above parameters <span class="math notranslate nohighlight">\(\int_{w_cut_min}^{w_cut_max}\omega \epsilon_{2}(\omega)d\omega=2\pi^{2}e^{2}N_{electron}/m/vol\)</span>.</p>
 <img alt="../_images/TDDFT.png" src="../_images/TDDFT.png" />
 <p>Both TDDFT+PBE and TDDFT+RSH could give the right spectrum shape. RSH could enhance the absorption edge  but still underestimate it.</p>
-</div>
-</div>
-</div>
-<div class="section" id="rpa-method-with-second-order-interpolation">
-<h2>RPA method with second order interpolation<a class="headerlink" href="#rpa-method-with-second-order-interpolation" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="rpa-method-with-second-order-interpolation">
+<h2>RPA method with second order interpolation<a class="headerlink" href="#rpa-method-with-second-order-interpolation" title="Permalink to this heading"></a></h2>
 <p>This module describe a method to calculate the bulk absorption spectrum and dielectric constant for bulk system using RPA method. Comparing to last module, a second order interpolation method has been used. Besides, it can also calculate the ion-clamped (high frequency) macroscopic dielectric constants <span class="math notranslate nohighlight">\(\epsilon_{\infty}\)</span> including local field effect on the Hartree level (RPA).</p>
 <p>Note: for using this module, PWmat version later than 20200812 is required.</p>
 <p>Compared to the conventional RPA absorption calculation, one would add JOB=MOMENT after JOB=DOS, then run ‘RPA_absorb.x’ and ‘RPA_diel_G1G2_000.x’. Note: HSE is not supported in JOB=MOMENT!</p>
@@ -438,8 +443,8 @@ HSE_OMEGA = 0.625
   <span class="mi">33</span>    <span class="mf">0.250000000000</span>   <span class="o">-</span><span class="mf">0.250000000000</span>   <span class="o">-</span><span class="mf">0.250000000000</span>  <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
 </pre></div>
 </div>
-<div class="section" id="step1-scf">
-<h3>Step1: SCF<a class="headerlink" href="#step1-scf" title="Permalink to this headline">¶</a></h3>
+<section id="step1-scf">
+<h3>Step1: SCF<a class="headerlink" href="#step1-scf" title="Permalink to this heading"></a></h3>
 <p>The etot.input for SCF might like</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4   1
 
@@ -473,9 +478,9 @@ OUT.WG = F
 </pre></div>
 </div>
 <p>The interpolation method in the following steps might not support k parallel for several versions, so we set ‘4 1’. The MP_N123 here shoule not be too large, otherwise the interpolation will be very slow. Large number of bands are needed in absorption calculation. Users could set it first in SCF of change the NUM_BAND tag in NONSCF.</p>
-</div>
-<div class="section" id="step2-nonscf">
-<h3>Step2: NONSCF<a class="headerlink" href="#step2-nonscf" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step2-nonscf">
+<h3>Step2: NONSCF<a class="headerlink" href="#step2-nonscf" title="Permalink to this heading"></a></h3>
 <p>After finished SCF job, copy OUT.VR to IN.VR for NONSCF and set IN.VR = T.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4   1
 
@@ -511,9 +516,9 @@ OUT.WG = T
 </pre></div>
 </div>
 <p>The number of bands can also be increased in this step.</p>
-</div>
-<div class="section" id="step3-dos">
-<h3>Step3: DOS<a class="headerlink" href="#step3-dos" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step3-dos">
+<h3>Step3: DOS<a class="headerlink" href="#step3-dos" title="Permalink to this heading"></a></h3>
 <p>IN.WG and OUT.EIGEN are from OUT.WG and OUT.EIGEN in NONSCF.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4   1
 
@@ -552,9 +557,9 @@ OUT.WG = F
 </pre></div>
 </div>
 <p>For DOS_DETAIL, 2 means the second order method (only supported by PWmat version later than 20200812). The interpolation results are needed in JOB = MOMENT.</p>
-</div>
-<div class="section" id="step4-moment">
-<h3>Step4: MOMENT<a class="headerlink" href="#step4-moment" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step4-moment">
+<h3>Step4: MOMENT<a class="headerlink" href="#step4-moment" title="Permalink to this heading"></a></h3>
 <p>One must run a PWmat for JOB=MOMENT after JOB = DOS. Considering many input files are needed from DOS, one could run JOB = MOMENT just inside the directory of JOB = DOS.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4   1
 
@@ -593,9 +598,9 @@ OUT.WG = F
 </pre></div>
 </div>
 <p>It will generate OUT.momentK.001.1 etc. for all kpoints and spin, the code will use it. We will use OUT.EIGEN, OUT.SYMM, OUT.IND_EXT_KPT, OUT.GKK and IN.WG, please do not remove them!</p>
-</div>
-<div class="section" id="step5-calculate-absorption-spectrum-and-dielectric-constant">
-<h3>Step5: Calculate absorption spectrum and dielectric constant<a class="headerlink" href="#step5-calculate-absorption-spectrum-and-dielectric-constant" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step5-calculate-absorption-spectrum-and-dielectric-constant">
+<h3>Step5: Calculate absorption spectrum and dielectric constant<a class="headerlink" href="#step5-calculate-absorption-spectrum-and-dielectric-constant" title="Permalink to this heading"></a></h3>
 <p>Prepare the RPA.input file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1        ! iflag_moment
 0.05  4.58914264024107   ! dE_smearing(eV)(RPA_absorb), Efermi(eV)
@@ -642,10 +647,10 @@ OUT.SYMM, atom.config
 <span class="n">The</span> <span class="n">inverse</span> <span class="n">diel</span> <span class="n">constant</span> <span class="n">matrix</span> <span class="ow">is</span> <span class="n">stored</span> <span class="ow">in</span><span class="p">:</span> <span class="n">OUT</span><span class="o">.</span><span class="n">inv_diel_matrix</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="emissivity-etc">
-<h2>Emissivity etc<a class="headerlink" href="#emissivity-etc" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="emissivity-etc">
+<h2>Emissivity etc<a class="headerlink" href="#emissivity-etc" title="Permalink to this heading"></a></h2>
 <p>This module continues from the previous module to calculate absorption coefficient, extinction coefficient, reflectivity, refractive index, emissivity. The first four steps is the same as previous module. End with running RPA_emissivity.x.</p>
 <p>As we said at the beginning, one could generate almost all optical properties after getting <span class="math notranslate nohighlight">\(\epsilon_{1}\)</span> and <span class="math notranslate nohighlight">\(\epsilon_{2}\)</span>.</p>
 <p>The complex refractive index</p>
@@ -694,13 +699,13 @@ OUT.SYMM, atom.config
 <img alt="../_images/reflectance.png" src="../_images/reflectance.png" />
 <p>File ‘emissivity’ contains 5 columns, in sequence <span class="math notranslate nohighlight">\(\omega (eV)\)</span>, average value, xx, yy and zz components.</p>
 <img alt="../_images/emissivity.png" src="../_images/emissivity.png" />
-</div>
-<div class="section" id="second-order-susceptibility-calculation">
-<h2>Second order susceptibility calculation<a class="headerlink" href="#second-order-susceptibility-calculation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="second-order-susceptibility-calculation">
+<h2>Second order susceptibility calculation<a class="headerlink" href="#second-order-susceptibility-calculation" title="Permalink to this heading"></a></h2>
 <p>In this module, we will describe how to calculate the second order susceptibilitu for bulk system using RPA method with second order interpolation. The procedure is similar to module ‘RPA method with second order interpolation’.</p>
-</div>
-<div class="section" id="infrared-spectrum">
-<h2>Infrared spectrum<a class="headerlink" href="#infrared-spectrum" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="infrared-spectrum">
+<h2>Infrared spectrum<a class="headerlink" href="#infrared-spectrum" title="Permalink to this heading"></a></h2>
 <p>In this module, we will calculate the Born effective charge using finite electric field method. Then users could get infrared spectrum (infrared intensity).</p>
 <p>Note: for using this module, PWmat version later than 20211202 is required.</p>
 <p>Some vibration modes could change the permanent dipole, resulting in infrared absorption. In other words, antisymmetric vibration modes usually lead to infrared active sigal. To get the infrared spectrum, we should:</p>
@@ -709,15 +714,15 @@ OUT.SYMM, atom.config
 <li><p>Calculate the Born effective charge</p></li>
 <li><p>Match the vibration modes and Born effective charge by symmetry and calculate the infrared intensity as a function of frequency.</p></li>
 </ol>
-<div class="section" id="example-gaas">
-<h3>Example GaAs<a class="headerlink" href="#example-gaas" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="raman-spectrum">
-<h2>Raman spectrum<a class="headerlink" href="#raman-spectrum" title="Permalink to this headline">¶</a></h2>
+<section id="example-gaas">
+<h3>Example GaAs<a class="headerlink" href="#example-gaas" title="Permalink to this heading"></a></h3>
+</section>
+</section>
+<section id="raman-spectrum">
+<h2>Raman spectrum<a class="headerlink" href="#raman-spectrum" title="Permalink to this heading"></a></h2>
 <p>In this module, we could obtain Raman spectrum with Gaussian broadening. Vibration modes with inversion symmetry will not contribute to the permanent dipole variation or in other word infrared spectrum. But they would lead to induced dipole variation which could contribute to the Raman spectrum.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

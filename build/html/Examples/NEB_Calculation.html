@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEB (nudged elastic band) calculation &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>NEB (nudged elastic band) calculation &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -58,7 +62,7 @@
 <li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation exclude local field</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">NEB (nudged elastic band) calculation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#first-step-relax-calculation-for-initial-and-final-states">First Step: “RELAX” calculation for initial and final states</a></li>
@@ -75,7 +79,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -91,9 +96,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
-      <li>NEB (nudged elastic band) calculation</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../PWmat.html">PWmat</a></li>
+      <li class="breadcrumb-item active">NEB (nudged elastic band) calculation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Examples/NEB_Calculation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,16 +108,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="neb-nudged-elastic-band-calculation">
-<h1>NEB (nudged elastic band) calculation<a class="headerlink" href="#neb-nudged-elastic-band-calculation" title="Permalink to this headline">¶</a></h1>
+  <section id="neb-nudged-elastic-band-calculation">
+<h1>NEB (nudged elastic band) calculation<a class="headerlink" href="#neb-nudged-elastic-band-calculation" title="Permalink to this heading"></a></h1>
 <p>The diffusion barrier for Li on graphene.</p>
 <p>There are three steps, the first step is “RELAX” calculation for initial and final states, the second is “SCF” calculation, and the third is “NEB” calculation.</p>
-<div class="section" id="first-step-relax-calculation-for-initial-and-final-states">
-<h2>First Step: “RELAX” calculation for initial and final states<a class="headerlink" href="#first-step-relax-calculation-for-initial-and-final-states" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="initial-state-relaxation">
-<h3>Initial state relaxation:<a class="headerlink" href="#initial-state-relaxation" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="input-files">
-<h4>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h4>
+<section id="first-step-relax-calculation-for-initial-and-final-states">
+<h2>First Step: “RELAX” calculation for initial and final states<a class="headerlink" href="#first-step-relax-calculation-for-initial-and-final-states" title="Permalink to this heading"></a></h2>
+<section id="initial-state-relaxation">
+<h3>Initial state relaxation:<a class="headerlink" href="#initial-state-relaxation" title="Permalink to this heading"></a></h3>
+<section id="input-files">
+<h4>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h4>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">51</span>
 <span class="n">LATTICE</span>
@@ -150,9 +155,9 @@
 </ol>
 </div>
 <p>C.SG15.PBE.UPF, Li.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="calculations">
-<h4>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="calculations">
+<h4>Calculations<a class="headerlink" href="#calculations" title="Permalink to this heading"></a></h4>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -178,16 +183,16 @@ mpirun -np 4 PWmat | tee output
 <p>Submit the task with a pbs script</p>
 </div>
 <p>2.Abtain the final.config file, which contains the position of the last ionic step of the relaxation, and can be used for step two “SCF” calculation.</p>
-</div>
-<div class="section" id="download">
-<h4>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="download">
+<h4>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h4>
 <p><a class="reference external" href="examples/Step1_initial_relax_cal.tar.gz">Step1_initial_relax_cal</a></p>
-</div>
-</div>
-<div class="section" id="final-state-relaxation">
-<h3>Final state relaxation:<a class="headerlink" href="#final-state-relaxation" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id1">
-<h4>Input files<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="final-state-relaxation">
+<h3>Final state relaxation:<a class="headerlink" href="#final-state-relaxation" title="Permalink to this heading"></a></h3>
+<section id="id1">
+<h4>Input files<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">51</span>
 <span class="n">LATTICE</span>
@@ -219,9 +224,9 @@ mpirun -np 4 PWmat | tee output
 </pre></div>
 </div>
 <p>C.SG15.PBE.UPF, Li.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="id2">
-<h4>Calculations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id2">
+<h4>Calculations<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -247,19 +252,19 @@ mpirun -np 4 PWmat | tee output
 <p>Submit the task with a pbs script</p>
 </div>
 <p>2.Abtain the final.config file, which contains the position of the last ionic step of the relaxation, and can be used for step two “SCF” calculation.</p>
-</div>
-<div class="section" id="id3">
-<h4>Download<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id3">
+<h4>Download<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
 <p><a class="reference external" href="examples/Step1_final_relax_cal.tar.gz">Step1_final_relax_cal</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="second-step-scf-calculation-for-initial-and-finial-states">
-<h2>Second Step: “SCF” calculation for initial and finial states<a class="headerlink" href="#second-step-scf-calculation-for-initial-and-finial-states" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="initial-state-scf">
-<h3>Initial state scf:<a class="headerlink" href="#initial-state-scf" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id4">
-<h4>Input files<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+</section>
+<section id="second-step-scf-calculation-for-initial-and-finial-states">
+<h2>Second Step: “SCF” calculation for initial and finial states<a class="headerlink" href="#second-step-scf-calculation-for-initial-and-finial-states" title="Permalink to this heading"></a></h2>
+<section id="initial-state-scf">
+<h3>Initial state scf:<a class="headerlink" href="#initial-state-scf" title="Permalink to this heading"></a></h3>
+<section id="id4">
+<h4>Input files<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
 <span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
@@ -297,9 +302,9 @@ mpirun -np 4 PWmat | tee output
 </pre></div>
 </div>
 <p>C.SG15.PBE.SOC.UPF, Li.SG15.PBE.SOC.UPF</p>
-</div>
-<div class="section" id="id5">
-<h4>Calculations<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id5">
+<h4>Calculations<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -326,19 +331,19 @@ mpirun -np 4 PWmat | tee output
 </div>
 <p>2.Read total energy from REPORT, and as input parameter for next NEB calculation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;E_tot(eV)&quot;</span> <span class="n">REPORT</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-.</span><span class="mf">79460153820497E+04</span>    <span class="o">-.</span><span class="mf">3343E-03</span>
+<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-</span><span class="mf">.79460153820497E+04</span>    <span class="o">-</span><span class="mf">.3343E-03</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id6">
-<h4>Download<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id6">
+<h4>Download<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <p><a class="reference external" href="examples/Step2_initial_scf_cal.tar.gz">Step2_initial_scf_cal</a></p>
-</div>
-</div>
-<div class="section" id="final-state-scf">
-<h3>Final state scf:<a class="headerlink" href="#final-state-scf" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id7">
-<h4>Input files<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="final-state-scf">
+<h3>Final state scf:<a class="headerlink" href="#final-state-scf" title="Permalink to this heading"></a></h3>
+<section id="id7">
+<h4>Input files<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
 <span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
@@ -376,9 +381,9 @@ mpirun -np 4 PWmat | tee output
 </pre></div>
 </div>
 <p>C.SG15.PBE.SOC.UPF, Li.SG15.PBE.SOC.UPF</p>
-</div>
-<div class="section" id="id8">
-<h4>Calculations<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id8">
+<h4>Calculations<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -405,18 +410,18 @@ mpirun -np 4 PWmat | tee output
 </div>
 <p>2.Read total energy from REPORT, and as input parameter for next NEB calculation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s2">&quot;E_tot(eV)&quot;</span> <span class="n">REPORT</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-.</span><span class="mf">79460153754978E+04</span>    <span class="o">-.</span><span class="mf">3548E-03</span>
+<span class="o">&gt;</span> <span class="n">E_tot</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span>    <span class="o">=</span> <span class="o">-</span><span class="mf">.79460153754978E+04</span>    <span class="o">-</span><span class="mf">.3548E-03</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id9">
-<h4>Download<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id9">
+<h4>Download<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
 <p><a class="reference external" href="examples/Step2_final_scf_cal.tar.gz">Step2_final_scf_cal</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="third-step-neb-calculation">
-<h2>Third Step: “NEB” calculation<a class="headerlink" href="#third-step-neb-calculation" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="third-step-neb-calculation">
+<h2>Third Step: “NEB” calculation<a class="headerlink" href="#third-step-neb-calculation" title="Permalink to this heading"></a></h2>
 <p>atom_initial.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="mi">51</span> <span class="n">atoms</span><span class="p">,</span><span class="n">Iteration</span> <span class="o">=</span>   <span class="mi">8</span><span class="p">,</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span> <span class="o">=</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>  <span class="o">-</span><span class="mf">0.7946015575E+04</span>   <span class="mf">0.0000000000E+00</span><span class="p">,</span> <span class="n">Average</span> <span class="n">Force</span><span class="o">=</span>  <span class="mf">0.15454E-02</span><span class="p">,</span> <span class="n">Max</span> <span class="n">force</span><span class="o">=</span>  <span class="mf">0.33836E-02</span>
 <span class="n">Lattice</span> <span class="n">vector</span> <span class="p">(</span><span class="n">Angstrom</span><span class="p">),</span> <span class="n">stress</span><span class="p">(</span><span class="n">eV</span><span class="o">/</span><span class="n">natom</span><span class="p">)</span>
@@ -467,7 +472,7 @@ mpirun -np 4 PWmat | tee output
 <span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
 <span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Li</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
 <span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom_initial</span><span class="o">.</span><span class="n">config</span>
-<span class="n">NEB_DETAIL</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-.</span><span class="mf">79460153820497E+04</span><span class="p">,</span> <span class="o">-.</span><span class="mf">79460153754978E+04</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">atom_final</span><span class="o">.</span><span class="n">config</span> <span class="c1">#IMTH, NSTEP, FORCE_TOL, NIMAGE, AK, TYPE_SPRING, E0, EN, ITYPE_AT2, ATOM2.CONFIG</span>
+<span class="n">NEB_DETAIL</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">.79460153820497E+04</span><span class="p">,</span> <span class="o">-</span><span class="mf">.79460153754978E+04</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">atom_final</span><span class="o">.</span><span class="n">config</span> <span class="c1">#IMTH, NSTEP, FORCE_TOL, NIMAGE, AK, TYPE_SPRING, E0, EN, ITYPE_AT2, ATOM2.CONFIG</span>
 <span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">Ecut2</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
@@ -548,8 +553,8 @@ mpirun -np 4 PWmat | tee output
 </div>
 </div>
 <p><a class="reference external" href="examples/Step3_neb_cal.tar.gz">Step3_neb_cal</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

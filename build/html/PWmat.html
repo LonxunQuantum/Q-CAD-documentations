@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PWmat &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>PWmat &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -80,7 +83,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -96,8 +100,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>PWmat</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">PWmat</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/PWmat.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -107,10 +111,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="pwmat">
-<h1>PWmat<a class="headerlink" href="#pwmat" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="download">
-<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+  <section id="pwmat">
+<h1>PWmat<a class="headerlink" href="#pwmat" title="Permalink to this heading"></a></h1>
+<section id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h2>
 <p>You can download PWmat from <a class="reference external" href="http://www.pwmat.com/">LongXun</a> offcial website. Currently, we only provide
 the executable binary files, which are compiled according to different mpi and cuda versions. Before download,
 it is necessary to confirm the mpi and cuda versions on your machines.</p>
@@ -157,9 +161,9 @@ it is necessary to confirm the mpi and cuda versions on your machines.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ wget http://www.pwmat.com/pwmat-resource/mstation-download/cuda-10.1-betaintel.zip
 </pre></div>
 </div>
-</div>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>After downloading the corresponding installation package, you can install it in the following way:</p>
 <ol class="loweralpha simple">
 <li><p>mpi --&gt; Open MPI 2.1.0,  cuda --&gt; 8.0:</p></li>
@@ -193,13 +197,13 @@ $ sh install.betaintel.run
 $ bash
 </pre></div>
 </div>
-</div>
-<div class="section" id="manual">
-<h2>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="manual">
+<h2>Manual<a class="headerlink" href="#manual" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference external" href="http://www.pwmat.com/pwmat-resource/Manual.pdf">manual</a> of PWmat is available on the LongXun offical website, please check it!</p>
-</div>
-<div class="section" id="input-files">
-<h2>Input Files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="input-files">
+<h2>Input Files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
 <p>As a minimal setup, PWmat requires the user to prepare the following input files:
 <strong>etot.input, atom.config, pseudopotential file (for example: Si.SG15.PBE.UPF)</strong>.</p>
 <p>If present (in the directory where the calculation runs) the following output files
@@ -207,13 +211,13 @@ of previous runs may be read as restart information <strong>OUT.WG</strong> and/
 <strong>(Note: you must rename IN.WG and or IN.RHO, and add the tag
 “IN.WG = T” and/or “IN.RHO = T” in etot.input)</strong>.</p>
 <p>Some specific features of PWmat require additional output files.</p>
-</div>
-<div class="section" id="output-files">
-<h2>Output Files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Permalink to this heading"></a></h2>
 <p>he main output file of PWmat is the <strong>REPORT</strong>. The <strong>RELAXSTEPS</strong> file contains the total energies of the electronic and ionic SCF steps, and it is useful for the monitoring of the calculations.</p>
 <p>Here is a comprehensive list of all important output files:</p>
-<div class="section" id="directly-readable-files">
-<h3>Directly readable files:<a class="headerlink" href="#directly-readable-files" title="Permalink to this headline">¶</a></h3>
+<section id="directly-readable-files">
+<h3>Directly readable files:<a class="headerlink" href="#directly-readable-files" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
@@ -275,9 +279,9 @@ of previous runs may be read as restart information <strong>OUT.WG</strong> and/
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="binary-files">
-<h3>Binary files:<a class="headerlink" href="#binary-files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="binary-files">
+<h3>Binary files:<a class="headerlink" href="#binary-files" title="Permalink to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
@@ -345,10 +349,10 @@ of previous runs may be read as restart information <strong>OUT.WG</strong> and/
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Examples/Si_SCF_Calculation.html">SCF calculation</a><ul>
@@ -535,12 +539,12 @@ of previous runs may be read as restart information <strong>OUT.WG</strong> and/
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="tutorials">
-<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="tutorials">
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading"></a></h2>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="phonon/phonon.html">Phonon calculation</a><ul>
@@ -654,14 +658,14 @@ of previous runs may be read as restart information <strong>OUT.WG</strong> and/
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="utilities">
-<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="cases">
-<h2>Cases<a class="headerlink" href="#cases" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading"></a></h2>
+</section>
+<section id="cases">
+<h2>Cases<a class="headerlink" href="#cases" title="Permalink to this heading"></a></h2>
+</section>
+</section>
 
 
            </div>

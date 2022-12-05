@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transition dipole moment calculation exclude local field &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Transition dipole moment calculation exclude local field &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -76,7 +79,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -92,9 +96,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../PWmat.html">PWmat</a> &raquo;</li>
-      <li>Transition dipole moment calculation exclude local field</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../PWmat.html">PWmat</a></li>
+      <li class="breadcrumb-item active">Transition dipole moment calculation exclude local field</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Examples/Trans_dipole_moment_exclude_Calculation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,14 +108,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="transition-dipole-moment-calculation-exclude-local-field">
-<h1>Transition dipole moment calculation exclude local field<a class="headerlink" href="#transition-dipole-moment-calculation-exclude-local-field" title="Permalink to this headline">¶</a></h1>
+  <section id="transition-dipole-moment-calculation-exclude-local-field">
+<h1>Transition dipole moment calculation exclude local field<a class="headerlink" href="#transition-dipole-moment-calculation-exclude-local-field" title="Permalink to this heading"></a></h1>
 <p>Transition dipole moment calculaton in CsPbI3.</p>
 <p>There are four steps, the first step is “SCF” calculation, the second is “NONSCF” calculation, the third is “DOS” calculation, and the fourth step is to process the data with TDM.x tool.</p>
-<div class="section" id="first-step-scf-calculation">
-<h2>First Step: “SCF” calculation<a class="headerlink" href="#first-step-scf-calculation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="input-files">
-<h3>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h3>
+<section id="first-step-scf-calculation">
+<h2>First Step: “SCF” calculation<a class="headerlink" href="#first-step-scf-calculation" title="Permalink to this heading"></a></h2>
+<section id="input-files">
+<h3>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h3>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
 <span class="n">LATTICE</span>
@@ -140,9 +144,9 @@
 </pre></div>
 </div>
 <p>Cs.SG15.PBE.UPF, Pb-d.SG15.PBE.UPF, I.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="calculations">
-<h3>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="calculations">
+<h3>Calculations<a class="headerlink" href="#calculations" title="Permalink to this heading"></a></h3>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -167,12 +171,12 @@ mpirun -np 4 PWmat | tee output
 <p class="admonition-title">Note</p>
 <p>Submit the task with a pbs script</p>
 </div>
-</div>
-</div>
-<div class="section" id="second-step-nonscf-calculation">
-<h2>Second Step: “NONSCF” calculation<a class="headerlink" href="#second-step-nonscf-calculation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Input files<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="second-step-nonscf-calculation">
+<h2>Second Step: “NONSCF” calculation<a class="headerlink" href="#second-step-nonscf-calculation" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>Input files<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
 <span class="n">LATTICE</span>
@@ -222,9 +226,9 @@ mpirun -np 4 PWmat | tee output
 </div>
 </div>
 <p>Cs.SG15.PBE.SOC.UPF, Pb-d.SG15.PBE.SOC.UPF, I.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="id2">
-<h3>Calculations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id2">
+<h3>Calculations<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -249,12 +253,12 @@ mpirun -np 4 PWmat | tee output
 <p class="admonition-title">Note</p>
 <p>Submit the task with a pbs script</p>
 </div>
-</div>
-</div>
-<div class="section" id="third-step-dos-calculation">
-<h2>Third Step: “DOS” calculation<a class="headerlink" href="#third-step-dos-calculation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>Input files<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="third-step-dos-calculation">
+<h2>Third Step: “DOS” calculation<a class="headerlink" href="#third-step-dos-calculation" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>Input files<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">5</span>
 <span class="n">LATTICE</span>
@@ -290,9 +294,9 @@ mpirun -np 4 PWmat | tee output
 3.IN.KPT is the same as previous NONSCF calculation.</p>
 </div>
 <p>Cs.SG15.PBE.SOC.UPF, Pb-d.SG15.PBE.SOC.UPF, I.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="id4">
-<h3>Calculations<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3>Calculations<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -317,12 +321,12 @@ mpirun -np 4 PWmat | tee output
 <p class="admonition-title">Note</p>
 <p>Submit the task with a pbs script</p>
 </div>
-</div>
-</div>
-<div class="section" id="fourth-step-run-tdm-x">
-<h2>Fourth Step: run TDM.x<a class="headerlink" href="#fourth-step-run-tdm-x" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id5">
-<h3>Input files<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="fourth-step-run-tdm-x">
+<h2>Fourth Step: run TDM.x<a class="headerlink" href="#fourth-step-run-tdm-x" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h3>Input files<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <p>TDM.input</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>           <span class="c1">#flag: possible values 0, 1. 0: no nonlocal potential; 1: nonlocal potential is taken into account</span>
 <span class="mi">37</span> <span class="mi">38</span>       <span class="c1">#i,j: TDM between j and j state.</span>
@@ -348,13 +352,13 @@ mpirun -np 4 PWmat | tee output
 <span class="mi">85</span>   <span class="mf">0.3655E+02</span>   <span class="mf">0.4251E+01</span>   <span class="mf">0.2792E+01</span>          <span class="mf">0.4359E+02</span>  <span class="o">-</span><span class="mf">0.5741E+01</span>  <span class="o">-</span><span class="mf">0.1895E+01</span>   <span class="mf">0.1737E+01</span>   <span class="mf">0.1111E+01</span>   <span class="mf">0.4033E+00</span>   <span class="mf">0.1622E+01</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="download">
-<h3>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="download">
+<h3>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h3>
 <p><a class="reference external" href="examples/momoment_without_nonlocal_cal.tar.gz">momoment_without_nonlocal_cal</a></p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

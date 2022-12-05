@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ab Initio Molecular Dynamics &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Ab Initio Molecular Dynamics &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spin-polarized calculation" href="Ni_SCF_Spin_Calculation.html" />
+    <link rel="prev" title="Charge system relaxation calculation" href="BN_C_Charge_Relaxation_Cal.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,9 +39,47 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">Machine Learning Force Field</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../PWmat.html">PWmat</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#manual">Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#input-files">Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#output-files">Output Files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../PWmat.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Si_SCF_Calculation.html">SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_DOS_Calculation.html">DOS calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_Band_Calculation.html">Bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_SCF_Calculation.html">HSE SCF calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_Band_Calculation.html">HSE bandsctructure calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Si_RELAX_Calculation.html">Crystal Structure Optimization (only relax atomic position)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Graphene_CELL_REL_Calculation.html">Crystal Structure Optimization (both atomic position and cell shape)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GaAs_HSE_REL_Calculation.html">HSE Relaxation calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BN_C_Charge_Relaxation_Cal.html">Charge system relaxation calculation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ab Initio Molecular Dynamics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#input-files">Input files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calculations">Calculations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#download">Download</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_Spin_Calculation.html">Spin-polarized calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CdSe_SOC_Band_Calculation.html">Spin-orbit coupling bandstructure calculation without magnetic moment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Fe_Spin222_SCF_Calculation.html">Spin-orbit coupling with noncollinear magnetization calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Ni_SCF_DFTU_Calculation.html">DFT+U Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_exclude_Calculation.html">Transition dipole moment calculation exclude local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Trans_dipole_moment_include_Calculation.html">Transition dipole moment calculation include local field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="NEB_Calculation.html">NEB (nudged elastic band) calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Dimer_Calculation.html">Dimer method to calculate saddle point</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#tutorials">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PWmat.html#cases">Cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -52,8 +95,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Ab Initio Molecular Dynamics</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../PWmat.html">PWmat</a></li>
+      <li class="breadcrumb-item active">Ab Initio Molecular Dynamics</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Examples/Cu-Au-Alloy-MD-Calculation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -63,11 +107,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="ab-initio-molecular-dynamics">
-<h1>Ab Initio Molecular Dynamics<a class="headerlink" href="#ab-initio-molecular-dynamics" title="Permalink to this headline">¶</a></h1>
+  <section id="ab-initio-molecular-dynamics">
+<h1>Ab Initio Molecular Dynamics<a class="headerlink" href="#ab-initio-molecular-dynamics" title="Permalink to this heading"></a></h1>
 <p>Ab Initio Molecular Dynamics calculation for Cu-Au alloy</p>
-<div class="section" id="input-files">
-<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<section id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this heading"></a></h2>
 <p>atom.config</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="mi">32</span>
 <span class="n">LATTICE</span>
@@ -105,9 +149,9 @@
 </ol>
 </div>
 <p>Cu.SG15.PBE.UPF, Au.SG15.PBE.UPF</p>
-</div>
-<div class="section" id="calculations">
-<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="calculations">
+<h2>Calculations<a class="headerlink" href="#calculations" title="Permalink to this heading"></a></h2>
 <p>1.You can submit PWmat tasks in different ways:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="mi">4</span> <span class="n">PWmat</span> <span class="o">|</span> <span class="n">tee</span> <span class="n">output</span>
 </pre></div>
@@ -137,12 +181,12 @@ mpirun -np 4 PWmat | tee output
 </ol>
 <p>&gt;MDSTEPS: concisely reports about the atomic relaxation steps. A typical RELAXSTEPS file looks like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.100000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631878E+06</span>  <span class="o">-</span><span class="mf">0.1391656624E+06</span>   <span class="mf">0.2474566470E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">598.25336</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">598.25336</span> <span class="n">dE</span><span class="o">=</span> <span class="mf">0.10E-02</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.32E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">6</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.75E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.973E+00</span>
-<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.200000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631867E+06</span>  <span class="o">-</span><span class="mf">0.1391656490E+06</span>   <span class="mf">0.2462251387E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">595.27606</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">596.76471</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">82E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.23E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.75E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.921E+00</span>
-<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.300000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631839E+06</span>  <span class="o">-</span><span class="mf">0.1391656291E+06</span>   <span class="mf">0.2445185018E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">591.15008</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">594.89316</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">84E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.18E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.74E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.860E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.200000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631867E+06</span>  <span class="o">-</span><span class="mf">0.1391656490E+06</span>   <span class="mf">0.2462251387E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">595.27606</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">596.76471</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-</span><span class="mf">.82E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.23E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.75E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.921E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.300000E+01</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631839E+06</span>  <span class="o">-</span><span class="mf">0.1391656291E+06</span>   <span class="mf">0.2445185018E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">591.15008</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">594.89316</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-</span><span class="mf">.84E-03</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.18E-03</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">3</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.74E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.860E+00</span>
 <span class="o">...</span>
-<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.980000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631836E+06</span>  <span class="o">-</span><span class="mf">0.1391647989E+06</span>   <span class="mf">0.1615347915E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">390.52793</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">464.12570</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">90E-02</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.43E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.893E+00</span>
-<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.990000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631835E+06</span>  <span class="o">-</span><span class="mf">0.1391648020E+06</span>   <span class="mf">0.1618521791E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.29525</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">463.39004</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">18E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.40E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.102E+01</span>
-<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.100000E+03</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631880E+06</span>  <span class="o">-</span><span class="mf">0.1391648061E+06</span>   <span class="mf">0.1618121193E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.19840</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">462.66812</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-.</span><span class="mf">26E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.33E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.974E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.980000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631836E+06</span>  <span class="o">-</span><span class="mf">0.1391647989E+06</span>   <span class="mf">0.1615347915E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">390.52793</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">464.12570</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-</span><span class="mf">.90E-02</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.43E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.893E+00</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.990000E+02</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631835E+06</span>  <span class="o">-</span><span class="mf">0.1391648020E+06</span>   <span class="mf">0.1618521791E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.29525</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">463.39004</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-</span><span class="mf">.18E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.40E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.102E+01</span>
+<span class="n">Iter</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span><span class="o">=</span>  <span class="mf">0.100000E+03</span> <span class="n">Etot</span><span class="p">,</span><span class="n">Ep</span><span class="p">,</span><span class="n">Ek</span><span class="p">(</span><span class="n">eV</span><span class="p">)</span><span class="o">=</span>   <span class="o">-</span><span class="mf">0.1391631880E+06</span>  <span class="o">-</span><span class="mf">0.1391648061E+06</span>   <span class="mf">0.1618121193E+01</span> <span class="n">Temp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">391.19840</span> <span class="n">aveTemp</span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="o">=</span>       <span class="mf">462.66812</span> <span class="n">dE</span><span class="o">=</span> <span class="o">-</span><span class="mf">.26E-01</span> <span class="n">dRho</span><span class="o">=</span> <span class="mf">0.33E-04</span> <span class="n">SCF</span><span class="o">=</span>    <span class="mi">2</span> <span class="n">dL</span><span class="o">=</span> <span class="mf">0.57E-02</span> <span class="n">Fcheck</span><span class="o">=</span> <span class="mf">0.974E+00</span>
 </pre></div>
 </div>
 <p>&gt;REPORT: more detailed information about every electronic and MD step</p>
@@ -151,17 +195,20 @@ mpirun -np 4 PWmat | tee output
 </ol>
 <p>&gt;final.config: holds the structure of the last MD step.</p>
 <p>&gt;MOVEMENT: holds the structures of every MD steps.</p>
-</div>
-<div class="section" id="download">
-<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="examples/Cu-Au-Alloy-md-Cal.tar.gz">Cu-Au-Alloy-md-Cal</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BN_C_Charge_Relaxation_Cal.html" class="btn btn-neutral float-left" title="Charge system relaxation calculation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ni_SCF_Spin_Calculation.html" class="btn btn-neutral float-right" title="Spin-polarized calculation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

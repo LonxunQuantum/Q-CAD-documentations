@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Q-CAD documentation! &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Q-CAD documentation! &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,7 +40,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="PWmat.html">PWmat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -53,8 +57,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Q-CAD documentation!</li>
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Q-CAD documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -64,8 +68,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="q-cad-documentation">
-<h1>Q-CAD documentation!<a class="headerlink" href="#q-cad-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="q-cad-documentation">
+<h1>Q-CAD documentation!<a class="headerlink" href="#q-cad-documentation" title="Permalink to this heading"></a></h1>
 <p><strong>Q-CAD</strong> is a Material Design R&amp;D integration platform developed by <a class="reference external" href="http://www.pwmat.com/">Longxun</a> .</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -391,36 +395,101 @@ research and development model, and changing the face of industrial design and m
 <li class="toctree-l2"><a class="reference internal" href="PWmat.html#cases">Cases</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">Machine Learning Force Field</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#theoretical-backgrounds">Theoretical Backgrounds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#environment-setup">Environment Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#prepare-training-data">Prepare training data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#configuration-and-features-generation">Configuration and features generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#engine-1-linear-model">Engine 1: Linear Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#training">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#inference">2.Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MLFF/MLFF.html">PWMat Machine Learning Force Field</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#on-mcloud">On Mcloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#on-your-own-workstation">On your own workstation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#lammps">LAMMPS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#linear-model-kfnn-and-kfdp">Linear Model, KFNN, and KFDP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#gnn">GNN</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#engine-2-nonlinear-model-vv">Engine 2: Nonlinear Model(VV)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id3">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id4">2. Inference</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#engine-3-kalman-filter-based-neural-network">Engine 3: Kalman Filter-based Neural Network</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id5">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#during-training">2. During training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id8">3. Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#linear-model">Linear Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#training">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#evaluation">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#prediction">Prediction</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#engine-4-kalman-filter-based-deepmd">Engine 4: Kalman Filter-based DeepMD</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id9">1.Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#deep-neural-network">Deep Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id1">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id2">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id3">Prediction</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#dp-torch-network">DP-Torch Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id4">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id5">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id6">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#graphic-neural-network">Graphic Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id7">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id8">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id9">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#lammps-md-calculation">LAMMPS MD calculation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id10">Linear Model,KFNN, and KFDP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id11">GNN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#parameter-details">Parameter details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id12">Linear Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#global-parameters">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#local-parameters-training">Local parameters: Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#local-parameters-evaluation">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#local-parameters-prediction">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id13">Deep Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id14">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id15">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id16">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id17">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id18">DP-torch Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id19">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id20">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id21">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id22">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#id23">Graphic Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id24">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id25">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MLFF/MLFF.html#id26">Local parameters:Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MLFF/MLFF.html#appendix-i-features-wiki">Appendix I: features Wiki</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#what-are-features">What are features?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#b-and-3-b-features-with-piecewise-cosine-functions-feature-1-2">2-b and 3-b features with piecewise cosine functions (feature 1 &amp; 2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#b-and-3-b-gaussian-feature-feature-3-4">2-b and 3-b Gaussian feature (feature 3 &amp; 4)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#moment-tensor-potential-feature-5">Moment Tensor Potential (feature 5)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#spectral-neighbor-analysis-potential-feature-6">Spectral Neighbor Analysis Potential (feature 6)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#dp-chebyshev-feature-7">DP-Chebyshev (feature 7)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MLFF/MLFF.html#dp-gaussian-feature-8">DP-Gaussian (feature 8)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PWkit/PWkit.html">PWkit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PWkit/PWkit.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PWkit/PWkit.html#installation-on-mstation">Installation on MStation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PWkit/PWkit.html#how-to-use-pwkit-on-mcloud">How to use PWkit on MCloud</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
+</section>
 
 
            </div>

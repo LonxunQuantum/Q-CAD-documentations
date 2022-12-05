@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Machine Learning Force Field &mdash; Q-CAD 0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>PWMat Machine Learning Force Field &mdash; Q-CAD 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PWkit" href="../PWkit/PWkit.html" />
     <link rel="prev" title="Ultrafast dynamical process" href="../ultrafast/ultrafast.html" /> 
 </head>
 
@@ -37,33 +42,93 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Machine Learning Force Field</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#theoretical-backgrounds">Theoretical Backgrounds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#prepare-training-data">Prepare training data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-and-features-generation">Configuration and features generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#engine-1-linear-model">Engine 1: Linear Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#training">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inference">2.Inference</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#engine-2-nonlinear-model-vv">Engine 2: Nonlinear Model(VV)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">2. Inference</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#engine-3-kalman-filter-based-neural-network">Engine 3: Kalman Filter-based Neural Network</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">1.Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#during-training">2. During training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">3. Inference</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#engine-4-kalman-filter-based-deepmd">Engine 4: Kalman Filter-based DeepMD</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id9">1.Training</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PWMat Machine Learning Force Field</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#on-mcloud">On Mcloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#on-your-own-workstation">On your own workstation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lammps">LAMMPS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#linear-model-kfnn-and-kfdp">Linear Model, KFNN, and KFDP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gnn">GNN</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linear-model">Linear Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evaluation">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prediction">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deep-neural-network">Deep Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dp-torch-network">DP-Torch Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#graphic-neural-network">Graphic Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lammps-md-calculation">LAMMPS MD calculation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">Linear Model,KFNN, and KFDP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">GNN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-details">Parameter details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Linear Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#global-parameters">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-parameters-training">Local parameters: Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-parameters-evaluation">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-parameters-prediction">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Deep Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">DP-torch Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id19">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">Local parameters: Evaluation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">Local parameters: Prediction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Graphic Neural Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id24">Global parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">Local parameters:Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">Local parameters:Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#appendix-i-features-wiki">Appendix I: features Wiki</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-are-features">What are features?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-and-3-b-features-with-piecewise-cosine-functions-feature-1-2">2-b and 3-b features with piecewise cosine functions (feature 1 &amp; 2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-and-3-b-gaussian-feature-feature-3-4">2-b and 3-b Gaussian feature (feature 3 &amp; 4)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#moment-tensor-potential-feature-5">Moment Tensor Potential (feature 5)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectral-neighbor-analysis-potential-feature-6">Spectral Neighbor Analysis Potential (feature 6)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dp-chebyshev-feature-7">DP-Chebyshev (feature 7)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dp-gaussian-feature-8">DP-Gaussian (feature 8)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../PWkit/PWkit.html">PWkit</a></li>
 </ul>
 
         </div>
@@ -79,8 +144,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Machine Learning Force Field</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">PWMat Machine Learning Force Field</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/MLFF/MLFF.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -90,133 +155,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="machine-learning-force-field">
-<h1>Machine Learning Force Field<a class="headerlink" href="#machine-learning-force-field" title="Permalink to this headline">¶</a></h1>
-<p>Machine Learning Force Field (MLFF) platform aims at generating force fields with accuracy comparable to Ab Initio DFT molecular dynamics. It provides 8 types of features with translation, rotation, and permutation invariance. It also supports 4 engines for training and prediction, which are:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>Linear Model</p></li>
-<li><p>Nonlinear Model</p></li>
-<li><p>Kalman Filter-based Neural Netowrk (KFNN)</p></li>
-<li><p>Kalman Filter-based DeepMD (KF-DeepMD)</p></li>
-</ol>
-</div></blockquote>
-<div class="section" id="theoretical-backgrounds">
-<h2>Theoretical Backgrounds<a class="headerlink" href="#theoretical-backgrounds" title="Permalink to this headline">¶</a></h2>
-<div class="line-block">
-<div class="line">Phys. Rev. Lett. 98, 146401</div>
-<div class="line">Phys. Rev. B 99, 064103</div>
-<div class="line">…</div>
-</div>
-</div>
-<div class="section" id="environment-setup">
-<h2>Environment Setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h2>
-<p>We recommmend using anaconda for package installing and management. You should first install Anaconda following the steps shown on its official website. Please don’t attempt to use miniconda instead of Anaconda, since it might incur various dependecy and path errors that are hard to debug.</p>
-<p>To install conda environment, use the following command. You may choose a new version of Anaconda.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">Anaconda3</span><span class="o">-</span><span class="mf">2020.07</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
-</pre></div>
-</div>
-<p>Then, create a new environment for this module.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">mlff</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
-</pre></div>
-</div>
-<p>After mlff has been created, re-enter the current environment.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">deactivate</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
-</pre></div>
-</div>
-<p>You should identify the architecture of your Nvidia GPU and install a compatible pytorch version accordingly. We use RTX 3080Ti as an example. It is fabricated in Ampere architecture, and requires CUDA 11.1 or later. Since we’ve had CUDA 11.3 loaded, pytorch with cudatoolkit 11.3 shoule be installed.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span> <span class="n">torchvision</span> <span class="n">torchaudio</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">11.3</span> <span class="o">-</span><span class="n">c</span> <span class="n">pytorch</span>
-</pre></div>
-</div>
-<p>After this, install the rest packages.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span><span class="o">-</span><span class="n">intelex</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">numba</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">tensorboard</span>
-</pre></div>
-</div>
-<p>You can check the following article to determine which CUDA to use on your GPU device.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">arnon</span><span class="o">.</span><span class="n">dk</span><span class="o">/</span><span class="n">matching</span><span class="o">-</span><span class="n">sm</span><span class="o">-</span><span class="n">architectures</span><span class="o">-</span><span class="n">arch</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">gencode</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">various</span><span class="o">-</span><span class="n">nvidia</span><span class="o">-</span><span class="n">cards</span><span class="o">/</span>
-</pre></div>
-</div>
-<p>Next, enter src/op and run the following commands to compile acceleration modules. Notice that the compilation must take place on host that has available GPU. If you are working on a cluster, use the the following to start a interactive job for compilation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">srun</span> <span class="o">-</span><span class="n">p</span> <span class="n">mygpupartition</span> <span class="o">--</span><span class="n">gres</span><span class="o">=</span><span class="n">gpu</span><span class="p">:</span><span class="mi">1</span> <span class="o">--</span><span class="n">pty</span> <span class="n">bash</span>
-</pre></div>
-</div>
-<p><strong>You should make sure that your g++ compiler supports C++ 14 standard!</strong> Also, you should modify the path in setup.py. It should be the bin directory in your CUDA path. To obtain the CUDA path, use</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>echo $CUDADIR
-</pre></div>
-</div>
-<p>and the path in setup.py file should therefore be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">what</span><span class="o">/</span><span class="n">echo</span><span class="o">/</span><span class="n">CUDADIR</span><span class="o">/</span><span class="n">tells</span><span class="o">/</span><span class="n">you</span><span class="o">/</span><span class="nb">bin</span>
-</pre></div>
-</div>
-<p>To compile, use the following command.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
-</pre></div>
-</div>
-<p>MLFF switches to use the above modules when GPU is available. However, this is a good option only for KF-DeepMD engine. For KFNN, training on GPU appears less efficient than on CPU. Certainly, we will bring modifications in future releases to better utlize the power of GPU in KFNN. We will eleborate on how to choose the computing device in following sections.</p>
-<p>Now, enter the src directory and compile source codes. Intel 2020 module must be loaded.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">intel</span><span class="o">/</span><span class="mi">2020</span>
-<span class="n">cd</span> <span class="n">src</span>
-<span class="n">sh</span> <span class="n">build</span><span class="o">.</span><span class="n">sh</span>
-</pre></div>
-</div>
-<p>After compilation, you should modify environment variables. The absolute path of src/bin should be exported in ~/.bashrc. You can use “echo $PWD” to obtain the absolute path.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vim ~/.bashrc
-export PATH=absolute/path/of/src/bin:$PATH
-source ~/.bashrc
-</pre></div>
-</div>
-</div>
-<div class="section" id="prepare-training-data">
-<h2>Prepare training data<a class="headerlink" href="#prepare-training-data" title="Permalink to this headline">¶</a></h2>
-<p>The format of training data is same as the MOVEMENT files generated by PWmat’s molecular dynamics caculation. Please refer to PWmat manual for details involving MD calculations. <strong>Notice that it is very important to set energy_decomp = T in etot.input</strong>, otherwise there will be no feature to extract.</p>
-<p>A sample etot.input is shown below.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">16</span>  <span class="mi">1</span>
-<span class="n">JOB</span> <span class="o">=</span> <span class="n">MD</span>
-<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Cu</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
-<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">Au</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
-<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">config</span>
-<span class="n">MD_DETAIL</span> <span class="o">=</span> <span class="mi">3</span> <span class="mi">400</span> <span class="mf">0.8</span> <span class="mi">300</span> <span class="mi">300</span>
-<span class="n">E_Cut</span> <span class="o">=</span> <span class="mi">60</span>
-<span class="n">precision</span> <span class="o">=</span> <span class="n">double</span>
-<span class="n">energy_decomp</span> <span class="o">=</span> <span class="n">T</span>       <span class="c1">#this flag must be true</span>
-<span class="n">mp_n123</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span>
-<span class="n">xcfunctional</span> <span class="o">=</span> <span class="n">GGA</span>
-<span class="n">E_error</span> <span class="o">=</span> <span class="mf">1.0e-6</span>
-<span class="n">Rho_error</span> <span class="o">=</span> <span class="mf">1.0e-4</span>
-</pre></div>
-</div>
-<p>The resultant MOVEMENT files should be combined into one single file. MOVEMENT files can comes from the same kind of system with different atom number. Use the following command to do so.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">MOVEMENT_1</span> <span class="n">MOVEMENT_2</span> <span class="o">...</span> <span class="o">&gt;</span> <span class="n">MOVEMENT</span>
-</pre></div>
-</div>
-<p>Names other than “MOVEMENT” are not allowed.</p>
-<p><strong>Principles for generating trianing data</strong></p>
-<p>As the first principle, training data set should well represent the 3N-dimensional phase space, where N is the number of atoms. That is, data should include the system’s spatial configurations as many as possible. The reason is sell-evident under the framework of energy decomposition. In our example, the training data is usually made up of images from more several MD results with varying condtitions. However, these images are sampled from the raw data, otherwise data size can be overwhelming. We now use some naïve rules to pick up images from the raw data. We may introduce more complex sampling method in the future.</p>
-</div>
-<div class="section" id="configuration-and-features-generation">
-<h2>Configuration and features generation<a class="headerlink" href="#configuration-and-features-generation" title="Permalink to this headline">¶</a></h2>
-<p>First, export the absolute path to src/bin in the ~/.bashrc. You can obtain the absolute path via command “pwd”.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd src/bin
-pwd
-(copy the absolute path)
-vim ~/.bashrc
-export PATH=/absolute/path/to/bin:$PATH
-</pre></div>
-</div>
-<p>Create a new directory (call it examples) that will contain all the cases. This directory should be created in the directory that contains README.md. Enter directory examples, and create a new directory for a single system. In our exmaple, we study Copper, whose directory is called Cu1646.</p>
-<p>In Cu1646, create a directory callled <strong>PWdata</strong> and move the MOVEMENT file in it. A parameters.py file should appear in the same directory. An environmental configuration also has to be done.</p>
-<p><strong>codedir</strong>: the absolute path of the MLFF package, which is the one that contains directory src. Notice that letter r must appear in front of the path string. This step</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">codedir</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/your/path/to/MLFF_torch&#39;</span>
-</pre></div>
-</div>
-<p>For feature generation, the folllowing parameters should be set correctly.</p>
-<p><strong>atomType</strong>: the atomic numbers. In the example case, system consists of only Cu, thus atomType should be [29]. If the system contains more than one element, all atomic numbers should be specified. For instance, atomType should be [8,29] for CuO. Order does not matter here.</p>
-<p><strong>use_Ftype</strong>: features fed into the training process. 8 types of features are provided, which are</p>
+  <section id="pwmat-machine-learning-force-field">
+<h1>PWMat Machine Learning Force Field<a class="headerlink" href="#pwmat-machine-learning-force-field" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>PWmat Machine Learning Force Field (PWmatMLFF) is an open source software under GNU license. It aims at generating force fields with accuracy comparable to Ab Initio Molecular Dynamics (AIMD). It is compatible with AIMD data with either <strong>PWmat</strong> or <strong>VASP</strong> format. You can access the code from <a class="reference external" href="https://github.com/LonxunQuantum/PWmatMLFF">https://github.com/LonxunQuantum/PWmatMLFF</a>.</p>
+<p>You can also access our online AIMD data archive via <a class="reference external" href="https://www.jianguoyun.com/p/DUWoiP4Ql-_OChiEk8IEIAA">https://www.jianguoyun.com/p/DUWoiP4Ql-_OChiEk8IEIAA</a></p>
+<p>This package contains 8 types of features with translation, rotation, and permutation invariance, which are</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>2-body(2b)</p></li>
@@ -225,253 +170,1067 @@ export PATH=/absolute/path/to/bin:$PATH
 <li><p>3-body Cosine(3bcos)</p></li>
 <li><p>Multiple Tensor Potential(MTP)</p></li>
 <li><p>Spectral Neighbor Analysis Potential(SNAP)</p></li>
-<li><p>deepMD-Chebyshev(deepMD1)</p></li>
-<li><p>deepMD-Gaussian(deepMD2)</p></li>
+<li><p>DP-Chebyshev(dp1)</p></li>
+<li><p>DP-Gaussian(dp2)</p></li>
 </ol>
 </div></blockquote>
-<p>Please refer to Theoretical Backgrounds section for more details. Usually, combinations such as [1,2],[3,4],[5],[6],[7],[8] are used, but you are free to explore other combinations. In the given example, we use [1,2]. Note that feature 6 could be slow.</p>
-<p><strong>isCalcFeat</strong>: set to be True. Notice that this step will generate feature output files that can be reused by other training processes. They are stored in directory fread_dfeat.</p>
-<p><strong>Rc_M</strong>: the cutoff radius of feature generation, in Angstrom. Since all of our 8 features are “local”, which assumes that atomic properties such as energy are determined by near neighbors, this parameter controls how many neighbors are taken into account when generating features. Its default value is 6, but we recommand you trying different values for different system.</p>
-<p><strong>maxNeighborNum</strong>: its default value is 100, so you can try it with altering. However, for some system it is not enough to accommodate all the neighbors, and the feature generation fails. The singal of such an error can be found in /output. For each feature, an out file is generated. There should be out1 and out2 if feature combination [1,2] is chosen. In each out file, feature generation detail of each MD step is recorded. The correct scenario is shown below.</p>
-<img alt="../_images/feature_success.png" src="../_images/feature_success.png" />
-<p>If, however, you find that no information was printed, like the scenario shown below, you shoud assign <strong>maxNeighborNum</strong> with a larger number.</p>
-<img alt="../_images/feature_fail.png" src="../_images/feature_fail.png" />
-<p>After parameters are all set, run mlff.py to obtain the features.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Having generated the feature data, you can now feed them in various training engines. <strong>isCalcFeat</strong> should be turned off now.</p>
-</div>
-<div class="section" id="engine-1-linear-model">
-<h2>Engine 1: Linear Model<a class="headerlink" href="#engine-1-linear-model" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="training">
-<h3>1.Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
-<p>Turn on <strong>isFitLinModel</strong> to lanuch linear fitting. After training, turn off <strong>isFitLinModel</strong>.</p>
-</div>
-<div class="section" id="inference">
-<h3>2.Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
-<p>After training, you can use the model to run MD calculation in an alternative data set. We call this step inference. Prepare another Ab Initio MOVEMENT file. Create a new directory called MD and move another MOVEMENT into it.</p>
-<p>Several parameters should be set.</p>
-<p><strong>isNewMd100</strong>: set True</p>
-<p><strong>imodel</strong>: set to be 1, which is linear model.</p>
-<p><strong>md_num_process</strong>: the mpi process number you wish to use. Its value can be up to the number of available cores in you CPU.</p>
-<p>Next, run mlff.py. You may also use the bash file we provided to submit a mlff job.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>A sample slurm script is given below. Notice that when submitting jobs through slurm, ntasks-per-node determines how many cores you can use.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#SBATCH --partition=mypartition</span>
-<span class="c1">#SBATCH --job-name=cu1646_l12</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=1</span>
-<span class="c1">#SBATCH --threads-per-core=1</span>
-
+<p>and 4 engines for training and prediction, which are</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Linear Model</p></li>
+<li><p>Graphic Neural Netowrk (GNN)</p></li>
+<li><p>Deep Neural Netowrk with Kalman Filter optimizer(KFNN)</p></li>
+<li><p>DP-torch Network with Kalman Filter optimizer(KFDP)</p></li>
+</ol>
+</div></blockquote>
+<p>A complete MLFF workflow contains 3 major steps. <strong>First</strong>, use eitehr PWmat or VASP to run AIMD calculation to generate training data (features and direvatives of features, .etc), and perform post-processing of the data. <strong>Second</strong>, run training to obtain the force field, and monitor the <strong>validation</strong> result to see if overfitting occurs; <strong>Finally</strong>, use the obtained force field to make inference.</p>
+<p>There are two kinds of inference: <strong>evaluation</strong> and <strong>prediction</strong>. <strong>Evaluation</strong> is a more rigorous assessment of the force field.  In practice, ene first prepares a MOVEMENT file generated by Ab Initio calculation, use the obtained force field to calculate energy and force, and compare them against the Ab Initio results. Error given by this test is usually larger than the error given in the validation.</p>
+<p>In comparison, <strong>prediction</strong> solves real challenges. Like Ab Initio MD calculations, it starts with a initial configuration, and simulates the ensuing process based on the force field and the conditions specified. Both <strong>LAMMPS</strong> and <strong>PWmat</strong> can be used.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<section id="on-mcloud">
+<h3>On Mcloud<a class="headerlink" href="#on-mcloud" title="Permalink to this heading"></a></h3>
+<p>Mcloud is equipped with a ready-to-use MLFF environment. Use the following commands to load MLFF environment</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">intel</span><span class="o">/</span><span class="mi">2020</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">cuda</span><span class="o">/</span><span class="mf">11.3</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">PWmatMLFF</span><span class="o">/</span><span class="mf">1.0</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
-
-<span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-<p>In our example, a new MOVEMENT file can be found after the inference step. You can copy plot_mlff_inference.py from utils/ directory to visualize the results. Below is the plot of results for Cu1646 case.</p>
-<img alt="../_images/cu1646_linear.png" src="../_images/cu1646_linear.png" />
-</div>
-</div>
-<div class="section" id="engine-2-nonlinear-model-vv">
-<h2>Engine 2: Nonlinear Model(VV)<a class="headerlink" href="#engine-2-nonlinear-model-vv" title="Permalink to this headline">¶</a></h2>
-<p>VV(vector-vector) goes beyond linear fitting by introducing nonlinearity. In linear model, we approximate the total energy by a linear combination of features. But in VV, we build a new set of features from the old ones. These new features are generated by feeding old ones into nonlinear functions. For example, they could be exp(-F_i), F_i* F_i, F_i* F_i <a href="#id1"><span class="problematic" id="id2">*</span></a>F_i, .etc.</p>
-<div class="section" id="id3">
-<h3>1.Training<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>First, perform feature generation and fitting as in linear model. To do so, set isCalcFeat=True and isFitLinModel=True, and run mlff.py.</p>
-<p>After the first step, enter <strong>fread_dfeat</strong> directory and run</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select_mm_VV</span><span class="o">.</span><span class="n">r</span>
+</section>
+<section id="on-your-own-workstation">
+<h3>On your own workstation<a class="headerlink" href="#on-your-own-workstation" title="Permalink to this heading"></a></h3>
+<p>Install the conda environment first. To install, use the following command. You may choose a new version of Anaconda.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">Anaconda3</span><span class="o">-</span><span class="mf">2020.07</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-<p>This routine generate secondary features based on the exisisting ones. You should input the following parameters.</p>
-<p><strong>itype</strong>: type of atom taken into account. If system only consists of 1 type of atom, input 1; if there are more than 1 type of atom, input should be 1, or 2, or 3, .etc. We will elaborate on how to deal with more than one type of atom below.</p>
-<p><strong>iseed</strong>: a minus integer seed. It is used to randomly form a temporary training set and test set.</p>
-<p><strong>include feat</strong>: input 0</p>
-<p><strong>iscan_MM, or not</strong>: input 1</p>
-<p>You can observe that this routine is looping over the secondary features. Finally, 8000 secondary features are obtained. Each loop takes increasingly long time since it involves diagonalization of a dense matrix of increasing dimension.</p>
-<p>Next, run select_VV_MM.r again to select the best secondary features. Input parameters as follows:</p>
-<p><strong>itype</strong>: same as previous run</p>
-<p><strong>iseed</strong>: same as previous run</p>
-<p><strong>include feat</strong>: input 0</p>
-<p><strong>iscan_MM, or not</strong>: input 0</p>
-<p><strong>input mm</strong>: the number of secondary feature you wish to choose. 1000 to 2000 is a resonable range.</p>
-<p>For system with more than one type of element, you should run the above process more than once. For clarity, we call the two runs of select_mm_VV.r a single “selection”. For each type of element, you should run selection with resepct to each element. That is, run the whole selection with <strong>itype=1</strong>, and next <strong>itype=2</strong>, <strong>itype=3</strong>, etc. <strong>iseed</strong> and <strong>input mm</strong> must match in each selection.</p>
-<p>Now, prepare a file called <em>select_VV.input</em>, which should have the following format</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
-<span class="mi">2000</span>
-<span class="mi">20</span>
-<span class="mi">0</span>
-<span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">0.001</span>
+<p>Then, create a new environment for this module. We recommend using Python 3.8.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">mlff</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.8</span>
 </pre></div>
 </div>
-<p>Except to modify the number to match your input mm parameter, you can use the rest as a template.</p>
-<p>After this, run feat_dist_xp.r. Choose 1 when input selection pops up.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feat_dist_xp</span><span class="o">.</span><span class="n">r</span>
-</pre></div>
-</div>
-<p>Finally, use fit_VV_forceMM.r to fit. You can observe that the numbe of feature used to fit, as well as the time to fit, significantly increased.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fit_VV_forceMM</span><span class="o">.</span><span class="n">r</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id4">
-<h3>2. Inference<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>Quit from <strong>fread_dfeat</strong> to tyhe directory that contains parameters.py, and prepare a MD directory containing test data as introduced in Linear model section. Turn off <strong>isCalcFeat</strong> and <strong>isFitLinModel</strong> in parameters.py. Modify the following parameters to lanuch MD calculation</p>
-<p><strong>isNewMd100</strong>: set to be true</p>
-<p><strong>imodel</strong>: 2, i.e. MD mode for VV</p>
-<p><strong>md_num_process</strong>: number of process you wish to use.</p>
-<p>Next, run</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>or submit job via script</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#SBATCH --partition=mycpupartition</span>
-<span class="c1">#SBATCH --job-name=myjobname</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=32</span>
-<span class="c1">#SBATCH --threads-per-core=1</span>
-
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff_debug</span>
-
-<span class="n">mlff</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>After MD, you make visualize the results as introduced in the linear model section.</p>
-<p>The graph below shows a VV inference on Cu1646 case. However, there is no guarantee that the choice of parameters is optimal. We will further explore better combinations of parameters.</p>
-<img alt="../_images/cu1646_vv.png" src="../_images/cu1646_vv.png" />
-</div>
-</div>
-<div class="section" id="engine-3-kalman-filter-based-neural-network">
-<h2>Engine 3: Kalman Filter-based Neural Network<a class="headerlink" href="#engine-3-kalman-filter-based-neural-network" title="Permalink to this headline">¶</a></h2>
-<p>In this engine, we use Kalman filter to improve the bare neural network(NN). Essentially, Kalman filter smooths the “spikes” of the high dimension cost function, curbing the likelihood of falling into local minimum.</p>
-<div class="section" id="id5">
-<h3>1.Training<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>First, several NN parameters should be set.</p>
-<p><strong>batch_size</strong>: must be 1. We may support different batch sizes in the future.</p>
-<p><strong>nLayer</strong> The layer of neural network. Notice that more layers does not mean better result! In our example, we set it to be 3.</p>
-<p><strong>nNode</strong> The dimension of nodes. We have used</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nNodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">],[</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
-</pre></div>
-</div>
-<p>as default. Only change the first two pairs when necessary. It is also recommended not to make these number too large.</p>
-<p>After this, several parameters should also be set.</p>
-<p><strong>natoms</strong> If more than one type of atom present, one should also set natoms correctly. For example, if the system of interest consists of 4 Cu atom and 7 Au atom, then you should set atomType = [29,79] and natoms = [4,7].</p>
-<p><strong>nFeatures</strong> It is the number of features. It should be the sum of the two numbers in the last line of   /fread_dfeat/feat.info. In our example, nFeatures is 42.</p>
-<p>We now use seper.py to devide data into a training set and a validation set. Currently, the division is a simple cut between first 80% and 20%. We might provide more complicated division method in the future.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seper</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Next, use gen_data.py to re-format data. After this step you will find them in the directory train_data.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gen_data</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>Finally, set the following parameters:</p>
-<p><strong>dR_neigh</strong>: set to be False</p>
-<p><strong>use_GKalman</strong>: set to be True</p>
-<p><strong>use_LKalman</strong>: set to be False</p>
-<p><strong>is_scale</strong>: set to be True</p>
-<p><strong>itype_Ei_mean</strong>: the estimation of mean energy of each type of atom. You should go to train_data/final_train and take a look at engy_scaled.npy via the following commands,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">train_data</span><span class="o">/</span><span class="n">final_train</span>
-<span class="n">python</span>
-<span class="kn">import</span> <span class="nn">numpy</span>
-<span class="n">numpy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;engy_scaled.npy&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You don’t need an excact mean, and a rough estimate should suffice. For example, for a CuO system which contains 2 types of atom, if the commands above returns something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">174.0633357</span><span class="p">],</span>
-   <span class="p">[</span><span class="mf">174.0604308</span><span class="p">],</span>
-   <span class="p">[</span><span class="mf">174.0453315</span><span class="p">],</span>
-   <span class="o">...</span><span class="p">,</span>
-   <span class="p">[</span><span class="mf">437.0013048</span><span class="p">],</span>
-   <span class="p">[</span><span class="mf">437.3404306</span><span class="p">],</span>
-   <span class="p">[</span><span class="mf">437.2137406</span><span class="p">]])</span>
-</pre></div>
-</div>
-<p>you can just set</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">itype_Ei_mean</span><span class="o">=</span><span class="p">[</span><span class="mf">174.0</span><span class="p">,</span><span class="mf">437.0</span><span class="p">]</span>
-</pre></div>
-</div>
-<p><strong>n_epoch</strong>: the number of epoch for training. You can start with a few hundred.</p>
-<p>You can now launch train.py. You should also specify a directory with flag -s to save the logs and models. As stated above, training in GPU is not efficient as in CPU at this point. To force using cpu, add <strong>-c</strong> flag.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">s</span> <span class="n">records</span> <span class="o">-</span><span class="n">c</span>
-</pre></div>
-</div>
-<p>You can also use scripts to submit a job on you cluster. For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#SBATCH --partition=mypartition</span>
-<span class="c1">#SBATCH --job-name=myjobname</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=num_of_threads</span>
-<span class="c1">#SBATCH --threads-per-core=1</span>
-
+<p>After mlff has been created, re-enter the current environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">deactivate</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
-
-<span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">s</span> <span class="n">records</span>
 </pre></div>
 </div>
+<p>After this, install the following packages.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pandas</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span><span class="o">-</span><span class="n">intelex</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numba</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">tensorboard</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="o">/</span><span class="n">label</span><span class="o">/</span><span class="n">cf202003</span> <span class="n">dpdata</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">git</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">--</span><span class="n">channel</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pymatgen</span>
+</pre></div>
 </div>
-<div class="section" id="during-training">
-<h3>2. During training<a class="headerlink" href="#during-training" title="Permalink to this headline">¶</a></h3>
-<p>During training, you can monitor te progress by checking the logs in <a href="#id6"><span class="problematic" id="id7">**</span></a>records**directory.</p>
-<p><strong>epoch_loss.dat</strong>: loss, RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch.</p>
+<p><strong>If you wish to use the GNN model</strong>, also clone and install the following package, in accordance with the steps given within</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mir</span><span class="o">-</span><span class="n">group</span><span class="o">/</span><span class="n">nequip</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>Next, check if your CUDA version is <strong>11.3</strong>. If not, update to or install CUDA 11.3. Install pytorch with the following command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">11.3</span> <span class="o">-</span><span class="n">c</span> <span class="n">pytorch</span>
+</pre></div>
+</div>
+<p>Also, make sure your g++ supports <strong>C++ 14</strong> standard. Use “g++ –version” to check, and version above 7.0 should be fine. Intel compiler is also required.</p>
+<p>Enter <strong>/src</strong> and start building with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">build</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>If the building is successful, modify the following environment variables</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vim ~/.bashrc
+export PATH=absolute/path/to/PWmatMLFF/src/bin:$PATH
+export PYTHONPATH=absolute/path/to/PWmatMLFF/src/:$PYTHONPATH
+source ~/.bashrc
+</pre></div>
+</div>
+</section>
+<section id="lammps">
+<h3>LAMMPS<a class="headerlink" href="#lammps" title="Permalink to this heading"></a></h3>
+<section id="linear-model-kfnn-and-kfdp">
+<h4>Linear Model, KFNN, and KFDP<a class="headerlink" href="#linear-model-kfnn-and-kfdp" title="Permalink to this heading"></a></h4>
+<p>MLFF provides an interface for LAMMPS. You should compile LAMMPS from the source code in order to use it. Intel Fortran and C++ compilers are required.</p>
+<p>First, obtain LAMMPS’s source code and unzip it. Create a directory called <strong>PWMATMLFF</strong> in LAMMPS’s <strong>src</strong> directory, and copy all content under <strong>src/md</strong> into <strong>PWMATMLFF</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">lammps</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">PWMATMLFF</span>
+<span class="n">cp</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">mlff</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">md</span> <span class="o">.</span> <span class="o">-</span><span class="n">r</span>
+</pre></div>
+</div>
+<p>In src/PWMATMLFF, <em>remove</em> line 118 in the <strong>makefile</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">cp</span> <span class="n">main_MD</span><span class="o">.</span><span class="n">x</span> <span class="o">../../</span><span class="nb">bin</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>which is a stand-alone PWMat MD program.</p>
+<p>Run make to compile</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
+</pre></div>
+</div>
+<p>Now, go back to LAMMPS’s <strong>src/</strong> and run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">pwmatmlff</span>
+</pre></div>
+</div>
+<p>This step tells LAMMPS to include our interface during compiling. After this, copy <strong>src/PWMATMLFF/Makefile.mpi</strong> into <strong>src/MAKE</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">/</span><span class="n">PWMATMLFF</span><span class="o">/</span><span class="n">Makefile</span><span class="o">.</span><span class="n">mpi</span> <span class="o">/</span><span class="n">MAKE</span>
+</pre></div>
+</div>
+<p>and make</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">mpi</span>
+</pre></div>
+</div>
+<p>This will generate an executable called <strong>lmp_mpi</strong> in <strong>/src</strong>. You might need to add an environment variable to make this executable visible elsewhere.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PATH=/path/to/your/lammps/src/:$PATH
+</pre></div>
+</div>
+</section>
+<section id="gnn">
+<h4>GNN<a class="headerlink" href="#gnn" title="Permalink to this heading"></a></h4>
+<p><strong>If you wish to use GNN for in LAMMPS</strong>, see the page below for guidance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mir</span><span class="o">-</span><span class="n">group</span><span class="o">/</span><span class="n">pair_nequip</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h2>
+<p>To start training, you should first prepare the AIMD data with either VASP or PWmat. You can use the ultily module <strong>outcar2movement</strong> to convert VASP’s OUTCAR output to MOVEMENT format. In the directory that contains the OUTCAR file, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">outcar2movement</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using PWmat for AIMD calculation, add the following flags in <strong>etot.input</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">energy_decomp</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">e_error</span> <span class="o">=</span> <span class="mf">1.0e-6</span>
+<span class="n">rho_error</span> <span class="o">=</span> <span class="mf">1.0e-4</span>
+</pre></div>
+</div>
+<p>This enables PWmat to perform atomic energy decomposition with high precision, which is crucial in data preparation. You will find that besides Velocity, Force, and Position blocks, a block called <strong>Atomic Energy</strong> will show up in the MOVEMENT file, which includes the decomposed atomic energy of each atom.</p>
+</div>
+<p>Code examples for each model are now presented, with all parameters set to be default. A complete introduction on parameters will be given in next section.</p>
+<section id="linear-model">
+<h3>Linear Model<a class="headerlink" href="#linear-model" title="Permalink to this heading"></a></h3>
+<section id="training">
+<h4>Training<a class="headerlink" href="#training" title="Permalink to this heading"></a></h4>
+<p>All MOVEMENT files must be stored in the directory <strong>/PWdata</strong>. If more than one MOVEMENT files are used for training, create multiple directories within <strong>/PWdata</strong>, with each containing <strong>exactly ONE</strong> MOVEMENT file. You can use <strong>data/MOVEMENT</strong> for a quick test.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import module from PWmatMLFF</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.linear_regressor</span> <span class="kn">import</span> <span class="n">linear_regressor</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        atom types to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        feature to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create a class instance</span>
+<span class="sd">        MUST BE DONE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span> <span class="o">=</span> <span class="n">linear_regressor</span><span class="p">(</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        generate training data</span>
+<span class="sd">        ONLY NEED TO BE DONE ONCE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span><span class="o">.</span><span class="n">generate_data</span><span class="p">()</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        start training</span>
+<span class="sd">        the results are automatically saved in the current directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Paste the code above in python script (<strong>main.py</strong>, for example). Run the following command to train</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</section>
+<section id="evaluation">
+<h4>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading"></a></h4>
+<p>Before evaluation, create a directory <strong>/MD</strong>,  and put in it another MOVEMENT file obtained from AIMD. <strong>Note that for such a MOVEMENT, energy decomposition is necessary</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import module from PWmatMLFF</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.linear_regressor</span> <span class="kn">import</span> <span class="n">linear_regressor</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        atom types to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        feature to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create a class instance</span>
+<span class="sd">        MUST BE DONE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span> <span class="o">=</span> <span class="n">linear_regressor</span><span class="p">(</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        perform evaulation and plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+    <span class="n">linReg</span><span class="o">.</span><span class="n">plot_evaluation</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="prediction">
+<h4>Prediction<a class="headerlink" href="#prediction" title="Permalink to this heading"></a></h4>
+<p>The code below runs <strong>PWmat-style</strong> MD calculation with the force field just obtained. For MD calculation with LAMMPS, see the section “<strong>LAMMPS MD calculation</strong>”. You must prepare an initial configuration in order to proceed. A <strong>md_detail</strong> array is also required, which specifies 1)simulation method, 2) steps, 3) time lentgh of step, 4) initial temperature, and 5) final temperature. Please refer to PWmat manual for more details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import module from PWmatMLFF</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.linear_regressor</span> <span class="kn">import</span> <span class="n">linear_regressor</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        atom types to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        feature to be used</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create a class instance</span>
+<span class="sd">        MUST BE DONE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span> <span class="o">=</span> <span class="n">linear_regressor</span><span class="p">(</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">)</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        PWmat-style md_detail array</span>
+<span class="sd">        MUST BE SPECIFIED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">md_detail</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">]</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        run MD</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linReg</span><span class="o">.</span><span class="n">linReg</span><span class="o">.</span><span class="n">run_md</span><span class="p">(</span><span class="n">md_details</span> <span class="o">=</span> <span class="n">md_detail</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This process generates all information in the current directory as in PWmat MD calculation.</p>
+</section>
+</section>
+<section id="deep-neural-network">
+<h3>Deep Neural Network<a class="headerlink" href="#deep-neural-network" title="Permalink to this heading"></a></h3>
+<section id="id1">
+<h4>Training<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h4>
+<p>All MOVEMENT files must be stored in the directory <strong>/PWdata</strong>. If more than one MOVEMENT files are used for training, create multiple directories within <strong>/PWdata</strong>, with each containing <strong>exactly ONE</strong> MOVEMENT file. You can use <strong>data/MOVEMENT</strong> for a quick test. Notice that for Deep Neural Network, training with <strong>global Kalman Filter</strong> optimizer on <strong>cpu</strong> is recommended.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import the regressor module</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.nn_network</span> <span class="kn">import</span> <span class="n">nn_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># feature to be used. MUST BE SPECIFIED</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">kfnn_trainer</span> <span class="o">=</span> <span class="n">nn_network</span><span class="p">(</span>
+                                <span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span>
+                                <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+                                <span class="n">kalman_type</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>      <span class="c1"># using global Kalman filter</span>
+                                <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>              <span class="c1"># run training on cpu</span>
+                                <span class="n">recover</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>             <span class="c1"># recover previous training</span>
+                                <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;record&quot;</span>       <span class="c1"># directory that contains</span>
+                             <span class="p">)</span>
+
+    <span class="c1"># generate data from MOVEMENT files</span>
+    <span class="c1"># ONLY NEED TO BE DONE ONCE</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">generate_data</span><span class="p">()</span>
+
+    <span class="c1"># transform data</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+    <span class="c1"># initialize the network</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">set_model</span><span class="p">()</span>
+
+    <span class="c1"># initialize the optimizer and related scheduler</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">set_optimizer</span><span class="p">()</span>
+
+    <span class="c1"># set epoch number for training</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">set_epoch_num</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># start training</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Paste the code above in python script (<strong>main.py</strong>, for example). Run the following command to train</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>During training, you can monitor the progress by checking the logs in the <strong>session_dir</strong> you specified:</p>
+<p><strong>epoch_loss.dat</strong>: RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch.</p>
 <p><strong>epoch_loss_valid.dat</strong>: RMSE_Etot, RMSE_Ei, RMSE_F of valid set in each epoch.</p>
-<p><strong>model</strong>: directory that contains the obtained models. The latest and the best model will be saved.</p>
-<p>You can use -R to plug in previously trained models. It will automatically search for “latest.pt” in record/model</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">R</span>
-</pre></div>
-</div>
-<p>You can compare epoch_loss.dat and epoch_loss_valid.dat to see if an overfitting occurs.</p>
-</div>
-<div class="section" id="id8">
-<h3>3. Inference<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="engine-4-kalman-filter-based-deepmd">
-<h2>Engine 4: Kalman Filter-based DeepMD<a class="headerlink" href="#engine-4-kalman-filter-based-deepmd" title="Permalink to this headline">¶</a></h2>
-<p>In this module, we incorporates Kalman filter upon open source DeepMD kit. However, you may still use the DeepMD funtionalities alone without Kalman filter.</p>
-<div class="section" id="id9">
-<h3>1.Training<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>Unlike all the other engines, you can only use 1 feature at each time. Having made sure this, modify the following parameters accordingly.</p>
-<p><strong>dR_neigh</strong>: set to be Trues</p>
-<p><strong>use_LKalman</strong>: set to be true if you wish to apply local Kalman filter upon deepMD. Note that <strong>do not</strong> attempt to use global KF, since memory usage will be unreasonably large. You should set the network configuration accordingly. See below.</p>
-<p><strong>batch_size</strong>: without KF, batch size can be larger than 1. You can start with 4. But if KF is applied, batch size can only be 1</p>
-<p><strong>n_epoch</strong>: You need a epoch number larger than in KFNN. DeepMD might take several thousands epochs to converge. However, since a single DeepMD epoch is faster, there is no substantial difference between the total training time of DeepMD and that of KFNN. If KF is used, epoch number can be smaller.</p>
-<p><strong>nFeatures</strong>: check the feature number in output/outx, with x being the feature index you chose.</p>
-<p>Having done the above, run <strong>seper.py</strong> and <strong>gen_data.py</strong> as in engine 3.</p>
-<p>To initiate training, you should also choose a network configuration class in accordance with the model.</p>
-<p><strong>DeepMD_cfg_dp</strong>: without KF</p>
-<p><strong>DeepMD_cfg_dp_kf</strong>: with KF</p>
-<p>In trainning, pass it in as an argument after flag <strong>-n</strong>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">deepmd</span><span class="o">=</span><span class="kc">True</span> <span class="o">-</span><span class="n">n</span> <span class="n">DeepMD_cfg_dp</span> <span class="o">-</span><span class="n">s</span> <span class="n">record</span>
-</pre></div>
-</div>
-<p>You can also use the following script to submit job on your cluster. You have to submit this to nodes with at least 1 available GPU.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#SBATCH --partition=mygpupartition</span>
-<span class="c1">#SBATCH --job-name=cu1646_dp1</span>
-<span class="c1">#SBATCH --gres=gpu:1</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=4</span>
-<span class="c1">#SBATCH --threads-per-core=1</span>
+</section>
+<section id="id2">
+<h4>Evaluation<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<p>Before evaluation, create a directory <strong>/MD</strong>,  and put in it another MOVEMENT file obtained from AIMD. <strong>Note that for such a MOVEMENT, energy decomposition is necessary</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import the regressor module</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.nn_network</span> <span class="kn">import</span> <span class="n">nn_network</span>
 
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">mlff</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-<span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">deepmd</span><span class="o">=</span><span class="kc">True</span> <span class="o">-</span><span class="n">n</span> <span class="n">DeepMD_cfg_dp</span> <span class="o">-</span><span class="n">s</span> <span class="n">record</span>
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># feature to be used. MUST BE SPECIFIED</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">kfnn_trainer</span> <span class="o">=</span> <span class="n">nn_network</span><span class="p">(</span>
+                                <span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span>
+                                <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+                                <span class="n">kalman_type</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>      <span class="c1"># using global Kalman filter</span>
+                                <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>              <span class="c1"># run training on cpu</span>
+                                <span class="n">recover</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>             <span class="c1"># recover previous training</span>
+                                <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;record&quot;</span>       <span class="c1"># directory that contains the log &amp; saved models</span>
+                             <span class="p">)</span>
+
+    <span class="c1"># extract network parameters for inference module. MUST-HAVE, ONLY ONCE</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">extract_model_para</span><span class="p">()</span>
+
+    <span class="c1"># run evaluation</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+
+    <span class="c1"># plot the evaluation result</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">plot_evaluation</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+<section id="id3">
+<h4>Prediction<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<p>The code below runs <strong>PWmat-style</strong> MD calculation with the force field just obtained. For MD calculation with LAMMPS, see the section “<strong>LAMMPS MD calculation</strong>”. You must prepare an initial configuration in order to proceed. A <strong>md_detail</strong> array is also required, which specifies 1)simulation method, 2) steps, 3) time lentgh of step, 4) initial temperature, and 5) final temperature. Please refer to PWmat manual for more details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import the regressor module</span>
+<span class="kn">from</span> <span class="nn">PWmatMLFF.nn_network</span> <span class="kn">import</span> <span class="n">nn_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># feature to be used. MUST BE SPECIFIED</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">kfnn_trainer</span> <span class="o">=</span> <span class="n">nn_network</span><span class="p">(</span>
+                                <span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span>
+                                <span class="n">feature_type</span> <span class="o">=</span> <span class="n">feature_type</span><span class="p">,</span>
+                                <span class="n">kalman_type</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>      <span class="c1"># using global Kalman filter</span>
+                                <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>              <span class="c1"># run training on cpu</span>
+                                <span class="n">recover</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>             <span class="c1"># recover previous training</span>
+                                <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;record&quot;</span>       <span class="c1"># directory that contains the log &amp; saved models</span>
+                             <span class="p">)</span>
+
+    <span class="c1"># extract network parameters for inference module. MUST-HAVE. ONLY ONCE</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">extract_model_para</span><span class="p">()</span>
+
+    <span class="c1"># md_detail array</span>
+    <span class="n">md_detail</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">]</span>
+
+    <span class="c1"># run MD</span>
+    <span class="n">kfnn_trainer</span><span class="o">.</span><span class="n">run_md</span><span class="p">(</span><span class="n">md_details</span> <span class="o">=</span> <span class="n">md_detail</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
 </div>
+<p>This process generates all information in the current directory as in PWmat MD calculation.</p>
+</section>
+</section>
+<section id="dp-torch-network">
+<h3>DP-Torch Network<a class="headerlink" href="#dp-torch-network" title="Permalink to this heading"></a></h3>
+<section id="id4">
+<h4>Training<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<p>All MOVEMENT files must be stored in the directory <strong>/PWdata</strong>. If more than one MOVEMENT files are used for training, create multiple directories within <strong>/PWdata</strong>, with each containing <strong>exactly ONE</strong> MOVEMENT file. You can use <strong>data/MOVEMENT</strong> for a quick test. Notice that the layerwise Kalman filter oprimizer is used by default. <strong>It is recommended to run training on GPU</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.dp_network</span> <span class="kn">import</span> <span class="n">dp_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">dp_trainer</span> <span class="o">=</span> <span class="n">dp_network</span><span class="p">(</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;kfdp_record&quot;</span><span class="p">)</span>
+
+    <span class="c1"># generating trianing data. ONLY NEED TO BE DONE ONCE</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">generate_data</span><span class="p">()</span>
+
+    <span class="c1"># load data into memeory</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+    <span class="c1"># initialize network</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">set_model</span><span class="p">()</span>
+
+    <span class="c1"># set optimzer</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">set_optimizer</span><span class="p">()</span>
+
+    <span class="c1"># set epoch num</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">set_epoch_num</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1">#start training</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
 </div>
+<p>Paste the code above in python script (<strong>main.py</strong>, for example). Run the following command to train</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
 </div>
+<p>During training, you can monitor the progress by checking the logs in the <strong>session_dir</strong> you specified:</p>
+<p><strong>epoch_loss.dat</strong>: RMSE_Etot, RMSE_Ei, RMSE_F of training set in each epoch.</p>
+<p><strong>epoch_loss_valid.dat</strong>: RMSE_Etot, RMSE_Ei, RMSE_F of valid set in each epoch.</p>
+</section>
+<section id="id5">
+<h4>Evaluation<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<p>Before evaluation, create a directory <strong>/MD</strong>,  and put in it another MOVEMENT file obtained from AIMD. <strong>Note that for such a MOVEMENT, energy decomposition is necessary</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.dp_network</span> <span class="kn">import</span> <span class="n">dp_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">dp_trainer</span> <span class="o">=</span> <span class="n">dp_network</span><span class="p">(</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;kfdp_record&quot;</span><span class="p">)</span>
+
+    <span class="c1"># extract network parameters for inference. MUST BE DONE</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">extract_model_para</span><span class="p">()</span>
+
+    <span class="c1"># run evaluation</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+
+    <span class="c1"># (optinal) plot RMSE graph</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">plot_evaluation</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>Prediction<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<p>The code below runs <strong>PWmat-style</strong> MD calculation with the force field just obtained. For MD calculation with LAMMPS, see the section “<strong>LAMMPS MD calculation</strong>”. You must prepare an initial configuration in order to proceed. A <strong>md_detail</strong> array is also required, which specifies 1)simulation method, 2) steps, 3) time lentgh of step, 4) initial temperature, and 5) final temperature. Please refer to PWmat manual for more details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.dp_network</span> <span class="kn">import</span> <span class="n">dp_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atom type to be used. MUST BE SPECIFIED</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="mi">29</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+
+    <span class="c1"># create an instance. MUST BE DONE.</span>
+    <span class="n">dp_trainer</span> <span class="o">=</span> <span class="n">dp_network</span><span class="p">(</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span><span class="n">atom_type</span> <span class="o">=</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">session_dir</span> <span class="o">=</span> <span class="s2">&quot;kfdp_record&quot;</span><span class="p">)</span>
+
+    <span class="c1"># extract network parameters for inference. MUST BE DONE</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">extract_model_para</span><span class="p">()</span>
+
+    <span class="c1"># md_detail array. MUST-HAVE</span>
+
+    <span class="c1"># run MD</span>
+    <span class="n">dp_trainer</span><span class="o">.</span><span class="n">run_md</span><span class="p">(</span><span class="n">md_details</span> <span class="o">=</span> <span class="n">md_detail</span><span class="p">,</span> <span class="n">num_thread</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This process generates all information in the current directory as in PWmat MD calculation.</p>
+</section>
+</section>
+<section id="graphic-neural-network">
+<h3>Graphic Neural Network<a class="headerlink" href="#graphic-neural-network" title="Permalink to this heading"></a></h3>
+<section id="id7">
+<h4>Training<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
+<p>All MOVEMENT files must be stored in the directory <strong>/PWdata</strong>. If more than one MOVEMENT files are used for training, create multiple directories within <strong>/PWdata</strong>, with each containing <strong>exactly ONE</strong> MOVEMENT file. You can use <strong>data/MOVEMENT</strong> for a quick test. <strong>Notice that you have to manually specify the size of training set and validation set</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.gnn_network</span> <span class="kn">import</span> <span class="n">gnn_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atomic symbols. MUST-HAVE</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cu&quot;</span><span class="p">,</span><span class="s2">&quot;O&quot;</span><span class="p">]</span>
+
+    <span class="c1"># creating class instance. MUST-HAVE</span>
+    <span class="n">gnn_trainer</span> <span class="o">=</span> <span class="n">gnn_network</span><span class="p">(</span>  <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="c1"># choose the device for training</span>
+                                <span class="n">chemical_symbols</span> <span class="o">=</span> <span class="n">atom_type</span>
+                                    <span class="p">)</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">set_epoch_num</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># set number of image in training and validation</span>
+    <span class="c1"># Notice that nequip picks up training and validation set randomly.</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">set_num_train_img</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">set_num_valid_img</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="c1"># create directory for current session</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">set_session_dir</span><span class="p">(</span><span class="s2">&quot;record&quot;</span><span class="p">)</span>
+
+    <span class="c1"># specify task name</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">set_task_name</span><span class="p">(</span><span class="s2">&quot;20220902-test&quot;</span><span class="p">)</span>
+
+    <span class="c1"># generate data</span>
+    <span class="c1"># ONLY NEED TO BE DONE ONCE!</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">generate_data</span><span class="p">()</span>
+
+    <span class="c1"># lanuch training</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4>Evaluation<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h4>
+<p>You must specify the directory used for training when running evaluation. Images that are used in neither training nor validation are to be evaluated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.gnn_network</span> <span class="kn">import</span> <span class="n">gnn_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atomic symbols. MUST-HAVE</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cu&quot;</span><span class="p">,</span><span class="s2">&quot;O&quot;</span><span class="p">]</span>
+
+    <span class="c1"># creating class instance. MUST-HAVE.</span>
+    <span class="n">gnn_trainer</span> <span class="o">=</span> <span class="n">gnn_network</span><span class="p">(</span>  <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="c1"># choose the device for training</span>
+                                    <span class="n">chemical_symbols</span> <span class="o">=</span> <span class="n">atom_type</span>
+                             <span class="p">)</span>
+
+    <span class="c1"># lanuch evaluation</span>
+    <span class="c1"># Notice that train_dir MUST BE SPECIFIED.</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="n">train_dir</span> <span class="o">=</span> <span class="s2">&quot;record/20220902-test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h4>Prediction<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<p>GNN force field can only be used in LAMMPS. First, you should deploy the model.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PWmatMLFF.gnn_network</span> <span class="kn">import</span> <span class="n">gnn_network</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1"># atomic symbols. MUST-HAVE</span>
+    <span class="n">atom_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cu&quot;</span><span class="p">,</span><span class="s2">&quot;O&quot;</span><span class="p">]</span>
+
+    <span class="c1"># creating class instance. MUST-HAVE.</span>
+    <span class="n">gnn_trainer</span> <span class="o">=</span> <span class="n">gnn_network</span><span class="p">(</span>  <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="c1"># choose the device for training</span>
+                                    <span class="n">chemical_symbols</span> <span class="o">=</span> <span class="n">atom_type</span>
+                                <span class="p">)</span>
+
+    <span class="c1"># lanuch evaluation</span>
+    <span class="c1"># Notice that train_dir MUST BE SPECIFIED.</span>
+    <span class="n">gnn_trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span><span class="n">train_dir</span> <span class="o">=</span> <span class="s2">&quot;record/20220902-test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You also need to compile LAMMPS manually to support the GNN pair style. See section <strong>“”LAMMPS MD calculation””</strong>.</p>
+</section>
+</section>
+<section id="lammps-md-calculation">
+<h3>LAMMPS MD calculation<a class="headerlink" href="#lammps-md-calculation" title="Permalink to this heading"></a></h3>
+<section id="id10">
+<h4>Linear Model,KFNN, and KFDP<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<p>To use LAMMPS for MD calculation, you should add these lines in LAMMPS’s input file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pair_style</span> <span class="n">pwmatmlff</span>
+<span class="n">pair_coeff</span>  <span class="o">*</span> <span class="o">*</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">29</span>
+</pre></div>
+</div>
+<p>The first line specify pair style. In the second line, the first 2 stars are place holders which need not to be changed. “1” stands for the <strong>method index</strong> you want to use, 5 means calculating neighbors in every 5 steps. 29 is the first type of atom (in this case, Cu) in the system. Notice that for system with more than 1 type of element, all elements should listed. For example, if the system is CuO, the second line should be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pair_coeff</span>  <span class="o">*</span> <span class="o">*</span> <span class="mi">1</span> <span class="mi">5</span> <span class="mi">8</span> <span class="mi">29</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Method indices for each model are:</p>
+<p><strong>Linear Model</strong>: 1</p>
+<p><strong>KFNN</strong>: 3</p>
+<p><strong>KFDP</strong>: 5</p>
+</div>
+<p>You should also make sure that Intel MKL library is loaded. On MCloud, use the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">mkl</span>
+</pre></div>
+</div>
+<p>Remember that in <strong>NN and DP-torch</strong>, you still need to extract the network parameters before launching LAMMPS</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_trainer</span><span class="o">.</span><span class="n">extract_model_para</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, run LAMMPS with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">n</span> <span class="n">myNodeNum</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">lammps</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">lmp_mpi</span> <span class="o">-</span><span class="ow">in</span> <span class="n">lammps</span><span class="o">.</span><span class="ow">in</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h4>GNN<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<p>To use LAMMPS with <strong>GNN</strong> model, see</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mir</span><span class="o">-</span><span class="n">group</span><span class="o">/</span><span class="n">nequip</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mir</span><span class="o">-</span><span class="n">group</span><span class="o">/</span><span class="n">pair_nequip</span>
+</pre></div>
+</div>
+<p>for more details.</p>
+</section>
+</section>
+</section>
+<section id="parameter-details">
+<h2>Parameter details<a class="headerlink" href="#parameter-details" title="Permalink to this heading"></a></h2>
+<p>This section introduces the user-definable parameters in all models. There are 2 types of parameters: <strong>gloabl</strong> and <strong>local</strong>.</p>
+<p><strong>Global parameters</strong>: Most (but not all) gloabl parameters can either be passed in when creating the trainer class instance, or be altered via memebr function <strong>.set_&lt;name_of_parameter&gt;()</strong>. Example: for parameter called <strong>mypara</strong>, it can be passed in when the trainer class is created,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_trainer</span> <span class="o">=</span> <span class="n">trainer</span><span class="p">(</span>
+                        <span class="o">...</span>
+                        <span class="n">mypara</span> <span class="o">=</span> <span class="n">val</span><span class="p">,</span>
+                        <span class="o">...</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<p>or via a member function ( for example, <strong>set_mypara()</strong>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="n">my_trainer</span><span class="o">.</span><span class="n">set_mypara</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Unless otherwise noted, all global parameters listed below can be altered in <strong>both ways</strong>.</p>
+<p><strong>Local parameters</strong>: these parameters are only effective with memeber functions such as train(), evaluate(), .etc.</p>
+<section id="id12">
+<h3>Linear Model<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<section id="global-parameters">
+<h4>Global parameters<a class="headerlink" href="#global-parameters" title="Permalink to this heading"></a></h4>
+<p><strong>max_neigh_num</strong>: size of neighbor buffer, with default value <strong>100</strong>. However, for some systems it is not enough to accommodate all the neighbors, and the feature generation fails. The following warning will pop up:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error! maxNeighborNum too small
+</pre></div>
+</div>
+<p>In this case increase the value.</p>
+<p>Usage: <strong>trainer.set_neigh_num(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>etot_weight</strong>: weight of total energy in fitting. Default value is <strong>0.5</strong>.</p>
+<p>Usage: <strong>trainer.set_etot_weight(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>force_weight</strong>: weight of force in fitting. Default value is <strong>0.5</strong>.</p>
+<p>Usage: <strong>trainer.set_force_weight(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>ei_weight</strong>: weight of atomic energy in fitting. Default value is <strong>0.0</strong>.</p>
+<p>Usage: <strong>trainer.set_ei_weight(val)</strong> or pass in at the instantiation</p>
+</section>
+<section id="local-parameters-training">
+<h4>Local parameters: Training<a class="headerlink" href="#local-parameters-training" title="Permalink to this heading"></a></h4>
+<p>None.</p>
+</section>
+<section id="local-parameters-evaluation">
+<h4>Local parameters: Evaluation<a class="headerlink" href="#local-parameters-evaluation" title="Permalink to this heading"></a></h4>
+<p>The complete list of parameters in evaluation is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>num_thread</strong>: number of threads for evaluation. Default is 1.</p>
+</section>
+<section id="local-parameters-prediction">
+<h4>Local parameters: Prediction<a class="headerlink" href="#local-parameters-prediction" title="Permalink to this heading"></a></h4>
+<p>The complete list of parameters in prediction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run_md</span><span class="p">(</span><span class="n">init_config</span> <span class="o">=</span> <span class="s2">&quot;atom.config&quot;</span><span class="p">,</span> <span class="n">md_details</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_thread</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>init_config</strong>: inital configuration file for MD. Default is <strong>atom.config</strong></p>
+<hr class="docutils" />
+<p><strong>md_details</strong>: md_detail array. Must be passed in by user.</p>
+<hr class="docutils" />
+<p><strong>num_thread</strong>: number of threads for prediction. Default is 1.</p>
+<hr class="docutils" />
+<p><strong>follow</strong>: if continue previous MD run. Default is False.</p>
+</section>
+</section>
+<section id="id13">
+<h3>Deep Neural Network<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<section id="id14">
+<h4>Global parameters<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<p><strong>max_neigh_num</strong>: size of neighbor buffer, with default value <strong>100</strong>. However, for some systems it is not enough to accommodate all the neighbors, and the feature generation fails. The following warning will pop up:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error! maxNeighborNum too small
+</pre></div>
+</div>
+<p>In this case increase the value.</p>
+<p>Usage: <strong>my_trainer.set_neigh_num(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>nn_layer_config</strong>: dimension of the nueral network. Default is [15,15,1].</p>
+<p>Usage: pass in at the instantiation <strong>ONLY</strong></p>
+<hr class="docutils" />
+<p><strong>is_trainForce</strong>: if force is used in training. Default is True</p>
+<p>Usage: <strong>my_trainer.set_train_force(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>is_trainEi</strong>: if atomic energy is used in training. Default is False</p>
+<p>Usage: <strong>my_trainer.set_train_Ei(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>is_trainEgroup</strong>: if group energy is used in training. Default is False</p>
+<p>Usage: <strong>my_trainer.set_train_Egroup(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>is_trainEtot</strong>: if total energy is used in training. Default is True</p>
+<p>Usage: <strong>my_trainer.set_train_Etot(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>kf_prefac_Etot</strong>: KF update prefactor for total energy. Default is 1.0. Can be understood as the “learning rate” for KF.</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_Etot(val)</strong></p>
+<hr class="docutils" />
+<p><strong>kf_prefac_Ei</strong>: KF update prefactor for atomic energy. Default is 1.0</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_Ei(val)</strong></p>
+<hr class="docutils" />
+<p><strong>kf_prefac_F</strong>: KF update prefactor for force. Default is 1.0</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_F(val)</strong></p>
+<hr class="docutils" />
+<p><strong>kf_prefac_Egroup</strong>: KF update prefactor for group energy. Default is 1.0</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_Egroup(val)</strong></p>
+<hr class="docutils" />
+<p><strong>session_dir</strong>: name of directory that saves the training log and models. Default is <strong>record</strong></p>
+<p>Usage: <strong>my_trainer.set_session_dir(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>device</strong>: device for traning. Default is cpu</p>
+<p>Usage: pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>recover</strong>: if recover previous training. Default is False.</p>
+<p>Usage: pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>n_epoch</strong>: number of epoch. Default is 25</p>
+<p>Usage: <strong>my_trainer.set_epoch_num(val)</strong> or pass in at the instantiation</p>
+</section>
+<hr class="docutils" />
+<section id="id15">
+<h4>Local parameters:Training<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>set_model()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">set_model</span><span class="p">(</span><span class="n">start_epoch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>start_epcoh</strong>: start epoch number. No need to vary.</p>
+<p><strong>model_name</strong>: the model name to be load when <strong>recover=True</strong>. Default value is <strong>latest.pt</strong>, which is the latest model.</p>
+</section>
+<section id="id16">
+<h4>Local parameters: Evaluation<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>evaluate()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>num_thread</strong>: number of threads for evaluation. Default value is 1.</p>
+<hr class="docutils" />
+<p>Complete list of parameters in member function <strong>extract_model_para()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_model_para</span><span class="p">(</span><span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;latest.pt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>model_name</strong>: the name of model to be extracted. Default values is  <strong>latest.pt</strong></p>
+</section>
+<section id="id17">
+<h4>Local parameters: Prediction<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h4>
+<p>The complete list of parameters in prediction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run_md</span><span class="p">(</span><span class="n">init_config</span> <span class="o">=</span> <span class="s2">&quot;atom.config&quot;</span><span class="p">,</span> <span class="n">md_details</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_thread</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>init_config</strong>: inital configuration file for MD. Default is <strong>atom.config</strong></p>
+<hr class="docutils" />
+<p><strong>md_details</strong>: md_detail array. Must be passed in by user.</p>
+<hr class="docutils" />
+<p><strong>num_thread</strong>: number of threads for prediction. Default is 1.</p>
+<hr class="docutils" />
+<p><strong>follow</strong>: if continue previous MD run. Default is False.</p>
+</section>
+</section>
+<section id="id18">
+<h3>DP-torch Network<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
+<section id="id19">
+<h4>Global parameters<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h4>
+<p><strong>max_neigh_num</strong>: size of neighbor buffer, with default value <strong>100</strong>. However, for some systems it is not enough to accommodate all the neighbors, and the feature generation fails. The following warning will pop up:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Error! maxNeighborNum too small
+</pre></div>
+</div>
+<p>In this case increase the value.</p>
+<p>Usage: <strong>my_trainer.set_neigh_num(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>kf_prefac_Etot</strong>: KF update prefactor for total energy. Default is 1.0. Can be understood as the “learning rate” for KF.</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_Etot(val)</strong></p>
+<hr class="docutils" />
+<p><strong>kf_prefac_F</strong>: KF update prefactor for force. Default is 1.0</p>
+<p>Usage: <strong>my_trainer.set_kf_prefac_F(val)</strong></p>
+<hr class="docutils" />
+<p><strong>session_dir</strong>: name of directory that saves the training log and models. Default is <strong>record</strong></p>
+<p>Usage: <strong>my_trainer.set_session_dir(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>device</strong>: device for traning. Default is cpu</p>
+<p>Usage: pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>recover</strong>: if recover previous training. Default is False.</p>
+<p>Usage: pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>n_epoch</strong>: number of epoch. Default is 25</p>
+<p>Usage: <strong>my_trainer.set_epoch_num(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>batch_size</strong>: batch size. Default is 1.</p>
+<p>Usage: <strong>my_trainer.set_batch_size(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>select_num</strong>: number of selected atoms for force update in KF. Default is 24.</p>
+<p>Usage: <strong>my_trainer.set_select_num(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>group_size</strong>: number of groups the selected atoms will be divided into. Default is 6</p>
+<p>Usage: <strong>my_trainer.set_group_size(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>block_size</strong>: block size in layerwise KF. Default is 5120</p>
+<p>Usage: <strong>my_trainer.set_block_size(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>embedding_net_config</strong>: configuration of the embedding network, i.e. number of nodes in each layer. Default is [25, 25, 25] with KF, and [25, 50, 100] without KF</p>
+<p>Usage: <strong>my_trainer.set_embedding_net_config(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>fitting_net_config</strong>: configuration of the fitting network, i.e. number of nodes in each layer. Default is [50, 50, 50, 1] with KF, and [240, 240, 240, 1] without KF</p>
+<p>Usage: <strong>my_trainer.set_fitting_net_config(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>Rmin</strong>: low cut-offin DP’s smoothing function. Default is 3.0</p>
+<p>Usage: <strong>my_trainer.set_Rmin(val)</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>Rmax</strong>: high cut-off in DP’s smoothing function. Default is 5.4</p>
+<p>Usage: <strong>my_trainer.set_Rmax(val)</strong> or pass in at the instantiation</p>
+</section>
+<section id="id20">
+<h4>Local parameters:Training<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>set_model()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">set_model</span><span class="p">(</span><span class="n">start_epoch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>start_epcoh</strong>: start epoch number. No need to vary.</p>
+<p><strong>model_name</strong>: the model name to be load when <strong>recover=True</strong>. Default value is <strong>latest.pt</strong>, which is the latest model.</p>
+</section>
+<section id="id21">
+<h4>Local parameters: Evaluation<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>evaluate()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>num_thread</strong>: number of threads for evaluation. Default value is 1.</p>
+</section>
+<section id="id22">
+<h4>Local parameters: Prediction<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h4>
+<p>The complete list of parameters in prediction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run_md</span><span class="p">(</span><span class="n">init_config</span> <span class="o">=</span> <span class="s2">&quot;atom.config&quot;</span><span class="p">,</span> <span class="n">md_details</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_thread</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">follow</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>init_config</strong>: inital configuration file for MD. Default is <strong>atom.config</strong></p>
+<hr class="docutils" />
+<p><strong>md_details</strong>: md_detail array. Must be passed in by user.</p>
+<hr class="docutils" />
+<p><strong>num_thread</strong>: number of threads for prediction. Default is 1.</p>
+<hr class="docutils" />
+<p><strong>follow</strong>: if continue previous MD run. Default is False.</p>
+</section>
+</section>
+<section id="id23">
+<h3>Graphic Neural Network<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
+<section id="id24">
+<h4>Global parameters<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h4>
+<p><strong>device</strong>: device to train. Default is <strong>“cuda”</strong>.</p>
+<p>Usage: <strong>my_trainer.set_device()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>session_dir</strong>: directory that contains training tasks. Default is <strong>“record”</strong></p>
+<p>Usage: <strong>my_trainer.set_session_dir()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>task_name</strong>: directory under <em>session_dir</em> that stores the inforrmation of each task. Default is <strong>“gnn”</strong></p>
+<p>Usage: <strong>my_trainer.set_task_name()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>epoch_num</strong>: number of epoch. Default is 25.</p>
+<p>Usage: <strong>my_trainer.set_epoch_num()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_train_img</strong>: number of images for training. <strong>YOU MUST SPECIFY THIS BASED ON YOU DATASET</strong></p>
+<p>Usage: <strong>my_trainer.set_num_train_img()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_valid_img</strong>: number of images for validation. <strong>YOU MUST SPECIFY THIS BASED ON YOU DATASET</strong></p>
+<p>Usage: <strong>my_trainer.set_num_valid_img()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_train_batch_size</strong>: number of images for training. Default is 5, and <strong>1 to 5 are reasonable choices</strong>.</p>
+<p>Usage: <strong>my_trainer.set_train_batch_size()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_valid_batch_size</strong>: number of images for training. Default is 10.</p>
+<p>Usage: <strong>my_trainer.set_valid_batch_size()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>learning_rate</strong>: learning rate. Default is 0.005.</p>
+<p>Usage: <strong>my_trainer.set_learning_rate()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>r_max</strong>: cutoff radius in Angstrom. Default is 4.0</p>
+<p>Usage: <strong>my_trainer.set_r_max()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_layers</strong>: number of interaction blocks. Default is 4</p>
+<p>Usage: <strong>my_trainer.set_num_layers()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>l_max</strong>: the maximum irrep order (rotation order) for the network’s features. Default is 1, which is good enough for most cases.</p>
+<p>Usage: <strong>my_trainer.set_l_max()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_features</strong>: number of features. Default is 32, which is good enough for most cases.</p>
+<p>Usage: <strong>my_trainer.set_num_features()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_basis</strong>: number of features. Default is 32, which is good enough for most cases.</p>
+<p>Usage: <strong>my_trainer.set_num_basis()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>num_basis</strong>: number of basis functions used in the radial basis. Default is 8, which is good enough for most cases.</p>
+<p>Usage: <strong>my_trainer.set_num_basis()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>PolynomialCutoff_p</strong>: p-exponent used in polynomial cutoff function, smaller p corresponds to stronger decay with distance. Default is 6.</p>
+<p>Usage: <strong>my_trainer.set_PolynomialCutoff_p()</strong> or pass in at the instantiation</p>
+<hr class="docutils" />
+<p><strong>invariant_layers</strong>: number of radial layers. Default is 2. 1 to 3 are reasonable.</p>
+<p>Usage: <strong>my_trainer.set_invariant_layers()</strong> or pass in at the instantiation</p>
+</section>
+<section id="id25">
+<h4>Local parameters:Training<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>generate_data()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">generate_data</span><span class="p">(</span><span class="n">xyz_output</span> <span class="o">=</span> <span class="s2">&quot;./PWdata/training_data.xyz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>xyz_output</strong>: name of .xyz file after coversion. Default values is  <strong>./PWdata/training_data.xyz</strong></p>
+<hr class="docutils" />
+<p>Complete list of parameters in member function <strong>train()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">train_data</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;./PWdata/training_data.xyz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>train_data</strong>: .xyz to be used in training. Default values is  <strong>./PWdata/training_data.xyz</strong></p>
+</section>
+<section id="id26">
+<h4>Local parameters:Evaluation<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h4>
+<p>Complete list of parameters in member function <strong>evaluate()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span>
+                <span class="n">train_dir</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                <span class="n">device</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">use_deterministic_algorithms</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>train_dir</strong>: path to the data set to be evaluated. Images that are <strong>NOT</strong> used in training and validation will be used</p>
+<p><strong>model</strong>: the model to be evaluated. <strong>MUST BE A DELOPYED MODEL</strong></p>
+<p><strong>batch_size</strong>: batch size.</p>
+<p><strong>device</strong>: device for evaluation task</p>
+<p><strong>use_deterministic_algorithms</strong>: if a deterministic method is used in evaluation. Notice that if CUDA is used, algorithms are non-deterministic, and forcing it using deterministic method may induce error. Set <strong>device = cpu</strong> instead.</p>
+<hr class="docutils" />
+<p>Complete list of parameters in member function <strong>deploy()</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deploy</span><span class="p">(</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">train_dir</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>model</strong>: model to be deployed. Default is <strong>best_model.pth</strong> in <strong>train_dir</strong></p>
+<p><strong>train_dir</strong>: directory that contains the model to be deployed</p>
+<p><strong>out_file</strong>: name of the output file</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="appendix-i-features-wiki">
+<h2>Appendix I: features Wiki<a class="headerlink" href="#appendix-i-features-wiki" title="Permalink to this heading"></a></h2>
+<p>This section provides a brief introduction on the features used in PWMatMLFF. The related literature is also listed, for readers’ reference.</p>
+<section id="what-are-features">
+<h3>What are features?<a class="headerlink" href="#what-are-features" title="Permalink to this heading"></a></h3>
+<p>Features (or descriptors) are quantities that describe the local atomic environment of an atom. They are required preserve the translational, rotational, and permutational symmetries. Features are usually used as the input of various regressors(linear model, NN, .etc), which output atomic energies and forces.</p>
+<p>Features are differentiable functions of the spatial coordinates, so that force can be calculated as</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{F_i} = - \frac{d E_{tot}}{d \mathbf{R_i}} = - \sum_{j,\alpha} \frac{\partial E_j}{\partial G_{j,\alpha}} \frac{\partial G_{j,\alpha}}{ \partial \mathbf{R_i}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(j\)</span> is the index of neighbor atom within the cutoff radius, and <span class="math notranslate nohighlight">\(\alpha\)</span> the index of feature.</p>
+<p>Additionally, features are required to be rotionally, translationally, and permutaionally invariant.</p>
+</section>
+<section id="b-and-3-b-features-with-piecewise-cosine-functions-feature-1-2">
+<h3>2-b and 3-b features with piecewise cosine functions (feature 1 &amp; 2)<a class="headerlink" href="#b-and-3-b-features-with-piecewise-cosine-functions-feature-1-2" title="Permalink to this heading"></a></h3>
+<p>Given a center atom, the piecewise cosine functions are used as the basis to describe its local environment. The praph below gives you an idea of how they look like.</p>
+<figure class="align-default">
+<img alt="../_images/piecewise_cos.png" src="../_images/piecewise_cos.png" />
+</figure>
+<p>We now define the pieceswise cosine functions, in both 2-body and 3-body feaures. Given the inner and outer cut <span class="math notranslate nohighlight">\(R_{inner}\)</span> and <span class="math notranslate nohighlight">\(R_{outer}\)</span>, the degree of the basis <span class="math notranslate nohighlight">\(M\)</span>, the width of piecewise function <span class="math notranslate nohighlight">\(h\)</span>, and the interatomic distance between the center atom <span class="math notranslate nohighlight">\(i\)</span> and the neighbor <span class="math notranslate nohighlight">\(j\)</span> <span class="math notranslate nohighlight">\(R_{ij}\)</span>, one defines the basis function as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\phi_\alpha (R_{ij}) =
+\begin{cases}
+    \frac{1}{2}\cos(\frac{R_{ij}-R_{\alpha}}{h}\pi) + \frac{1}{2} &amp;, |R_{ij} - R_{\alpha}| &lt; h \\
+                                                                    0 &amp;, \text{otherwise} \\
+\end{cases}\end{split}\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[R_{\alpha} = R_{inner} + (\alpha - 1) h,\ \alpha = 1,2,...,M\]</div>
+<p>The expression of <strong>2-b feature</strong> with center atom <span class="math notranslate nohighlight">\(i\)</span> is thus</p>
+<div class="math notranslate nohighlight">
+\[G_{\alpha,i} = \sum_{m} \phi_{\alpha}(R_{ij})\]</div>
+<p>and <strong>3-b feature</strong></p>
+<div class="math notranslate nohighlight">
+\[G_{\alpha\beta\gamma,i} = \sum_{j,k} \phi_{\alpha}(R_{ij}) \phi_{\beta}(R_{ik})  \phi_{\gamma}(R_{jk})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sum_{m}\)</span> and <span class="math notranslate nohighlight">\(\sum_{m,n}\)</span> sum over all atoms within cutoff <span class="math notranslate nohighlight">\(R_{outer}\)</span> of atom <span class="math notranslate nohighlight">\(i\)</span></p>
+<p>In practice, these two features are usually used in pair.</p>
+<p><em>Reference</em>:</p>
+<p>Huang, Y., Kang, J., Goddard, W. A. &amp; Wang, L.-W. Density functional theory based neural network force fields from energy decompositions. Phys. Rev. B 99, 064103 (2019)</p>
+</section>
+<section id="b-and-3-b-gaussian-feature-feature-3-4">
+<h3>2-b and 3-b Gaussian feature (feature 3 &amp; 4)<a class="headerlink" href="#b-and-3-b-gaussian-feature-feature-3-4" title="Permalink to this heading"></a></h3>
+<p>These two are the features first used in Behler-Parrinello Neural Network. Given the cutoff radius <span class="math notranslate nohighlight">\(R_c\)</span>, and the interatomic distance <span class="math notranslate nohighlight">\(R_{ij}\)</span> with center atom <span class="math notranslate nohighlight">\(i\)</span>, define cutoff function <span class="math notranslate nohighlight">\(f_c\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f_c(R_{ij}) =
+\begin{cases}
+    \frac{1}{2}\cos(\frac{\pi R_{ij}}{R_c}) + \frac{1}{2} &amp;, R_{ij} &lt; R_c \\
+                                                                    0 &amp;, \text{otherwise} \\
+\end{cases}\end{split}\]</div>
+<p>The <strong>2-b Gaussian</strong> feature of atom <span class="math notranslate nohighlight">\(i\)</span> is defined as</p>
+<div class="math notranslate nohighlight">
+\[G_i = \sum_{j \neq i} e^{(-\eta(R_{ij} - R_s)^2)} f_c (R_{ij})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\eta\)</span> and <span class="math notranslate nohighlight">\(R_s\)</span> are parameters defined by user.</p>
+<p>The <strong>3-b Gaussian</strong> feature of atom <span class="math notranslate nohighlight">\(i\)</span> is defined as</p>
+<div class="math notranslate nohighlight">
+\[G_i = 2^{1-\zeta} \sum_{j,k \neq i} (1+\lambda \cos \theta_{ijk} )^\zeta\ e^{-\eta(R_{ij}^2 + R_{ik}^2 + R_{jk}^2)} f_c (R_{ij}) f_c (R_{ik}) f_c (R_{jk})\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\cos \theta_{ijk} = \frac{\mathbf{R_{ij}} \cdot \mathbf{R_{ik}}}{|\mathbf{R_{ij}}||\mathbf{R_{ik}}|}\]</div>
+<p>and <span class="math notranslate nohighlight">\(\eta\)</span>, <span class="math notranslate nohighlight">\(\zeta\)</span>, and <span class="math notranslate nohighlight">\(\lambda = \pm1\)</span> are parameters defined by user.</p>
+<p>In practice, these two features are usually used in pair.</p>
+<p><em>Reference</em>:</p>
+<ol class="upperalpha simple" start="10">
+<li><p>Behler and M. Parrinello, Generalized Neural-Network Representation of High Dimensional Potential-Energy Surfaces. Phys. Rev. Lett. 98, 146401 (2007)</p></li>
+</ol>
+</section>
+<section id="moment-tensor-potential-feature-5">
+<h3>Moment Tensor Potential (feature 5)<a class="headerlink" href="#moment-tensor-potential-feature-5" title="Permalink to this heading"></a></h3>
+<p>In MTP, the local environment of the center atom <span class="math notranslate nohighlight">\(i\)</span> is characterized by</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{n_i} = (z_i, z_j, \mathbf{r_{ij}})\]</div>
+<p>where <span class="math notranslate nohighlight">\(z_i\)</span> is the atom type of the center atom, <span class="math notranslate nohighlight">\(z_j\)</span> atom type of the neighbor <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{r_{ij}}\)</span> the relative coordinates of neighbors. Next, energy contribution of each atom is expanded as</p>
+<div class="math notranslate nohighlight">
+\[E_i(\mathbf{n_i}) = \sum_\alpha c_\alpha B_\alpha(\mathbf{n_i})\]</div>
+<p>where <span class="math notranslate nohighlight">\(B_\alpha\)</span> are the basis functions of choice and <span class="math notranslate nohighlight">\(c_\alpha\)</span> the parameters to be fitted.</p>
+<p>We now introduce moment tensors <span class="math notranslate nohighlight">\(M_{\mu\nu}\)</span> to define the basis functions</p>
+<div class="math notranslate nohighlight">
+\[M_{\mu\nu} (\mathbf{n_i}) = \sum_j f_\mu (|\mathbf{r_{ij}}|,z_i,z_j) \bigotimes_\nu \mathbf{r_{ij}}\]</div>
+<p>These moments contain both radial and angular parts. The radial parts can be expanded as</p>
+<div class="math notranslate nohighlight">
+\[f_\mu (|\mathbf{r_{ij}}|,z_i,z_j) = \sum_\beta c^{(\beta)}_{\mu,z_i,z_j} Q^{(\beta)}(|\mathbf{r_{ij}}|)\]</div>
+<p>where <span class="math notranslate nohighlight">\(Q^{(\beta)}(|\mathbf{r_{ij}}|)\)</span> are the radial basis funtions. Specifically,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Q^{(\beta)}(|\mathbf{r_{ij}}|) =
+\begin{cases}
+    \phi^{(\beta)}(|\mathbf{r_{ij}}|) (R_{cut} - (|\mathbf{r_{ij}}|))^2 &amp;, (|\mathbf{r_{ij}}|) &lt; R_{cut} \\
+    0 &amp;,\text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi^{(\beta)}\)</span> are polynomials (e.g. Chebyshev polynomials) defined on the interval [<span class="math notranslate nohighlight">\(R_{min},R_{cut}\)</span>]</p>
+<p>The angular part <span class="math notranslate nohighlight">\(\bigotimes_\nu \mathbf{r_{ij}}\)</span>, which means taking tensor product of <span class="math notranslate nohighlight">\(\mathbf{r_{ij}}\)</span> <span class="math notranslate nohighlight">\(\nu\)</span> times, contains the angular information of the neighborhood <span class="math notranslate nohighlight">\(\mathbf{n_i}\)</span>. <span class="math notranslate nohighlight">\(\nu\)</span> determines the rank of moment tensor. With <span class="math notranslate nohighlight">\(\nu=0\)</span> one gets a constant scalar, <span class="math notranslate nohighlight">\(\nu=1\)</span> a vector (rank-1 tensor), <span class="math notranslate nohighlight">\(\nu=2\)</span> a matrix (rank-2 tensor), .etc.</p>
+<p>Define further the <em>level</em> of moments as</p>
+<div class="math notranslate nohighlight">
+\[lev(M_{\mu \nu}) = 2 + 4\mu + \nu\]</div>
+<p>This is an empirical formula.</p>
+<p><em>Reference</em>:</p>
+<p>I.S. Novikov, etal, The MLIP package: moment tensor potential with MPI and active learning. Mach. Learn.: Sci. Technol, 2, 025002 (2021)</p>
+</section>
+<section id="spectral-neighbor-analysis-potential-feature-6">
+<h3>Spectral Neighbor Analysis Potential (feature 6)<a class="headerlink" href="#spectral-neighbor-analysis-potential-feature-6" title="Permalink to this heading"></a></h3>
+</section>
+<section id="dp-chebyshev-feature-7">
+<h3>DP-Chebyshev (feature 7)<a class="headerlink" href="#dp-chebyshev-feature-7" title="Permalink to this heading"></a></h3>
+<p>This feature attempts to mimic the behavior of DP’s embedding network. It uses the Chebyshev polynomial as the basis.</p>
+</section>
+<section id="dp-gaussian-feature-8">
+<h3>DP-Gaussian (feature 8)<a class="headerlink" href="#dp-gaussian-feature-8" title="Permalink to this heading"></a></h3>
+<p>This feature attempts to mimic the behavior of DP’s embedding network.</p>
+</section>
+</section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../ultrafast/ultrafast.html" class="btn btn-neutral float-left" title="Ultrafast dynamical process" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../PWkit/PWkit.html" class="btn btn-neutral float-right" title="PWkit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
