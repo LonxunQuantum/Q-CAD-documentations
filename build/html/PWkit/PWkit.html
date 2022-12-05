@@ -42,9 +42,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../PWmat.html">PWmat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../MLFF/MLFF.html">PWMat Machine Learning Force Field</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PWkit</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#download">Download</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-on-mstation">Installation on MStation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-use-pwkit-on-mcloud">How to use PWkit on MCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">PWkit 介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">PWkit 下载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mstation-pwkit">在 MStation 上安装 Pwkit 的方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mcloud-pwkit">在 MCloud 上使用 PWkit 的方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generator">使用示例 – Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module">使用示例 – Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility">使用示例 – Utility</a></li>
 </ul>
 </li>
 </ul>
@@ -75,8 +79,19 @@
              
   <section id="pwkit">
 <h1>PWkit<a class="headerlink" href="#pwkit" title="Permalink to this heading"></a></h1>
-<section id="download">
-<h2>Download<a class="headerlink" href="#download" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h2>PWkit 介绍<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>PWkit 主要包含三个模块：Generator、Module、Utility。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Generator: 根据可选参数（任务类型、泛函设置、赝势设置、特殊设置）, 为 PWmat 生成输入文件。</p></li>
+<li><p>Module: 在PWmat的基础功能上, 我们针对用户的使用需求开发了一些顶层模块(MODULE)。此部分提供了对各个 Module 的介绍。</p></li>
+<li><p>Utility: 为了方便用户进行计算的前、后处理, PWmat安装包内附带了一系列实用程序。通过这些程序, 我们可以实现PWmat结构文件和其他常见晶体结构文件之间的相互转换、处理数据得到可视化电荷密度、能带结构图、投影态密度、真空能级等操作。</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id2">
+<h2>PWkit 下载<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>You can download PWkit from <a class="reference external" href="https://github.com/LonxunQuantum/">LongXun github account</a>.</p>
 <ol class="arabic simple">
 <li><p>Clone <cite>PWkit</cite> from github</p></li>
@@ -97,8 +112,8 @@
 </pre></div>
 </div>
 </section>
-<section id="installation-on-mstation">
-<h2>Installation on MStation<a class="headerlink" href="#installation-on-mstation" title="Permalink to this heading"></a></h2>
+<section id="mstation-pwkit">
+<h2>在 MStation 上安装 Pwkit 的方法<a class="headerlink" href="#mstation-pwkit" title="Permalink to this heading"></a></h2>
 <p>We will display how to install <cite>PWkit</cite> on your own PC.</p>
 <ol class="arabic simple">
 <li><p>Python 的conda环境配置</p></li>
@@ -136,8 +151,8 @@ $ rm -rf $HOME/.local/pwkit
 </pre></div>
 </div>
 </section>
-<section id="how-to-use-pwkit-on-mcloud">
-<h2>How to use PWkit on MCloud<a class="headerlink" href="#how-to-use-pwkit-on-mcloud" title="Permalink to this heading"></a></h2>
+<section id="mcloud-pwkit">
+<h2>在 MCloud 上使用 PWkit 的方法<a class="headerlink" href="#mcloud-pwkit" title="Permalink to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 1. 加载环境
 $ module load pwkit/1.0
 # 2. 运行 PWkit
@@ -147,6 +162,318 @@ _ ____      ___ __ ___   __ _| |_
 | |_) \ V  V /| | | | | | (_| | |_   v1.0.0
 | .__/ \_/\_/ |_| |_| |_|\__,_|\__|  pwmat kit Usage: pwkit -h
 |_|
+</pre></div>
+</div>
+</section>
+<section id="generator">
+<h2>使用示例 – Generator<a class="headerlink" href="#generator" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>任务设置：</dt><dd><ul class="simple">
+<li><p>任务类型：自洽计算</p></li>
+<li><p>泛函设置：PBE</p></li>
+<li><p>赝势设置：SG15</p></li>
+<li><p>特殊设置：溶剂效应、自旋极化</p></li>
+</ul>
+</dd>
+</dl>
+<p>Step 1. 加载模块 pwkit/1.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ module load pwkit/1.0
+</pre></div>
+</div>
+<p>Step 2. 输入 g 进入 Generator 模块</p>
+<p>Step 3. 输入 scpesgspse (不用区分大小写)</p>
+<p>Step 4. 输入 KMesh-Resolved value: 0.04</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 1. 输入 g 进入 Generator 模块
+# 2. 输入 scpesgspse (不用区分大小写)
+# 3. 输入 KMesh-Resolved value: 0.04
+$ pwkit
+                            _
+_ ____      ___ __ ___   __ _| |_
+| &#39;_ \ \ /\ / / &#39;_ ` _ \ / _` | __|  website: http://www.lonxun.com
+| |_) \ V  V /| | | | | | (_| | |_   v1.0.0
+| .__/ \_/\_/ |_| |_| |_|\__,_|\__|  pwmat kit Usage: pwkit -h
+|_|
+
+================================== Generator ===================================
+g) 进入 Input Generator 模块
+为 PWmat 生成输入文件。
+
+==================================== Module ====================================
+m) 进入 Module
+在PWmat的基础功能上, 我们针对用户的使用需求开发了一些顶层模块(MODULE)。
+这些MODULE中的一部分是与已有的优秀工具的接口, 一部分是以PWmat的计算结果为基础得
+到实际需要的物理量, 一部分则是为特定的计算需求而设计的计算流程。这些MODULE涵盖了
+物质结构, 基础性质, 针对大体系的计算以及机器学习力场等, 功能全面。
+
+=================================== Utility ====================================
+u) 进入 Utility
+为了方便用户进行计算的前、后处理, PWmat安装包内附带了一系列实用程序。通过这些程
+序, 我们可以实现PWmat结构文件和其他常见晶体结构文件之间的相互转换、处理数据得到
+可视化电荷密度、能带结构图、投影态密度、真空能级等操作。
+
+q)  退出
+------------&gt;&gt;
+g
+---------------------------------- 任务类型 -----------------------------------
+SC) 自洽计算              CR) 晶格+原子位置优化      AR) 固定晶格优化原子位置
+NS) 非自洽计算            DS) 原子轨道投影（态密度）
+
+---------------------------------- 泛函设置 -----------------------------------
+PE) PBE(默认)    91) PW91     PS) PBEsol      LD) CA-PZ       H6) HSE06
+H3) HSE03        P0) PBE0     B3) B3LYP       TP) TPSS        SC) SCAN
+
+---------------------------------- 赝势设置 -----------------------------------
+SG) SG15(默认)   PD) PD04      FH) FHI        PW) PWM         UD) 自定义
+
+---------------------------------- 特殊设置 -----------------------------------
+
+SP) 自旋极化    SO) 自旋轨道耦合   SN) 非共线磁矩+自旋轨道耦合    CS) 带电体系
+PU) DFT+U       D3) DFT-D3         FF) 固定电势计算               SE) 溶剂效应
+
+---------------------------------- 输入示例 -----------------------------------
+SCH6        CRSPCS
+
+
+bb) 返回上一级目录
+q)  退出
+
+------------&gt;&gt;
+scpesgspse
+************************************* 任务设置 *************************************
+      1. 任务类型: 自洽计算
+      2. 泛函设置: PBE
+      3. 赝势设置: SG15
+      4. 特殊设置: 溶剂效应、自旋极化
+************************************************************************************
+
+当前目录下共有 9 个文件。搜索当前目录是否含有 atom.config 格式的文件...
+
++-----------------------------Warm Tips------------------------------+
+      * Accuracy Levels: Gamma-Only: 0;
+                           Low:        0.06~0.04;
+                           Medium:     0.04~0.03
+                           Fine:       0.02~0.01
+      * 0.03~0.04 is Generally Precise Enough!
++--------------------------------------------------------------------+
+Input Kmesh-Resolved Value (in Units of 2*PI/Angstrom):
+------------&gt;&gt;
+0.04
+Part I. 任务类型设置成功...
+Part II. 泛函类型设置成功...
+Part III. 赝势类型设置成功...
+Part IV. 特殊设置成功...
++-----------------------------Warm Tips------------------------------+
+      * 额外需要输出文件IN.SOLVENT (自动生成)
++--------------------------------------------------------------------+
+Part IV. 特殊设置成功...
+</pre></div>
+</div>
+<p>产生文件 etot.input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="mi">4</span>   <span class="c1"># 并行设置: 波函数并行设置、K点并行设置，两者之积必须等于GPU总数</span>
+
+<span class="c1">### 基础设置</span>
+<span class="n">JOB</span> <span class="o">=</span> <span class="n">SCF</span>
+<span class="n">XCFUNCTIONAL</span> <span class="o">=</span> <span class="n">PBE</span>
+<span class="n">ACCURACY</span> <span class="o">=</span> <span class="n">NORMAL</span>
+<span class="n">CONVERGENCE</span> <span class="o">=</span> <span class="n">EASY</span>
+<span class="n">PRECISION</span> <span class="o">=</span> <span class="n">AUTO</span>
+
+
+<span class="c1">### 电子自洽设置</span>
+<span class="n">Ecut</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">MP_N123</span> <span class="o">=</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">SCF_ITER0_1</span> <span class="o">=</span> <span class="mi">6</span> <span class="mi">4</span> <span class="mi">3</span> <span class="mf">0.0</span> <span class="mf">0.025</span> <span class="mi">1</span>
+<span class="n">SCF_ITER0_2</span> <span class="o">=</span> <span class="mi">94</span> <span class="mi">4</span> <span class="mi">3</span> <span class="mf">1.0</span> <span class="mf">0.025</span> <span class="mi">1</span>
+
+
+<span class="c1">### 特殊设置</span>
+<span class="n">SPIN</span> <span class="o">=</span> <span class="mi">2</span>   <span class="c1"># 自旋极化</span>
+
+
+<span class="c1">### 其他设置</span>
+<span class="c1">#CHARGE_DECOMP = T</span>
+<span class="c1">#NUM_BAND = XX</span>
+<span class="c1">#SYMM_PREC = 1E-5</span>
+
+
+<span class="c1">### 输入输出设置</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">ATOM</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">pwmat</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP1</span> <span class="o">=</span> <span class="n">Ni</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP2</span> <span class="o">=</span> <span class="n">O</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP3</span> <span class="o">=</span> <span class="n">Fe</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP4</span> <span class="o">=</span> <span class="n">Na</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP5</span> <span class="o">=</span> <span class="n">Mn</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">PSP6</span> <span class="o">=</span> <span class="n">Zn</span><span class="o">.</span><span class="n">SG15</span><span class="o">.</span><span class="n">PBE</span><span class="o">.</span><span class="n">UPF</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">WG</span> <span class="o">=</span> <span class="n">F</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">RHO</span> <span class="o">=</span> <span class="n">F</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">VR</span> <span class="o">=</span> <span class="n">F</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">KPT</span> <span class="o">=</span> <span class="n">F</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">WG</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">RHO</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">VR</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">VATOM</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">IN</span><span class="o">.</span><span class="n">SOLVENT</span> <span class="o">=</span> <span class="n">T</span>     <span class="c1"># 溶剂效应</span>
+<span class="n">OUT</span><span class="o">.</span><span class="n">SOLVENT_CHARGE</span> <span class="o">=</span> <span class="n">T</span>     <span class="c1"># 溶剂效应</span>
+</pre></div>
+</div>
+</section>
+<section id="module">
+<h2>使用示例 – Module<a class="headerlink" href="#module" title="Permalink to this heading"></a></h2>
+<p>查看声子计算的 electron-phonon coupling 模块</p>
+<p>Step 1. 加载模块 pwkit/1.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ module load pwkit/1.0
+</pre></div>
+</div>
+<p>Step 2. 输入 m 进入 Module 模块</p>
+<p>Step 3. 输入 6 （声子计算模块）</p>
+<p>Step 4. 输入 4 （electron-phonon coupling (EPC) 模块）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwkit
+                            _
+_ ____      ___ __ ___   __ _| |_
+| &#39;_ \ \ /\ / / &#39;_ ` _ \ / _` | __|  website: http://www.lonxun.com
+| |_) \ V  V /| | | | | | (_| | |_   v1.0.0
+| .__/ \_/\_/ |_| |_| |_|\__,_|\__|  pwmat kit Usage: pwkit -h
+|_|
+
+================================== Generator ===================================
+g) 进入 Input Generator 模块
+为 PWmat 生成输入文件。
+
+==================================== Module ====================================
+m) 进入 Module
+在PWmat的基础功能上, 我们针对用户的使用需求开发了一些顶层模块(MODULE)。
+这些MODULE中的一部分是与已有的优秀工具的接口, 一部分是以PWmat的计算结果为基础得
+到实际需要的物理量, 一部分则是为特定的计算需求而设计的计算流程。这些MODULE涵盖了
+物质结构, 基础性质, 针对大体系的计算以及机器学习力场等, 功能全面。
+
+=================================== Utility ====================================
+u) 进入 Utility
+为了方便用户进行计算的前、后处理, PWmat安装包内附带了一系列实用程序。通过这些程
+序, 我们可以实现PWmat结构文件和其他常见晶体结构文件之间的相互转换、处理数据得到
+可视化电荷密度、能带结构图、投影态密度、真空能级等操作。
+
+q)  退出
+------------&gt;&gt;
+m
+--------------------------- 物质结构 ---------------------------
+1) 结构搜索                2) 无序结构
+3) 分子动力学数据处理      4) CIF 文件转换与结构处理
+
+---------------------- 电子结构及声子计算 ----------------------
+5) 电子结构                6) 声子计算
+
+-------------------- 光、磁、力学和极化性质 --------------------
+7) 光学性质                8) 磁学性质
+9) 力学性质                a) 极化性质
+
+--------------------------- 其他模块 ---------------------------
+b) 缺陷性质                c) 电化学性质
+d) 输运性质                e) 超快动力学过程
+f) Beyond DFT              g) 电子束辐照分解
+h) 大体系计算              i) 机器学习力场
+j) 其它
+
+
+bb) 返回上一级目录
+q)  退出
+
+------------&gt;&gt;
+6
+============================== PWmat 模块 --&gt; 声子计算 ===============================
+1) PyPWmat
+2) High temperature phonon calculation
+3) PWphono3py
+4) electron-phonon coupling (EPC)
+
+bb) 返回上一级目录
+q)  退出
+
+------------&gt;&gt;
+4
+==================================================================== Module --&gt; electron-phonon coupling (EPC) =====================================================================
+1.模块简介
+----------
+使用瓦尼尔函数（wannier functions, WFs）计算电声耦合矩阵。
+
+2.使用手册
+----------
+http://www.pwmat.com:3389/pwmat-resource/module-download7/pdf/guide_EPC.pdf
+
+bb) 返回上一级目录
+q)  退出
+------------&gt;&gt;
+</pre></div>
+</div>
+</section>
+<section id="utility">
+<h2>使用示例 – Utility<a class="headerlink" href="#utility" title="Permalink to this heading"></a></h2>
+<p>查看数据可视化的 plot_DOS.py 工具</p>
+<p>Step 1. 加载模块 pwkit/1.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ module load pwkit/1.0
+</pre></div>
+</div>
+<p>Step 2. 输入 u 进入 Utility 模块</p>
+<p>Step 3. 输入 2 （plot_DOS.py）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwkit
+                            _
+_ ____      ___ __ ___   __ _| |_
+| &#39;_ \ \ /\ / / &#39;_ ` _ \ / _` | __|  website: http://www.lonxun.com
+| |_) \ V  V /| | | | | | (_| | |_   v1.0.0
+| .__/ \_/\_/ |_| |_| |_|\__,_|\__|  pwmat kit Usage: pwkit -h
+|_|
+
+================================== Generator ===================================
+g) 进入 Input Generator 模块
+为 PWmat 生成输入文件。
+
+==================================== Module ====================================
+m) 进入 Module
+在PWmat的基础功能上, 我们针对用户的使用需求开发了一些顶层模块(MODULE)。
+这些MODULE中的一部分是与已有的优秀工具的接口, 一部分是以PWmat的计算结果为基础得
+到实际需要的物理量, 一部分则是为特定的计算需求而设计的计算流程。这些MODULE涵盖了
+物质结构, 基础性质, 针对大体系的计算以及机器学习力场等, 功能全面。
+
+=================================== Utility ====================================
+u) 进入 Utility
+为了方便用户进行计算的前、后处理, PWmat安装包内附带了一系列实用程序。通过这些程
+序, 我们可以实现PWmat结构文件和其他常见晶体结构文件之间的相互转换、处理数据得到
+可视化电荷密度、能带结构图、投影态密度、真空能级等操作。
+
+q)  退出
+------------&gt;&gt;
+u
+--------------------- Utility---------------------
+1) 格式转换      2) 数据可视化
+3) 数据后处理    4) 其它
+
+bb) 返回上一级目录
+q)  退出
+------------&gt;&gt;
+2
+-------------------------- 数据可视化 ---------------------------
+1) plot_band_structure.x            2) plot_DOS.py
+3) absorption_spec_K2step.x         4) plot_wg.x
+5) plot_DOS_interp.x                6) plot_ABSORB_interp.x
+7) plot_TDDFT.x                     8) plot_fatband_structure.x
+9) plot_electrical_conductivity.x   a) plot_TDDFT_allk.x
+b) plot_TDDFT_rho.x
+
+bb) 返回上一级目录
+q)  退出
+------------&gt;&gt;
+2
+============================================================================= Utility --&gt; plot_DOS.py ==============================================================================
+1.工具简介
+----------
+用于画态密度
+
+2.使用手册
+----------
+http://www.pwmat.com:8080/upload/utility/pdf/plot_DOS.pdf
+
+bb) 返回上一级目录
+q)  退出
+------------&gt;&gt;
 </pre></div>
 </div>
 </section>
