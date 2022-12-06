@@ -100,12 +100,6 @@
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li><p>Download Python package <cite>pflow</cite></p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
 <li><p>Download a conda environment(<cite>pwkit_env.tar.gz</cite>) for PWkit</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$
@@ -124,9 +118,6 @@ $ tar -xzf pwkit_env.tar.gz -C pwkit_env
 
 # 2. 激活 pwkit_env 环境
 $ source pwkit_env/bin/activate
-
-# 3. 在 pwkit_env 环境下，安装 pflow 库
-(pwkit_env)$ cd pflow; pip install.
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
@@ -136,8 +127,8 @@ $ source pwkit_env/bin/activate
 (pwkit_env)$ export PWKIT_ROOT=&lt;Your_pwkit_folder_path&gt;
 (pwkit_env)$ PATH=${PWKIT_ROOT}/bin:$PATH
 
-# 2. 设置Conda环境 -- 修改 CONDA_PATH
-(pwkit_env)$ vim pwkit.cfg
+# 2. 设置Python环境 -- 修改 PYTHON_PATH (自己安装不需要指定 CONDA_PATH)
+(pwkit_env)$ vim pwkit.cfg    # PYTHON_PATH=&lt;your_path&gt;/pwkit_env/bin/python3
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">

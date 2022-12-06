@@ -21,13 +21,7 @@ You can download PWkit from `LongXun github account <https://github.com/LonxunQu
 
    $ git clone git@github.com:LonxunQuantum/pwkit.git
 
-2. Download Python package `pflow`
-
-.. code-block::
-   
-   $ 
-
-3. Download a conda environment(`pwkit_env.tar.gz`) for PWkit
+2. Download a conda environment(`pwkit_env.tar.gz`) for PWkit
 
 .. code-block::
 
@@ -50,9 +44,6 @@ We will display how to install `PWkit` on your own PC.
    # 2. 激活 pwkit_env 环境
    $ source pwkit_env/bin/activate
 
-   # 3. 在 pwkit_env 环境下，安装 pflow 库
-   (pwkit_env)$ cd pflow; pip install.
-
 
 2. PWkit 环境变量设置
 
@@ -62,8 +53,8 @@ We will display how to install `PWkit` on your own PC.
    (pwkit_env)$ export PWKIT_ROOT=<Your_pwkit_folder_path>
    (pwkit_env)$ PATH=${PWKIT_ROOT}/bin:$PATH
 
-   # 2. 设置Conda环境 -- 修改 CONDA_PATH
-   (pwkit_env)$ vim pwkit.cfg
+   # 2. 设置Python环境 -- 修改 PYTHON_PATH (自己安装不需要指定 CONDA_PATH)
+   (pwkit_env)$ vim pwkit.cfg    # PYTHON_PATH=<your_path>/pwkit_env/bin/python3
 
 
 3. 卸载
