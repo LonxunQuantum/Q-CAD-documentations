@@ -25,8 +25,8 @@ You can download PWkit from `LongXun github account <https://github.com/LonxunQu
 
 .. code-block::
 
-   # 百度网盘链接：https://pan.baidu.com/s/1M1sBuNIvWBJZcevVzkYVsA
-   # 提取码：myyb
+   # 百度网盘链接：https://pan.baidu.com/s/14JEInTL9WSbLVP3LUqCK-A
+   # 提取码：lxkt
 
 
 在 MStation 上安装 Pwkit 的方法
